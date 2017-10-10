@@ -1,6 +1,6 @@
 [package]
 name = "ci_info"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Provides current CI environment information."
 license = "Apache-2.0"
