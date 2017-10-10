@@ -25,6 +25,10 @@ fn setup_env(
     env::remove_var("GO_PIPELINE_LABEL");
     env::remove_var("BITBUCKET_COMMIT");
     env::remove_var("CODEBUILD_BUILD_ARN");
+    
+    env::remove_var("CI");
+    env::remove_var("CONTINUOUS_INTEGRATION");
+    env::remove_var("BUILD_NUMBER");
 
     env::set_var(key, value);
 }
