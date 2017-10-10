@@ -56,8 +56,6 @@ fn get_vendor() -> Option<Vendor> {
         Some(Vendor::BUILDKITE)
     } else if is_env_defined("HUDSON_URL") {
         Some(Vendor::HUDSON)
-    } else if is_env_defined("CIRCLECI") {
-        Some(Vendor::CIRCLE)
     } else if is_env_defined("TASK_ID") || is_env_defined("RUN_ID") {
         Some(Vendor::TASKCLUSTER)
     } else if is_env_defined("GO_PIPELINE_LABEL") {
@@ -71,7 +69,7 @@ fn get_vendor() -> Option<Vendor> {
     }
 }
 
-fn is_ci(vendor: &Option<Vendor>) -> bool {
+fn check_if_ci(vendor: &Option<Vendor>) -> bool {
     vendor.is_some() || is_env_defined("CI") || is_env_defined("CONTINUOUS_INTEGRATION") || is_env_defined("BUILD_NUMBER")
 }
 
@@ -96,7 +94,26 @@ pub fn get() -> CiInfo {
 
     ci_info.vendor = get_vendor();
 
-    ci_info.ci = is_ci(&ci_info.vendor);
+    ci_info.ci = check_if_ci(&ci_info.vendor);
 
     ci_info
+}
+
+/// Returns true if a CI environment is detected.
+///
+/// # Example
+///
+/// ```
+/// extern crate ci_info;
+///
+/// fn main() {
+///     let is_ci = ci_info::is_ci();
+///
+///     println!("Is CI: {}", is_ci);
+/// }
+/// ```
+pub fn is_ci() -> bool {
+    let info = get();
+
+    info.ci
 }

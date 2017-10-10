@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/ci_info/lib.rs.html#1-139' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/ci_info/lib.rs.html#1-170' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h1 id='ci_info' class='section-header'><a href='#ci_info'>ci_info</a></h1>
 <p>Provides current CI environment information.</p>
@@ -57,6 +57,7 @@
 The code is based on the <a href="https://github.com/watson/ci-info">ci-info</a> npm module.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h2 id='get-ci-environment-information' class='section-header'><a href='#get-ci-environment-information'>Get CI environment information.</a></h2>
 <pre class="rust rust-example-rendered">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ci_info</span>;
 
@@ -67,6 +68,16 @@ The code is based on the <a href="https://github.com/watson/ci-info">ci-info</a>
     <span class="kw">if</span> <span class="ident">info</span>.<span class="ident">ci</span> {
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Vendor: {:#?}&quot;</span>, <span class="ident">info</span>.<span class="ident">vendor</span>.<span class="ident">unwrap</span>());
     }
+}</pre>
+
+<h2 id='check-if-a-ci-environment-is-detected' class='section-header'><a href='#check-if-a-ci-environment-is-detected'>Check if a CI environment is detected.</a></h2>
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ci_info</span>;
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="ident">is_ci</span> <span class="op">=</span> <span class="ident">ci_info</span>::<span class="ident">is_ci</span>();
+
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Is CI: {}&quot;</span>, <span class="ident">is_ci</span>);
 }</pre>
 
 <h1 id='installation' class='section-header'><a href='#installation'>Installation</a></h1>
@@ -97,6 +108,13 @@ ci_info = &quot;*&quot;
                                   title='fn ci_info::get'>get</a></td>
                            <td class='docblock-short'>
                                 <p>Loads and returns the CI info of the current environment.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.is_ci.html"
+                                  title='fn ci_info::is_ci'>is_ci</a></td>
+                           <td class='docblock-short'>
+                                <p>Returns true if a CI environment is detected.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

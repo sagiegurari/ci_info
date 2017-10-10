@@ -80,6 +80,8 @@
 //!
 //! # Examples
 //!
+//! ## Get CI environment information.
+//!
 //! ```
 //! extern crate ci_info;
 //!
@@ -90,6 +92,18 @@
 //!     if info.ci {
 //!         println!("Vendor: {:#?}", info.vendor.unwrap());
 //!     }
+//! }
+//! ```
+//!
+//! ## Check if a CI environment is detected.
+//!
+//! ```
+//! extern crate ci_info;
+//!
+//! fn main() {
+//!     let is_ci = ci_info::is_ci();
+//!
+//!     println!("Is CI: {}", is_ci);
 //! }
 //! ```
 //!
@@ -136,4 +150,21 @@ use types::CiInfo;
 /// ```
 pub fn get() -> CiInfo {
     ci::get()
+}
+
+/// Returns true if a CI environment is detected.
+///
+/// # Example
+///
+/// ```
+/// extern crate ci_info;
+///
+/// fn main() {
+///     let is_ci = ci_info::is_ci();
+///
+///     println!("Is CI: {}", is_ci);
+/// }
+/// ```
+pub fn is_ci() -> bool {
+    ci::is_ci()
 }

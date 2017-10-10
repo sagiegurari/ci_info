@@ -27,14 +27,17 @@ Simply include the library and invoke the get function to pull all info as follo
 extern crate ci_info;
 
 fn main() {
-    let info = ci_info::get();
+    // Just check if a CI environment is detected.
+    let is_ci = ci_info::is_ci();
+    println!("Is CI: {}", is_ci);
 
+    // Get CI environment information
+    let info = ci_info::get();
     println!("Is CI: {}", info.ci);
     if info.ci {
         println!("Vendor: {:#?}", info.vendor.unwrap());
     }
 }
-
 ````
 
 <a name="installation"></a>
@@ -57,6 +60,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
+| 2017-10-10  | v0.1.1  | Maintenance |
 | 2017-10-10  | v0.1.0  | Initial release. |
 
 <a name="license"></a>
