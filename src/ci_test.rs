@@ -28,19 +28,28 @@ fn is_env_equal_not_defined() {
 }
 
 #[test]
-fn is_env_defined_yes() {
-    env::set_var("CI_DEFINED_YES", "YES");
+fn is_env_defined_found() {
+    env::set_var("ENV_VAR_FOUND_VALUE", "EMPTY");
 
-    let defined = is_env_defined("CI_DEFINED_YES");
+    let found = is_env_defined("ENV_VAR_FOUND_VALUE");
 
-    assert!(defined);
+    assert!(found);
 }
 
 #[test]
-fn is_env_defined_not_defined() {
-    let defined = is_env_defined("CI_DEFINED_NO");
+fn is_env_defined_empty() {
+    env::set_var("ENV_VAR_FOUND_EMPTY", "");
 
-    assert!(!defined);
+    let found = is_env_defined("ENV_VAR_FOUND_EMPTY");
+
+    assert!(found);
+}
+
+#[test]
+fn is_env_defined_not_found() {
+    let found = is_env_defined("ENV_VAR_NOT_FOUND");
+
+    assert!(!found);
 }
 
 #[test]
