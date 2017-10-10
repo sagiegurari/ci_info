@@ -1,0 +1,4 @@
+
+[tasks.outdated]
+# There are no dependencies so can be skipped
+disabled = true

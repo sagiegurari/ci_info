@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["get","Loads and returns the CI info of the current environment."]],"mod":[["types","types"]]});

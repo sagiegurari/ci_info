@@ -1,0 +1,35 @@
+[package]
+name = "ci_info"
+version = "0.1.0"
+authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
+description = "Provides current CI environment information."
+license = "Apache-2.0"
+documentation = "https://sagiegurari.github.io/ci_info/api/ci_info/index.html"
+homepage = "http://github.com/sagiegurari/ci_info"
+repository = "https://github.com/sagiegurari/ci_info.git"
+readme = "README.md"
+keywords = ["ci", "build"]
+categories = ["development-tools", "development-tools::build-utils", "development-tools::testing"]
+include = [
+    "/benches/*",
+    "/docs/*",
+    "/examples/*",
+    "/src/*",
+    "/tests/*",
+    "/Cargo.toml",
+    "/LICENSE",
+    "/README.md",
+    "/Makefile.toml"
+]
+
+[features]
+default = []
+
+[badges.travis-ci]
+branch = "master"
+repository = "sagiegurari/ci_info"
+
+[badges.codecov]
+branch = "master"
+repository = "sagiegurari/ci_info"
+service = "github"
