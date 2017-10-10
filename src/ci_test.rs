@@ -307,3 +307,33 @@ fn get_none() {
     assert!(!info.ci);
     assert!(info.vendor.is_none());
 }
+
+#[test]
+fn get_no_vendor_ci() {
+    setup_env("CI", "");
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.vendor.is_none());
+}
+
+#[test]
+fn get_no_vendor_continuous_integration() {
+    setup_env("CONTINUOUS_INTEGRATION", "");
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.vendor.is_none());
+}
+
+#[test]
+fn get_no_vendor_build_number() {
+    setup_env("BUILD_NUMBER", "");
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.vendor.is_none());
+}
