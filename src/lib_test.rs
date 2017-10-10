@@ -6,3 +6,11 @@ fn get_test() {
 
     assert_eq!(info.ci, info.vendor.is_some());
 }
+
+#[test]
+fn is_ci_test() {
+    let info = get();
+    let ci = is_ci();
+
+    assert_eq!(info.ci, ci);
+}
