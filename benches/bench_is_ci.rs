@@ -5,6 +5,6 @@ extern crate test;
 use test::Bencher;
 
 #[bench]
-fn get(bencher: &mut Bencher) {
+fn is_ci(bencher: &mut Bencher) {
     bencher.iter(|| { ci_info::is_ci(); });
 }

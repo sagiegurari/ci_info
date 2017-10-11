@@ -2,8 +2,8 @@ use super::*;
 
 #[test]
 fn ci_info_new() {
-    let ci_info = CiInfo::new();
+    let info = CiInfo::new();
 
-    assert!(ci_info.vendor.is_none());
-    assert!(!ci_info.ci);
+    assert!(info.vendor.is_none());
+    assert!(!info.ci);
 }

@@ -5,3 +5,13 @@ RUST_TEST_THREADS = "1"
 [tasks.outdated]
 # There are no dependencies so can be skipped
 disabled = true
+
+[tasks.run-example]
+command = "cargo"
+args = ["run", "--example", "example"]
+
+[tasks.pre-verify-project]
+dependencies = [
+    "run-example",
+    "bench-flow"
+]

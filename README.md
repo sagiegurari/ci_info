@@ -60,7 +60,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2017-10-10  | v0.1.4  | Maintenance |
+| 2017-10-10  | v0.1.5  | Maintenance |
 | 2017-10-10  | v0.1.0  | Initial release. |
 
 <a name="license"></a>

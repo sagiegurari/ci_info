@@ -90,13 +90,13 @@ fn check_if_ci(vendor: &Option<Vendor>) -> bool {
 /// }
 /// ```
 pub fn get() -> CiInfo {
-    let mut ci_info = CiInfo::new();
+    let mut info = CiInfo::new();
 
-    ci_info.vendor = get_vendor();
+    info.vendor = get_vendor();
 
-    ci_info.ci = check_if_ci(&ci_info.vendor);
+    info.ci = check_if_ci(&info.vendor);
 
-    ci_info
+    info
 }
 
 /// Returns true if a CI environment is detected.
