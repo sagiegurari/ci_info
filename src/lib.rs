@@ -101,9 +101,9 @@
 //! extern crate ci_info;
 //!
 //! fn main() {
-//!     let is_ci = ci_info::is_ci();
+//!     let ci = ci_info::is_ci();
 //!
-//!     println!("Is CI: {}", is_ci);
+//!     println!("Is CI: {}", ci);
 //! }
 //! ```
 //!
@@ -160,9 +160,9 @@ pub fn get() -> CiInfo {
 /// extern crate ci_info;
 ///
 /// fn main() {
-///     let is_ci = ci_info::is_ci();
+///     let ci = ci_info::is_ci();
 ///
-///     println!("Is CI: {}", is_ci);
+///     println!("Is CI: {}", ci);
 /// }
 /// ```
 pub fn is_ci() -> bool {

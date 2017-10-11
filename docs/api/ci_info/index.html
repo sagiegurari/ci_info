@@ -75,9 +75,9 @@ The code is based on the <a href="https://github.com/watson/ci-info">ci-info</a>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ci_info</span>;
 
 <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">is_ci</span> <span class="op">=</span> <span class="ident">ci_info</span>::<span class="ident">is_ci</span>();
+    <span class="kw">let</span> <span class="ident">ci</span> <span class="op">=</span> <span class="ident">ci_info</span>::<span class="ident">is_ci</span>();
 
-    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Is CI: {}&quot;</span>, <span class="ident">is_ci</span>);
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Is CI: {}&quot;</span>, <span class="ident">ci</span>);
 }</pre>
 
 <h1 id='installation' class='section-header'><a href='#installation'>Installation</a></h1>

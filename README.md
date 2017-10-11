@@ -28,8 +28,8 @@ extern crate ci_info;
 
 fn main() {
     // Just check if a CI environment is detected.
-    let is_ci = ci_info::is_ci();
-    println!("Is CI: {}", is_ci);
+    let ci = ci_info::is_ci();
+    println!("Is CI: {}", ci);
 
     // Get CI environment information
     let info = ci_info::get();
@@ -60,7 +60,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2017-10-10  | v0.1.5  | Maintenance |
+| 2017-10-11  | v0.1.6  | Maintenance |
 | 2017-10-10  | v0.1.0  | Initial release. |
 
 <a name="license"></a>
