@@ -1,6 +1,6 @@
 [package]
 name = "ci_info"
-version = "0.1.7"
+version = "0.1.8"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Provides current CI environment information."
 license = "Apache-2.0"
@@ -28,6 +28,12 @@ default = []
 [badges.travis-ci]
 branch = "master"
 repository = "sagiegurari/ci_info"
+
+[badges.appveyor]
+repository = "sagiegurari/ci_info"
+service = "github"
+branch = "master"
+project_name = "sagiegurari/ci-info"
 
 [badges.codecov]
 branch = "master"
