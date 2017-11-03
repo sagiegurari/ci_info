@@ -1,7 +1,7 @@
 # ci_info
 
 [![crates.io](https://img.shields.io/crates/v/ci_info.svg)](https://crates.io/crates/ci_info) [![Build Status](https://travis-ci.org/sagiegurari/ci_info.svg)](http://travis-ci.org/sagiegurari/ci_info) [![Build status](https://ci.appveyor.com/api/projects/status/yrb4y9cbaf6wtlk7?svg=true)](https://ci.appveyor.com/project/sagiegurari/ci-info) [![codecov](https://codecov.io/gh/sagiegurari/ci_info/branch/master/graph/badge.svg)](https://codecov.io/gh/sagiegurari/ci_info)<br>
-[![license](https://img.shields.io/github/license/sagiegurari/ci_info.svg)](https://github.com/sagiegurari/ci_info/blob/master/LICENSE) [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/sagiegurari/ci_info.svg)](https://libraries.io/cargo/ci_info) [![Documentation](https://docs.rs/ci_info/badge.svg)](https://docs.rs/crate/ci_info/) [![downloads](https://img.shields.io/crates/d/ci_info.svg)](https://crates.io/crates/ci_info)<br>
+[![license](https://img.shields.io/crates/l/ci_info.svg)](https://github.com/sagiegurari/ci_info/blob/master/LICENSE) [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/sagiegurari/ci_info.svg)](https://libraries.io/cargo/ci_info) [![Documentation](https://docs.rs/ci_info/badge.svg)](https://docs.rs/crate/ci_info/) [![downloads](https://img.shields.io/crates/d/ci_info.svg)](https://crates.io/crates/ci_info)<br>
 [![Built with cargo-make](https://sagiegurari.github.io/cargo-make/assets/badges/cargo-make.svg)](https://sagiegurari.github.io/cargo-make)
 
 > Provides current CI environment information.
@@ -60,7 +60,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2017-10-21  | v0.1.9  | Maintenance |
+| 2017-11-03  | v0.1.10 | Maintenance |
 | 2017-10-10  | v0.1.0  | Initial release. |
 
 <a name="license"></a>
