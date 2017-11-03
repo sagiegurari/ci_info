@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Vendor","CI info"]],"struct":[["CiInfo","CI info"]]});
+initSidebarItems({"enum":[["Vendor","Supported vendors enum"]],"struct":[["CiInfo","CI info"]]});

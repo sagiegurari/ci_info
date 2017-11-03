@@ -8,7 +8,7 @@
 mod types_test;
 
 #[derive(Debug, Clone, PartialEq, Copy)]
-/// CI info
+/// Supported vendors enum
 pub enum Vendor {
     /// CI vendor
     TRAVIS,
