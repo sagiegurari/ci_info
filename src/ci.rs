@@ -89,7 +89,7 @@ fn check_if_ci(vendor: &Option<Vendor>) -> bool {
 ///     }
 /// }
 /// ```
-pub fn get() -> CiInfo {
+pub(crate) fn get() -> CiInfo {
     let mut info = CiInfo::new();
 
     info.vendor = get_vendor();
@@ -112,7 +112,7 @@ pub fn get() -> CiInfo {
 ///     println!("Is CI: {}", ci);
 /// }
 /// ```
-pub fn is_ci() -> bool {
+pub(crate) fn is_ci() -> bool {
     let info = get();
 
     info.ci
