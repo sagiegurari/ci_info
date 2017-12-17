@@ -45,7 +45,7 @@ pub enum Vendor {
     /// CI vendor
     BITBUCKET,
     /// CI vendor
-    CODEBUILD
+    CODEBUILD,
 }
 
 #[derive(Debug, Clone, PartialEq, Copy)]
@@ -54,12 +54,15 @@ pub struct CiInfo {
     /// The CI vendor
     pub vendor: Option<Vendor>,
     /// True if CI environment
-    pub ci: bool
+    pub ci: bool,
 }
 
 impl CiInfo {
     /// Returns new instance
     pub fn new() -> CiInfo {
-        CiInfo { vendor: None, ci: false }
+        CiInfo {
+            vendor: None,
+            ci: false,
+        }
     }
 }

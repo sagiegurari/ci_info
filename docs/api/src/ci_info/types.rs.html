@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -108,6 +109,9 @@
 <span id="63">63</span>
 <span id="64">64</span>
 <span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! # types</span>
 <span class="doccomment">//!</span>
@@ -156,7 +160,7 @@
     <span class="doccomment">/// CI vendor</span>
     <span class="ident">BITBUCKET</span>,
     <span class="doccomment">/// CI vendor</span>
-    <span class="ident">CODEBUILD</span>
+    <span class="ident">CODEBUILD</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>)]</span>
@@ -165,13 +169,16 @@
     <span class="doccomment">/// The CI vendor</span>
     <span class="kw">pub</span> <span class="ident">vendor</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vendor</span><span class="op">&gt;</span>,
     <span class="doccomment">/// True if CI environment</span>
-    <span class="kw">pub</span> <span class="ident">ci</span>: <span class="ident">bool</span>
+    <span class="kw">pub</span> <span class="ident">ci</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CiInfo</span> {
     <span class="doccomment">/// Returns new instance</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">CiInfo</span> {
-        <span class="ident">CiInfo</span> { <span class="ident">vendor</span>: <span class="prelude-val">None</span>, <span class="ident">ci</span>: <span class="bool-val">false</span> }
+        <span class="ident">CiInfo</span> {
+            <span class="ident">vendor</span>: <span class="prelude-val">None</span>,
+            <span class="ident">ci</span>: <span class="bool-val">false</span>,
+        }
     }
 }
 </pre>

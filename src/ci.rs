@@ -10,10 +10,7 @@ mod ci_test;
 use std::env;
 use types::{CiInfo, Vendor};
 
-fn is_env_equal(
-    key: &str,
-    validation: &str,
-) -> bool {
+fn is_env_equal(key: &str, validation: &str) -> bool {
     match env::var(key) {
         Ok(value) => validation == value,
         _ => false,
@@ -70,7 +67,8 @@ fn get_vendor() -> Option<Vendor> {
 }
 
 fn check_if_ci(vendor: &Option<Vendor>) -> bool {
-    vendor.is_some() || is_env_defined("CI") || is_env_defined("CONTINUOUS_INTEGRATION") || is_env_defined("BUILD_NUMBER")
+    vendor.is_some() || is_env_defined("CI") || is_env_defined("CONTINUOUS_INTEGRATION")
+        || is_env_defined("BUILD_NUMBER")
 }
 
 /// Loads and returns the CI info of the current environment.

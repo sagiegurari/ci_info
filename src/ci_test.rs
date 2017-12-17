@@ -2,10 +2,7 @@ use super::*;
 
 use std::env;
 
-fn setup_env(
-    key: &str,
-    value: &str,
-) {
+fn setup_env(key: &str, value: &str) {
     env::remove_var("TRAVIS");
     env::remove_var("CIRCLECI");
     env::remove_var("GITLAB_CI");
