@@ -6,5 +6,7 @@ use test::Bencher;
 
 #[bench]
 fn is_ci(bencher: &mut Bencher) {
-    bencher.iter(|| { ci_info::is_ci(); });
+    bencher.iter(|| {
+        ci_info::is_ci();
+    });
 }
