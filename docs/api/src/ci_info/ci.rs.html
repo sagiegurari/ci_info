@@ -115,6 +115,8 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! # ci</span>
 <span class="doccomment">//!</span>
@@ -185,7 +187,9 @@
 }
 
 <span class="kw">fn</span> <span class="ident">check_if_ci</span>(<span class="ident">vendor</span>: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vendor</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">vendor</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="ident">is_env_defined</span>(<span class="string">&quot;CI&quot;</span>) <span class="op">||</span> <span class="ident">is_env_defined</span>(<span class="string">&quot;CONTINUOUS_INTEGRATION&quot;</span>)
+    <span class="ident">vendor</span>.<span class="ident">is_some</span>()
+        <span class="op">||</span> <span class="ident">is_env_defined</span>(<span class="string">&quot;CI&quot;</span>)
+        <span class="op">||</span> <span class="ident">is_env_defined</span>(<span class="string">&quot;CONTINUOUS_INTEGRATION&quot;</span>)
         <span class="op">||</span> <span class="ident">is_env_defined</span>(<span class="string">&quot;BUILD_NUMBER&quot;</span>)
 }
 

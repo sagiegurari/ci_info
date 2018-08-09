@@ -67,7 +67,9 @@ fn get_vendor() -> Option<Vendor> {
 }
 
 fn check_if_ci(vendor: &Option<Vendor>) -> bool {
-    vendor.is_some() || is_env_defined("CI") || is_env_defined("CONTINUOUS_INTEGRATION")
+    vendor.is_some()
+        || is_env_defined("CI")
+        || is_env_defined("CONTINUOUS_INTEGRATION")
         || is_env_defined("BUILD_NUMBER")
 }
 
