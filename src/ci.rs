@@ -7,8 +7,8 @@
 #[path = "./ci_test.rs"]
 mod ci_test;
 
+use crate::types::{CiInfo, Vendor};
 use std::env;
-use types::{CiInfo, Vendor};
 
 fn is_env_equal(key: &str, validation: &str) -> bool {
     match env::var(key) {
