@@ -22,9 +22,6 @@ include = [
     "/Makefile.toml"
 ]
 
-[features]
-default = []
-
 [badges.travis-ci]
 branch = "master"
 repository = "sagiegurari/ci_info"
