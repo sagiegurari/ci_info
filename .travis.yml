@@ -10,8 +10,6 @@ os:
 env:
   global:
     - RUST_BACKTRACE=1
-    - RUSTFLAGS="-C link-dead-code"
-    - CARGO_MAKE_RUN_CODECOV=true
 matrix:
   allow_failures:
     - rust: nightly
