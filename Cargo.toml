@@ -36,3 +36,10 @@ project_name = "sagiegurari/ci-info"
 branch = "master"
 repository = "sagiegurari/ci_info"
 service = "github"
+
+[features]
+serde-1 = ["serde", "serde_derive"]
+
+[dependencies]
+serde = { version = "1", optional = true }
+serde_derive = { version = "1", optional = true }

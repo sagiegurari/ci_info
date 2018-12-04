@@ -7,6 +7,7 @@
 #[path = "./types_test.rs"]
 mod types_test;
 
+#[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, Copy)]
 /// Supported vendors enum
 pub enum Vendor {
@@ -48,6 +49,7 @@ pub enum Vendor {
     CODEBUILD,
 }
 
+#[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, Copy)]
 /// CI info
 pub struct CiInfo {
