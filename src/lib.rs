@@ -137,6 +137,13 @@
 //! ci_info = "*"
 //! ```
 //!
+//! There is optional `serde` support that can be enabled via the `serde-1` feature:
+//!
+//! ```ini
+//! [dependencies]
+//! ci_info = { version = "*", features = ["serde-1"] }
+//! ```
+//!
 //! # Contributing
 //! See [contributing guide](https://github.com/sagiegurari/ci_info/blob/master/.github/CONTRIBUTING.md)
 //!
@@ -145,6 +152,9 @@
 //! [Apache 2](https://github.com/sagiegurari/ci_info/blob/master/LICENSE) open source license.
 //!
 
+#[cfg(feature = "serde-1")]
+#[macro_use]
+extern crate serde_derive;
 #[cfg(test)]
 #[path = "./lib_test.rs"]
 mod lib_test;
