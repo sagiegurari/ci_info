@@ -60,7 +60,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2018-11-17  | v0.2.1  | Maintenance |
+| 2018-12-10  | v0.3.0  | Added optional serde support |
 | 2017-10-10  | v0.1.0  | Initial release. |
 
 <a name="license"></a>
