@@ -49,6 +49,13 @@ In order to use this library, just add it as a dependency:
 ci_info = "*"
 ```
 
+There is optional `serde` support that can be enabled via the `serde-1` feature:
+
+```ini
+[dependencies]
+ci_info = { version = "*", features = ["serde-1"] }
+```
+
 ## API Documentation
 See full docs at: [API Docs](https://sagiegurari.github.io/ci_info/)
 
