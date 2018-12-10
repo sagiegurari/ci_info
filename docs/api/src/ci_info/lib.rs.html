@@ -190,6 +190,16 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(
     <span class="ident">absolute_paths_not_starting_with_crate</span>,
@@ -330,6 +340,13 @@
 <span class="doccomment">//! ci_info = &quot;*&quot;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! There is optional `serde` support that can be enabled via the `serde-1` feature:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```ini</span>
+<span class="doccomment">//! [dependencies]</span>
+<span class="doccomment">//! ci_info = { version = &quot;*&quot;, features = [&quot;serde-1&quot;] }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! # Contributing</span>
 <span class="doccomment">//! See [contributing guide](https://github.com/sagiegurari/ci_info/blob/master/.github/CONTRIBUTING.md)</span>
 <span class="doccomment">//!</span>
@@ -338,6 +355,9 @@
 <span class="doccomment">//! [Apache 2](https://github.com/sagiegurari/ci_info/blob/master/LICENSE) open source license.</span>
 <span class="doccomment">//!</span>
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-1&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./lib_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">lib_test</span>;

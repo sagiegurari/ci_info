@@ -1,6 +1,6 @@
 [package]
 name = "ci_info"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Provides current CI environment information."
 license = "Apache-2.0"
@@ -22,6 +22,13 @@ include = [
     "/Makefile.toml"
 ]
 
+[dependencies]
+serde = { version = "1", optional = true }
+serde_derive = { version = "1", optional = true }
+
+[features]
+serde-1 = [ "serde", "serde_derive" ]
+
 [badges.travis-ci]
 branch = "master"
 repository = "sagiegurari/ci_info"
@@ -36,10 +43,3 @@ project_name = "sagiegurari/ci-info"
 branch = "master"
 repository = "sagiegurari/ci_info"
 service = "github"
-
-[features]
-serde-1 = ["serde", "serde_derive"]
-
-[dependencies]
-serde = { version = "1", optional = true }
-serde_derive = { version = "1", optional = true }
