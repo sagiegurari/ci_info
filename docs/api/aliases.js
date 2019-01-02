@@ -1,2 +1,2 @@
 var ALIASES = {};
-ALIASES['ci_info'] = {};
+ALIASES["ci_info"] = {};

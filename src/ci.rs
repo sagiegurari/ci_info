@@ -74,21 +74,6 @@ fn check_if_ci(vendor: &Option<Vendor>) -> bool {
 }
 
 /// Loads and returns the CI info of the current environment.
-///
-/// # Example
-///
-/// ```
-/// extern crate ci_info;
-///
-/// fn main() {
-///     let info = ci_info::get();
-///
-///     println!("Is CI: {}", info.ci);
-///     if info.ci {
-///         println!("Vendor: {:#?}", info.vendor.unwrap());
-///     }
-/// }
-/// ```
 pub(crate) fn get() -> CiInfo {
     let mut info = CiInfo::new();
 
@@ -100,18 +85,6 @@ pub(crate) fn get() -> CiInfo {
 }
 
 /// Returns true if a CI environment is detected.
-///
-/// # Example
-///
-/// ```
-/// extern crate ci_info;
-///
-/// fn main() {
-///     let ci = ci_info::is_ci();
-///
-///     println!("Is CI: {}", ci);
-/// }
-/// ```
 pub(crate) fn is_ci() -> bool {
     let info = get();
 
