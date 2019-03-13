@@ -2,82 +2,61 @@ use super::*;
 
 use std::env;
 
-fn setup_env(key: &str, value: &str) {
-    env::remove_var("TRAVIS");
-    env::remove_var("CIRCLECI");
-    env::remove_var("GITLAB_CI");
+fn setup_env(vars: Vec<(&str, &str)>) {
     env::remove_var("APPVEYOR");
+    env::remove_var("APPVEYOR_PULL_REQUEST_NUMBER");
+    env::remove_var("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
+    env::remove_var("SYSTEM_PULLREQUEST_PULLREQUESTID");
+    env::remove_var("bamboo_planKey");
+    env::remove_var("BITBUCKET_COMMIT");
+    env::remove_var("BITBUCKET_PR_ID");
+    env::remove_var("BITRISE_IO");
+    env::remove_var("BITRISE_PULL_REQUEST");
+    env::remove_var("BUDDY_WORKSPACE_ID");
+    env::remove_var("BUDDY_EXECUTION_PULL_REQUEST_ID");
+    env::remove_var("BUILDKITE");
+    env::remove_var("BUILDKITE_PULL_REQUEST");
+    env::remove_var("CIRCLECI");
+    env::remove_var("CIRCLE_PULL_REQUEST");
+    env::remove_var("CIRRUS_CI");
+    env::remove_var("CIRRUS_PR");
+    env::remove_var("CODEBUILD_BUILD_ARN");
     env::remove_var("CI_NAME");
     env::remove_var("DRONE");
-    env::remove_var("MAGNUM");
-    env::remove_var("SEMAPHORE");
-    env::remove_var("JENKINS_URL");
-    env::remove_var("bamboo_planKey");
-    env::remove_var("TF_BUILD");
-    env::remove_var("TEAMCITY_VERSION");
-    env::remove_var("BUILDKITE");
+    env::remove_var("DRONE_BUILD_EVENT");
+    env::remove_var("pull_request");
+    env::remove_var("DSARI");
+    env::remove_var("GITLAB_CI");
+    env::remove_var("GO_PIPELINE_LABEL");
     env::remove_var("HUDSON_URL");
+    env::remove_var("JENKINS_URL");
+    env::remove_var("BUILD_ID");
+    env::remove_var("ghprbPullId");
+    env::remove_var("CHANGE_ID");
+    env::remove_var("MAGNUM");
+    env::remove_var("NETLIFY_BUILD_BASE");
+    env::remove_var("PULL_REQUEST");
+    env::remove_var("SAILCI");
+    env::remove_var("SAIL_PULL_REQUEST_NUMBER");
+    env::remove_var("SEMAPHORE");
+    env::remove_var("PULL_REQUEST_NUMBER");
+    env::remove_var("SHIPPABLE");
+    env::remove_var("IS_PULL_REQUEST");
+    env::remove_var("TDDIUM");
+    env::remove_var("TDDIUM_PR_ID");
+    env::remove_var("STRIDER");
     env::remove_var("TASK_ID");
     env::remove_var("RUN_ID");
-    env::remove_var("GO_PIPELINE_LABEL");
-    env::remove_var("BITBUCKET_COMMIT");
-    env::remove_var("CODEBUILD_BUILD_ARN");
-
+    env::remove_var("TEAMCITY_VERSION");
+    env::remove_var("TRAVIS");
+    env::remove_var("TRAVIS_PULL_REQUEST");
     env::remove_var("CI");
     env::remove_var("CONTINUOUS_INTEGRATION");
     env::remove_var("BUILD_NUMBER");
 
-    env::set_var(key, value);
-}
-
-#[test]
-fn is_env_equal_same() {
-    env::set_var("CI_TEST_SAME", "YES");
-
-    let same = is_env_equal("CI_TEST_SAME", "YES");
-
-    assert!(same);
-}
-
-#[test]
-fn is_env_equal_different() {
-    env::set_var("CI_TEST_DIFF", "NO");
-
-    let same = is_env_equal("CI_TEST_DIFF", "YES");
-
-    assert!(!same);
-}
-
-#[test]
-fn is_env_equal_not_defined() {
-    let same = is_env_equal("CI_TEST_NOT_DEFINED", "BAD");
-
-    assert!(!same);
-}
-
-#[test]
-fn is_env_defined_found() {
-    env::set_var("ENV_VAR_FOUND_VALUE", "EMPTY");
-
-    let found = is_env_defined("ENV_VAR_FOUND_VALUE");
-
-    assert!(found);
-}
-
-#[test]
-fn is_env_defined_empty() {
-    env::set_var("ENV_VAR_FOUND_EMPTY", "");
-
-    let found = is_env_defined("ENV_VAR_FOUND_EMPTY");
-
-    assert!(found);
-}
-
-#[test]
-fn is_env_defined_not_found() {
-    let found = is_env_defined("ENV_VAR_NOT_FOUND");
-
-    assert!(!found);
+    for env_var in vars {
+        env::set_var(env_var.0, env_var.1);
+    }
 }
 
 #[test]
@@ -92,245 +71,699 @@ fn is_ci_test() {
 fn get_test() {
     let info = get();
 
-    assert_eq!(info.ci, info.vendor.is_some());
+    assert_eq!(info.name.is_some(), info.vendor.is_some());
 }
 
 #[test]
-fn get_travis() {
-    setup_env("TRAVIS", "");
+fn get_no_pr_appveyor() {
+    setup_env(vec![("APPVEYOR", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::TRAVIS);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::AppVeyor);
+    assert_eq!(info.name.unwrap(), "AppVeyor");
 }
 
 #[test]
-fn get_circle() {
-    setup_env("CIRCLECI", "");
+fn get_pr_appveyor() {
+    setup_env(vec![("APPVEYOR", ""), ("APPVEYOR_PULL_REQUEST_NUMBER", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::CIRCLE);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::AppVeyor);
+    assert_eq!(info.name.unwrap(), "AppVeyor");
 }
 
 #[test]
-fn get_gitlab() {
-    setup_env("GITLAB_CI", "");
+fn get_no_pr_azure_piplines() {
+    setup_env(vec![("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::GITLAB);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::AzurePipelines);
+    assert_eq!(info.name.unwrap(), "Azure Pipelines");
 }
 
 #[test]
-fn get_appveyor() {
-    setup_env("APPVEYOR", "");
+fn get_pr_azure_piplines() {
+    setup_env(vec![
+        ("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", ""),
+        ("SYSTEM_PULLREQUEST_PULLREQUESTID", ""),
+    ]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::APPVEYOR);
-}
-
-#[test]
-fn get_codeship() {
-    setup_env("CI_NAME", "codeship");
-
-    let info = get();
-
-    assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::CODESHIP);
-}
-
-#[test]
-fn get_codeship_wrong_value() {
-    setup_env("CI_NAME", "test");
-
-    let info = get();
-
-    assert!(!info.ci);
-    assert!(info.vendor.is_none());
-}
-
-#[test]
-fn get_drone() {
-    setup_env("DRONE", "");
-
-    let info = get();
-
-    assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::DRONE);
-}
-
-#[test]
-fn get_magnum() {
-    setup_env("MAGNUM", "");
-
-    let info = get();
-
-    assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::MAGNUM);
-}
-
-#[test]
-fn get_semaphore() {
-    setup_env("SEMAPHORE", "");
-
-    let info = get();
-
-    assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::SEMAPHORE);
-}
-
-#[test]
-fn get_jenkins() {
-    setup_env("JENKINS_URL", "");
-
-    let info = get();
-
-    assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::JENKINS);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::AzurePipelines);
+    assert_eq!(info.name.unwrap(), "Azure Pipelines");
 }
 
 #[test]
 fn get_bamboo() {
-    setup_env("bamboo_planKey", "");
+    setup_env(vec![("bamboo_planKey", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::BAMBOO);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Bamboo);
+    assert_eq!(info.name.unwrap(), "Bamboo");
 }
 
 #[test]
-fn get_tfs() {
-    setup_env("TF_BUILD", "");
+fn get_no_pr_bitbucket_piplines() {
+    setup_env(vec![("BITBUCKET_COMMIT", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::TFS);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::BitbucketPipelines);
+    assert_eq!(info.name.unwrap(), "Bitbucket Pipelines");
 }
 
 #[test]
-fn get_teamcity() {
-    setup_env("TEAMCITY_VERSION", "");
+fn get_pr_bitbucket_piplines() {
+    setup_env(vec![("BITBUCKET_COMMIT", ""), ("BITBUCKET_PR_ID", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::TEAMCITY);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::BitbucketPipelines);
+    assert_eq!(info.name.unwrap(), "Bitbucket Pipelines");
 }
 
 #[test]
-fn get_buildkite() {
-    setup_env("BUILDKITE", "");
+fn get_no_pr_bitrise() {
+    setup_env(vec![("BITRISE_IO", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::BUILDKITE);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Bitrise);
+    assert_eq!(info.name.unwrap(), "Bitrise");
 }
 
 #[test]
-fn get_hudson() {
-    setup_env("HUDSON_URL", "");
+fn get_pr_bitrise() {
+    setup_env(vec![("BITRISE_IO", ""), ("BITRISE_PULL_REQUEST", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::HUDSON);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Bitrise);
+    assert_eq!(info.name.unwrap(), "Bitrise");
 }
 
 #[test]
-fn get_taskcluster_taskid() {
-    setup_env("TASK_ID", "");
+fn get_no_pr_buddy() {
+    setup_env(vec![("BUDDY_WORKSPACE_ID", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::TASKCLUSTER);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Buddy);
+    assert_eq!(info.name.unwrap(), "Buddy");
 }
 
 #[test]
-fn get_taskcluster_runid() {
-    setup_env("RUN_ID", "");
+fn get_pr_buddy() {
+    setup_env(vec![
+        ("BUDDY_WORKSPACE_ID", ""),
+        ("BUDDY_EXECUTION_PULL_REQUEST_ID", ""),
+    ]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::TASKCLUSTER);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Buddy);
+    assert_eq!(info.name.unwrap(), "Buddy");
+}
+
+#[test]
+fn get_no_pr_buildkite() {
+    setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "false")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Buildkite);
+    assert_eq!(info.name.unwrap(), "Buildkite");
+}
+
+#[test]
+fn get_pr_buildkite() {
+    setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "123")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Buildkite);
+    assert_eq!(info.name.unwrap(), "Buildkite");
+}
+
+#[test]
+fn get_pr2_buildkite() {
+    setup_env(vec![("BUILDKITE", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Buildkite);
+    assert_eq!(info.name.unwrap(), "Buildkite");
+}
+
+#[test]
+fn get_no_pr_circle_ci() {
+    setup_env(vec![("CIRCLECI", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::CircleCI);
+    assert_eq!(info.name.unwrap(), "CircleCI");
+}
+
+#[test]
+fn get_pr_circle_ci() {
+    setup_env(vec![("CIRCLECI", ""), ("CIRCLE_PULL_REQUEST", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::CircleCI);
+    assert_eq!(info.name.unwrap(), "CircleCI");
+}
+
+#[test]
+fn get_no_pr_cirrus_ci() {
+    setup_env(vec![("CIRRUS_CI", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::CirrusCI);
+    assert_eq!(info.name.unwrap(), "Cirrus CI");
+}
+
+#[test]
+fn get_pr_cirrus_ci() {
+    setup_env(vec![("CIRRUS_CI", ""), ("CIRRUS_PR", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::CirrusCI);
+    assert_eq!(info.name.unwrap(), "Cirrus CI");
+}
+
+#[test]
+fn get_aws_codebuild() {
+    setup_env(vec![("CODEBUILD_BUILD_ARN", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::AWSCodeBuild);
+    assert_eq!(info.name.unwrap(), "AWS CodeBuild");
+}
+
+#[test]
+fn get_codeship() {
+    setup_env(vec![("CI_NAME", "codeship")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Codeship);
+    assert_eq!(info.name.unwrap(), "Codeship");
+}
+
+#[test]
+fn get_no_pr_drone() {
+    setup_env(vec![("DRONE", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Drone);
+    assert_eq!(info.name.unwrap(), "Drone");
+}
+
+#[test]
+fn get_no_pr2_drone() {
+    setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "test")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Drone);
+    assert_eq!(info.name.unwrap(), "Drone");
+}
+
+#[test]
+fn get_pr_drone() {
+    setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "pull_request")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Drone);
+    assert_eq!(info.name.unwrap(), "Drone");
+}
+
+#[test]
+fn get_dsari() {
+    setup_env(vec![("DSARI", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::DSARI);
+    assert_eq!(info.name.unwrap(), "dsari");
+}
+
+#[test]
+fn get_gitlab_ci() {
+    setup_env(vec![("GITLAB_CI", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitLabCI);
+    assert_eq!(info.name.unwrap(), "GitLab CI");
 }
 
 #[test]
 fn get_gocd() {
-    setup_env("GO_PIPELINE_LABEL", "");
+    setup_env(vec![("GO_PIPELINE_LABEL", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::GOCD);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::GoCD);
+    assert_eq!(info.name.unwrap(), "GoCD");
 }
 
 #[test]
-fn get_bitbucket() {
-    setup_env("BITBUCKET_COMMIT", "");
+fn get_hudson() {
+    setup_env(vec![("HUDSON_URL", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::BITBUCKET);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Hudson);
+    assert_eq!(info.name.unwrap(), "Hudson");
 }
 
 #[test]
-fn get_codebuild() {
-    setup_env("CODEBUILD_BUILD_ARN", "");
+fn get_no_pr_jenkins() {
+    setup_env(vec![("JENKINS_URL", ""), ("BUILD_ID", "")]);
 
     let info = get();
 
     assert!(info.ci);
-    assert_eq!(info.vendor.unwrap(), Vendor::CODEBUILD);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Jenkins);
+    assert_eq!(info.name.unwrap(), "Jenkins");
 }
 
 #[test]
-fn get_none() {
-    setup_env("BAD", "");
+fn get_partial1_jenkins() {
+    setup_env(vec![("JENKINS_URL", "")]);
 
     let info = get();
 
-    assert!(!info.ci);
+    assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
 }
 
 #[test]
-fn get_no_vendor_ci() {
-    setup_env("CI", "");
+fn get_partial2_jenkins() {
+    setup_env(vec![("BUILD_ID", "")]);
+
+    let info = get();
+
+    assert!(info.pr.is_none());
+    assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
+}
+
+#[test]
+fn get_pr_jenkins() {
+    setup_env(vec![
+        ("JENKINS_URL", ""),
+        ("BUILD_ID", ""),
+        ("ghprbPullId", ""),
+    ]);
 
     let info = get();
 
     assert!(info.ci);
-    assert!(info.vendor.is_none());
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Jenkins);
+    assert_eq!(info.name.unwrap(), "Jenkins");
 }
 
 #[test]
-fn get_no_vendor_continuous_integration() {
-    setup_env("CONTINUOUS_INTEGRATION", "");
+fn get_pr2_jenkins() {
+    setup_env(vec![
+        ("JENKINS_URL", ""),
+        ("BUILD_ID", ""),
+        ("CHANGE_ID", ""),
+    ]);
 
     let info = get();
 
     assert!(info.ci);
-    assert!(info.vendor.is_none());
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Jenkins);
+    assert_eq!(info.name.unwrap(), "Jenkins");
 }
 
 #[test]
-fn get_no_vendor_build_number() {
-    setup_env("BUILD_NUMBER", "");
+fn get_magnum_ci() {
+    setup_env(vec![("MAGNUM", "")]);
 
     let info = get();
 
     assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::MagnumCI);
+    assert_eq!(info.name.unwrap(), "Magnum CI");
+}
+
+#[test]
+fn get_no_pr_netlify_ci() {
+    setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "false")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
+    assert_eq!(info.name.unwrap(), "Netlify CI");
+}
+
+#[test]
+fn get_pr_netlify_ci() {
+    setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "123")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
+    assert_eq!(info.name.unwrap(), "Netlify CI");
+}
+
+#[test]
+fn get_pr2_netlify_ci() {
+    setup_env(vec![("NETLIFY_BUILD_BASE", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
+    assert_eq!(info.name.unwrap(), "Netlify CI");
+}
+
+#[test]
+fn get_no_pr_sail_ci() {
+    setup_env(vec![("SAILCI", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::SailCI);
+    assert_eq!(info.name.unwrap(), "Sail CI");
+}
+
+#[test]
+fn get_pr_sail_ci() {
+    setup_env(vec![("SAILCI", ""), ("SAIL_PULL_REQUEST_NUMBER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::SailCI);
+    assert_eq!(info.name.unwrap(), "Sail CI");
+}
+
+#[test]
+fn get_no_pr_semaphore() {
+    setup_env(vec![("SEMAPHORE", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Semaphore);
+    assert_eq!(info.name.unwrap(), "Semaphore");
+}
+
+#[test]
+fn get_pr_semaphore() {
+    setup_env(vec![("SEMAPHORE", ""), ("PULL_REQUEST_NUMBER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Semaphore);
+    assert_eq!(info.name.unwrap(), "Semaphore");
+}
+
+#[test]
+fn get_no_pr_shippable() {
+    setup_env(vec![("SHIPPABLE", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Shippable);
+    assert_eq!(info.name.unwrap(), "Shippable");
+}
+
+#[test]
+fn get_no_pr2_shippable() {
+    setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "123")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Shippable);
+    assert_eq!(info.name.unwrap(), "Shippable");
+}
+
+#[test]
+fn get_pr_shippable() {
+    setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "true")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Shippable);
+    assert_eq!(info.name.unwrap(), "Shippable");
+}
+
+#[test]
+fn get_no_pr_solano_ci() {
+    setup_env(vec![("TDDIUM", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::SolanoCI);
+    assert_eq!(info.name.unwrap(), "Solano CI");
+}
+
+#[test]
+fn get_pr_solano_ci() {
+    setup_env(vec![("TDDIUM", ""), ("TDDIUM_PR_ID", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::SolanoCI);
+    assert_eq!(info.name.unwrap(), "Solano CI");
+}
+
+#[test]
+fn get_strider_cd() {
+    setup_env(vec![("STRIDER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::StriderCD);
+    assert_eq!(info.name.unwrap(), "Strider CD");
+}
+
+#[test]
+fn get_taskcluster() {
+    setup_env(vec![("TASK_ID", ""), ("RUN_ID", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::TaskCluster);
+    assert_eq!(info.name.unwrap(), "TaskCluster");
+}
+
+#[test]
+fn get_partial1_taskcluster() {
+    setup_env(vec![("TASK_ID", "")]);
+
+    let info = get();
+
+    assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
+}
+
+#[test]
+fn get_partial2_taskcluster() {
+    setup_env(vec![("RUN_ID", "")]);
+
+    let info = get();
+
+    assert!(info.pr.is_none());
+    assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
+}
+
+#[test]
+fn get_teamcity() {
+    setup_env(vec![("TEAMCITY_VERSION", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::TeamCity);
+    assert_eq!(info.name.unwrap(), "TeamCity");
+}
+
+#[test]
+fn get_no_pr_travis() {
+    setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "false")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
+    assert_eq!(info.name.unwrap(), "Travis CI");
+}
+
+#[test]
+fn get_pr_travis() {
+    setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "123")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
+    assert_eq!(info.name.unwrap(), "Travis CI");
+}
+
+#[test]
+fn get_pr2_travis() {
+    setup_env(vec![("TRAVIS", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
+    assert_eq!(info.name.unwrap(), "Travis CI");
+}
+
+#[test]
+fn get_ci_unknown_1() {
+    setup_env(vec![("CI", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
+}
+
+#[test]
+fn get_ci_unknown_2() {
+    setup_env(vec![("CONTINUOUS_INTEGRATION", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
+}
+
+#[test]
+fn get_ci_unknown_3() {
+    setup_env(vec![("BUILD_NUMBER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
+}
+
+#[test]
+fn get_ci_unknown_4() {
+    setup_env(vec![("RUN_ID", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert!(info.vendor.is_none());
+    assert!(info.name.is_none());
 }

@@ -23,7 +23,7 @@ The code is based on the [ci-info](https://github.com/watson/ci-info) npm module
 ## Usage
 Simply include the library and invoke the get function to pull all info as follows:
 
-````rust
+```rust
 extern crate ci_info;
 
 fn main() {
@@ -34,11 +34,15 @@ fn main() {
     // Get CI environment information
     let info = ci_info::get();
     println!("Is CI: {}", info.ci);
-    if info.ci {
+    if info.vendor.is_some() {
         println!("Vendor: {:#?}", info.vendor.unwrap());
+        println!("Name: {:#?}", info.name.unwrap());
+    }
+    if info.pr.is_some() {
+        println!("Is PR: {:#?}", info.pr.unwrap());
     }
 }
-````
+```
 
 <a name="installation"></a>
 ## Installation
@@ -67,7 +71,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2019-01-02  | v0.3.1  | Maintenance |
+| 2019-03-13  | v0.4.0  | Added pr flag and vendor name |
 | 2018-12-10  | v0.3.0  | Added optional serde support |
 | 2017-10-10  | v0.1.0  | Initial release. |
 

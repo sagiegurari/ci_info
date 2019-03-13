@@ -113,8 +113,12 @@
 //!     let info = ci_info::get();
 //!
 //!     println!("Is CI: {}", info.ci);
-//!     if info.ci {
+//!     if info.vendor.is_some() {
 //!         println!("Vendor: {:#?}", info.vendor.unwrap());
+//!         println!("Name: {:#?}", info.name.unwrap());
+//!     }
+//!     if info.pr.is_some() {
+//!         println!("Is PR: {:#?}", info.pr.unwrap());
 //!     }
 //! }
 //! ```
@@ -162,6 +166,8 @@ extern crate serde_derive;
 mod lib_test;
 
 mod ci;
+mod config;
+mod env;
 pub mod types;
 
 use crate::types::CiInfo;
@@ -179,6 +185,13 @@ use crate::types::CiInfo;
 ///     println!("Is CI: {}", info.ci);
 ///     if info.ci {
 ///         println!("Vendor: {:#?}", info.vendor.unwrap());
+///     }
+///     if info.vendor.is_some() {
+///         println!("Vendor: {:#?}", info.vendor.unwrap());
+///        println!("Name: {:#?}", info.name.unwrap());
+///     }
+///     if info.pr.is_some() {
+///         println!("Is PR: {:#?}", info.pr.unwrap());
 ///     }
 /// }
 /// ```
