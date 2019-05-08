@@ -215,9 +215,17 @@
 <span id="215">215</span>
 <span id="216">216</span>
 <span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(
     <span class="ident">absolute_paths_not_starting_with_crate</span>,
+    <span class="ident">ambiguous_associated_items</span>,
     <span class="ident">anonymous_parameters</span>,
     <span class="ident">const_err</span>,
     <span class="ident">dead_code</span>,
@@ -227,6 +235,8 @@
     <span class="ident">ellipsis_inclusive_range_patterns</span>,
     <span class="ident">exceeding_bitshifts</span>,
     <span class="ident">explicit_outlives_requirements</span>,
+    <span class="ident">exported_private_dependencies</span>,
+    <span class="ident">ill_formed_attribute_input</span>,
     <span class="ident">illegal_floating_point_literal_pattern</span>,
     <span class="ident">improper_ctypes</span>,
     <span class="ident">incoherent_fundamental_impls</span>,
@@ -240,7 +250,9 @@
     <span class="ident">missing_copy_implementations</span>,
     <span class="ident">missing_docs</span>,
     <span class="ident">missing_fragment_specifier</span>,
+    <span class="ident">mutable_borrow_reservation_conflict</span>,
     <span class="ident">mutable_transmutes</span>,
+    <span class="ident">nested_impl_trait</span>,
     <span class="ident">no_mangle_const_items</span>,
     <span class="ident">no_mangle_generic_items</span>,
     <span class="ident">non_camel_case_types</span>,
@@ -382,6 +394,8 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./lib_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">lib_test</span>;
+
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">envmnt</span>;
 
 <span class="kw">mod</span> <span class="ident">ci</span>;
 <span class="kw">mod</span> <span class="ident">config</span>;

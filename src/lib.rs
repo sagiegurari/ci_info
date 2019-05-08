@@ -170,6 +170,8 @@ extern crate serde_derive;
 #[path = "./lib_test.rs"]
 mod lib_test;
 
+extern crate envmnt;
+
 mod ci;
 mod config;
 mod env;

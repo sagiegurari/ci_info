@@ -7,20 +7,14 @@
 #[path = "./env_test.rs"]
 mod env_test;
 
-use std::env;
+use envmnt;
 
 pub(crate) fn is_env_equal(key: &str, value: &str) -> bool {
-    match env::var(key) {
-        Ok(current_value) => current_value == value,
-        _ => false,
-    }
+    envmnt::is_equal(key, value)
 }
 
 pub(crate) fn is_env_defined(key: &str) -> bool {
-    match env::var(key) {
-        Ok(_) => true,
-        _ => false,
-    }
+    envmnt::exists(key)
 }
 
 pub(crate) fn is_any_env_defined(keys: &Vec<String>) -> bool {

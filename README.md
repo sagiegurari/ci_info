@@ -71,6 +71,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
+| 2019-05-08  | v0.5.0  | Use envmnt library for environment variables support |
 | 2019-03-13  | v0.4.0  | Added pr flag and vendor name |
 | 2018-12-10  | v0.3.0  | Added optional serde support |
 | 2017-10-10  | v0.1.0  | Initial release. |
