@@ -8,8 +8,8 @@
 mod ci_test;
 
 use crate::config;
-use crate::env;
 use crate::types::{CiInfo, EnvValue, Vendor};
+use envmnt;
 
 /// Loads and returns the CI info of the current environment.
 pub(crate) fn get() -> CiInfo {
@@ -18,11 +18,11 @@ pub(crate) fn get() -> CiInfo {
 
     for vendor_config in vendor_config_list.iter() {
         let found = match vendor_config.ci_env {
-            EnvValue::Exists(ref key) => env::is_env_defined(key),
-            EnvValue::AllExists(ref keys) => env::is_all_env_defined(keys),
-            EnvValue::AnyExists(ref keys) => env::is_any_env_defined(keys),
-            EnvValue::Value(ref key, ref value) => env::is_env_equal(key, value),
-            EnvValue::NotEqual(ref key, ref value) => !env::is_env_equal(key, value),
+            EnvValue::Exists(ref key) => envmnt::exists(key),
+            EnvValue::AllExists(ref keys) => envmnt::is_all_exists(keys),
+            EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
+            EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
+            EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
         };
 
         if found {
@@ -39,11 +39,11 @@ pub(crate) fn get() -> CiInfo {
             info.pr = match vendor_config.pr_env {
                 Some(ref env_value) => {
                     let is_pr = match env_value {
-                        EnvValue::Exists(ref key) => env::is_env_defined(key),
-                        EnvValue::AllExists(ref keys) => env::is_all_env_defined(keys),
-                        EnvValue::AnyExists(ref keys) => env::is_any_env_defined(keys),
-                        EnvValue::Value(ref key, ref value) => env::is_env_equal(key, value),
-                        EnvValue::NotEqual(ref key, ref value) => !env::is_env_equal(key, value),
+                        EnvValue::Exists(ref key) => envmnt::exists(key),
+                        EnvValue::AllExists(ref keys) => envmnt::is_all_exists(keys),
+                        EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
+                        EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
+                        EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
                     };
 
                     Some(is_pr)

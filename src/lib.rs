@@ -174,7 +174,6 @@ extern crate envmnt;
 
 mod ci;
 mod config;
-mod env;
 pub mod types;
 
 use crate::types::CiInfo;
