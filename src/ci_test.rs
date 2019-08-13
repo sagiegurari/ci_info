@@ -36,6 +36,8 @@ fn setup_env(vars: Vec<(&str, &str)>) {
     env::remove_var("MAGNUM");
     env::remove_var("NETLIFY_BUILD_BASE");
     env::remove_var("PULL_REQUEST");
+    env::remove_var("NEVERCODE");
+    env::remove_var("NEVERCODE_PULL_REQUEST");
     env::remove_var("SAILCI");
     env::remove_var("SAIL_PULL_REQUEST_NUMBER");
     env::remove_var("SEMAPHORE");
@@ -516,6 +518,42 @@ fn get_pr2_netlify_ci() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
     assert_eq!(info.name.unwrap(), "Netlify CI");
+}
+
+#[test]
+fn get_no_pr_nevercode_ci() {
+    setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "false")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
+    assert_eq!(info.name.unwrap(), "Nevercode");
+}
+
+#[test]
+fn get_pr_nevercode_ci() {
+    setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "123")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
+    assert_eq!(info.name.unwrap(), "Nevercode");
+}
+
+#[test]
+fn get_pr2_nevercode_ci() {
+    setup_env(vec![("NEVERCODE", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
+    assert_eq!(info.name.unwrap(), "Nevercode");
 }
 
 #[test]

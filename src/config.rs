@@ -158,6 +158,16 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Nevercode".to_string(),
+        vendor: Vendor::Nevercode,
+        ci_env: EnvValue::Exists("NEVERCODE".to_string()),
+        pr_env: Some(EnvValue::NotEqual(
+            "NEVERCODE_PULL_REQUEST".to_string(),
+            "false".to_string(),
+        )),
+    });
+
+    config.push(VendorConfig {
         name: "Sail CI".to_string(),
         vendor: Vendor::SailCI,
         ci_env: EnvValue::Exists("SAILCI".to_string()),

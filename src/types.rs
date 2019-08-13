@@ -50,6 +50,8 @@ pub enum Vendor {
     /// CI vendor
     NetlifyCI,
     /// CI vendor
+    Nevercode,
+    /// CI vendor
     SailCI,
     /// CI vendor
     Semaphore,
