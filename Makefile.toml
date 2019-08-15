@@ -3,5 +3,6 @@
 additional_profiles = [
     "none-thread-safe-tests",
     "ci-coverage-tasks",
-    "ci-all-build-tasks"
+    "ci-all-build-tasks",
+    "publish-pre-cleanup"
 ]
