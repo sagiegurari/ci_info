@@ -31,6 +31,7 @@ fn setup_env(vars: Vec<(&str, &str)>) {
         "GITHUB_EVENT_NAME",
         "GITLAB_CI",
         "GO_PIPELINE_LABEL",
+        "NODE",
         "HUDSON_URL",
         "JENKINS_URL",
         "BUILD_ID",
@@ -437,6 +438,27 @@ fn get_gocd() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::GoCD);
     assert_eq!(info.name.unwrap(), "GoCD");
+}
+
+#[test]
+fn get_heroku() {
+    setup_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Heroku);
+    assert_eq!(info.name.unwrap(), "Heroku");
+}
+
+#[test]
+fn get_heroku_not_ci() {
+    setup_env(vec![("NODE", "test")]);
+
+    let info = get();
+
+    assert!(!info.ci);
 }
 
 #[test]

@@ -134,6 +134,13 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Heroku".to_string(),
+        vendor: Vendor::Heroku,
+        ci_env: EnvValue::Contains("NODE".to_string(), "heroku".to_string()),
+        pr_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "Hudson".to_string(),
         vendor: Vendor::Hudson,
         ci_env: EnvValue::Exists("HUDSON_URL".to_string()),

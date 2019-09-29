@@ -44,6 +44,8 @@ pub enum Vendor {
     /// CI vendor
     GoCD,
     /// CI vendor
+    Heroku,
+    /// CI vendor
     Hudson,
     /// CI vendor
     Jenkins,
@@ -88,6 +90,8 @@ pub(crate) enum EnvValue {
     Value(String, String),
     /// Env name and value which should not be defined
     NotEqual(String, String),
+    /// Env name contains the provided value (case insensitive)
+    Contains(String, String),
 }
 
 /// Vendor detection info
