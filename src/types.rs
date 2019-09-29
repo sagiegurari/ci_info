@@ -40,6 +40,8 @@ pub enum Vendor {
     /// CI vendor
     GitLabCI,
     /// CI vendor
+    GitHubActions,
+    /// CI vendor
     GoCD,
     /// CI vendor
     Hudson,

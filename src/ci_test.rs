@@ -27,6 +27,8 @@ fn setup_env(vars: Vec<(&str, &str)>) {
         "DRONE_BUILD_EVENT",
         "pull_request",
         "DSARI",
+        "GITHUB_ACTIONS",
+        "GITHUB_EVENT_NAME",
         "GITLAB_CI",
         "GO_PIPELINE_LABEL",
         "HUDSON_URL",
@@ -372,6 +374,45 @@ fn get_dsari() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::DSARI);
     assert_eq!(info.name.unwrap(), "dsari");
+}
+
+#[test]
+fn get_no_pr_github_actions() {
+    setup_env(vec![("GITHUB_ACTIONS", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
+    assert_eq!(info.name.unwrap(), "GitHub Actions");
+}
+
+#[test]
+fn get_no_pr2_github_actions() {
+    setup_env(vec![("GITHUB_ACTIONS", ""), ("GITHUB_EVENT_NAME", "test")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
+    assert_eq!(info.name.unwrap(), "GitHub Actions");
+}
+
+#[test]
+fn get_pr_github_actions() {
+    setup_env(vec![
+        ("GITHUB_ACTIONS", ""),
+        ("GITHUB_EVENT_NAME", "pull_request"),
+    ]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
+    assert_eq!(info.name.unwrap(), "GitHub Actions");
 }
 
 #[test]

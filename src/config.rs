@@ -110,6 +110,16 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "GitHub Actions".to_string(),
+        vendor: Vendor::GitHubActions,
+        ci_env: EnvValue::Exists("GITHUB_ACTIONS".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "GITHUB_EVENT_NAME".to_string(),
+            "pull_request".to_string(),
+        )),
+    });
+
+    config.push(VendorConfig {
         name: "GitLab CI".to_string(),
         vendor: Vendor::GitLabCI,
         ci_env: EnvValue::Exists("GITLAB_CI".to_string()),
