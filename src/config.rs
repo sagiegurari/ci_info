@@ -110,6 +110,16 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "GitHub Actions".to_string(),
+        vendor: Vendor::GitHubActions,
+        ci_env: EnvValue::Exists("GITHUB_ACTIONS".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "GITHUB_EVENT_NAME".to_string(),
+            "pull_request".to_string(),
+        )),
+    });
+
+    config.push(VendorConfig {
         name: "GitLab CI".to_string(),
         vendor: Vendor::GitLabCI,
         ci_env: EnvValue::Exists("GITLAB_CI".to_string()),
@@ -120,6 +130,13 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         name: "GoCD".to_string(),
         vendor: Vendor::GoCD,
         ci_env: EnvValue::Exists("GO_PIPELINE_LABEL".to_string()),
+        pr_env: None,
+    });
+
+    config.push(VendorConfig {
+        name: "Heroku".to_string(),
+        vendor: Vendor::Heroku,
+        ci_env: EnvValue::Contains("NODE".to_string(), "heroku".to_string()),
         pr_env: None,
     });
 
@@ -164,6 +181,16 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         pr_env: Some(EnvValue::NotEqual(
             "NEVERCODE_PULL_REQUEST".to_string(),
             "false".to_string(),
+        )),
+    });
+
+    config.push(VendorConfig {
+        name: "Render".to_string(),
+        vendor: Vendor::Render,
+        ci_env: EnvValue::Exists("RENDER".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "IS_PULL_REQUEST".to_string(),
+            "true".to_string(),
         )),
     });
 
@@ -227,6 +254,13 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "TRAVIS_PULL_REQUEST".to_string(),
             "false".to_string(),
         )),
+    });
+
+    config.push(VendorConfig {
+        name: "ZEIT Now".to_string(),
+        vendor: Vendor::ZEITNow,
+        ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
+        pr_env: None,
     });
 
     config.push(VendorConfig {

@@ -40,7 +40,11 @@ pub enum Vendor {
     /// CI vendor
     GitLabCI,
     /// CI vendor
+    GitHubActions,
+    /// CI vendor
     GoCD,
+    /// CI vendor
+    Heroku,
     /// CI vendor
     Hudson,
     /// CI vendor
@@ -51,6 +55,8 @@ pub enum Vendor {
     NetlifyCI,
     /// CI vendor
     Nevercode,
+    /// CI vendor
+    Render,
     /// CI vendor
     SailCI,
     /// CI vendor
@@ -68,6 +74,8 @@ pub enum Vendor {
     /// CI vendor
     TravisCI,
     /// CI vendor
+    ZEITNow,
+    /// CI vendor
     Unknown,
 }
 
@@ -82,6 +90,8 @@ pub(crate) enum EnvValue {
     Value(String, String),
     /// Env name and value which should not be defined
     NotEqual(String, String),
+    /// Env name contains the provided value (case insensitive)
+    Contains(String, String),
 }
 
 /// Vendor detection info

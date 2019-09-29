@@ -3,58 +3,65 @@ use super::*;
 use std::env;
 
 fn setup_env(vars: Vec<(&str, &str)>) {
-    env::remove_var("APPVEYOR");
-    env::remove_var("APPVEYOR_PULL_REQUEST_NUMBER");
-    env::remove_var("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
-    env::remove_var("SYSTEM_PULLREQUEST_PULLREQUESTID");
-    env::remove_var("bamboo_planKey");
-    env::remove_var("BITBUCKET_COMMIT");
-    env::remove_var("BITBUCKET_PR_ID");
-    env::remove_var("BITRISE_IO");
-    env::remove_var("BITRISE_PULL_REQUEST");
-    env::remove_var("BUDDY_WORKSPACE_ID");
-    env::remove_var("BUDDY_EXECUTION_PULL_REQUEST_ID");
-    env::remove_var("BUILDKITE");
-    env::remove_var("BUILDKITE_PULL_REQUEST");
-    env::remove_var("CIRCLECI");
-    env::remove_var("CIRCLE_PULL_REQUEST");
-    env::remove_var("CIRRUS_CI");
-    env::remove_var("CIRRUS_PR");
-    env::remove_var("CODEBUILD_BUILD_ARN");
-    env::remove_var("CI_NAME");
-    env::remove_var("DRONE");
-    env::remove_var("DRONE_BUILD_EVENT");
-    env::remove_var("pull_request");
-    env::remove_var("DSARI");
-    env::remove_var("GITLAB_CI");
-    env::remove_var("GO_PIPELINE_LABEL");
-    env::remove_var("HUDSON_URL");
-    env::remove_var("JENKINS_URL");
-    env::remove_var("BUILD_ID");
-    env::remove_var("ghprbPullId");
-    env::remove_var("CHANGE_ID");
-    env::remove_var("MAGNUM");
-    env::remove_var("NETLIFY_BUILD_BASE");
-    env::remove_var("PULL_REQUEST");
-    env::remove_var("NEVERCODE");
-    env::remove_var("NEVERCODE_PULL_REQUEST");
-    env::remove_var("SAILCI");
-    env::remove_var("SAIL_PULL_REQUEST_NUMBER");
-    env::remove_var("SEMAPHORE");
-    env::remove_var("PULL_REQUEST_NUMBER");
-    env::remove_var("SHIPPABLE");
-    env::remove_var("IS_PULL_REQUEST");
-    env::remove_var("TDDIUM");
-    env::remove_var("TDDIUM_PR_ID");
-    env::remove_var("STRIDER");
-    env::remove_var("TASK_ID");
-    env::remove_var("RUN_ID");
-    env::remove_var("TEAMCITY_VERSION");
-    env::remove_var("TRAVIS");
-    env::remove_var("TRAVIS_PULL_REQUEST");
-    env::remove_var("CI");
-    env::remove_var("CONTINUOUS_INTEGRATION");
-    env::remove_var("BUILD_NUMBER");
+    envmnt::remove_all(&vec![
+        "APPVEYOR",
+        "APPVEYOR_PULL_REQUEST_NUMBER",
+        "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI",
+        "SYSTEM_PULLREQUEST_PULLREQUESTID",
+        "bamboo_planKey",
+        "BITBUCKET_COMMIT",
+        "BITBUCKET_PR_ID",
+        "BITRISE_IO",
+        "BITRISE_PULL_REQUEST",
+        "BUDDY_WORKSPACE_ID",
+        "BUDDY_EXECUTION_PULL_REQUEST_ID",
+        "BUILDKITE",
+        "BUILDKITE_PULL_REQUEST",
+        "CIRCLECI",
+        "CIRCLE_PULL_REQUEST",
+        "CIRRUS_CI",
+        "CIRRUS_PR",
+        "CODEBUILD_BUILD_ARN",
+        "CI_NAME",
+        "DRONE",
+        "DRONE_BUILD_EVENT",
+        "pull_request",
+        "DSARI",
+        "GITHUB_ACTIONS",
+        "GITHUB_EVENT_NAME",
+        "GITLAB_CI",
+        "GO_PIPELINE_LABEL",
+        "NODE",
+        "HUDSON_URL",
+        "JENKINS_URL",
+        "BUILD_ID",
+        "ghprbPullId",
+        "CHANGE_ID",
+        "MAGNUM",
+        "NETLIFY_BUILD_BASE",
+        "PULL_REQUEST",
+        "NEVERCODE",
+        "NEVERCODE_PULL_REQUEST",
+        "RENDER",
+        "SAILCI",
+        "SAIL_PULL_REQUEST_NUMBER",
+        "SEMAPHORE",
+        "PULL_REQUEST_NUMBER",
+        "SHIPPABLE",
+        "IS_PULL_REQUEST",
+        "TDDIUM",
+        "TDDIUM_PR_ID",
+        "STRIDER",
+        "TASK_ID",
+        "RUN_ID",
+        "TEAMCITY_VERSION",
+        "TRAVIS",
+        "TRAVIS_PULL_REQUEST",
+        "NOW_BUILDER",
+        "CI",
+        "CONTINUOUS_INTEGRATION",
+        "BUILD_NUMBER",
+    ]);
 
     for env_var in vars {
         env::set_var(env_var.0, env_var.1);
@@ -371,6 +378,45 @@ fn get_dsari() {
 }
 
 #[test]
+fn get_no_pr_github_actions() {
+    setup_env(vec![("GITHUB_ACTIONS", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
+    assert_eq!(info.name.unwrap(), "GitHub Actions");
+}
+
+#[test]
+fn get_no_pr2_github_actions() {
+    setup_env(vec![("GITHUB_ACTIONS", ""), ("GITHUB_EVENT_NAME", "test")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
+    assert_eq!(info.name.unwrap(), "GitHub Actions");
+}
+
+#[test]
+fn get_pr_github_actions() {
+    setup_env(vec![
+        ("GITHUB_ACTIONS", ""),
+        ("GITHUB_EVENT_NAME", "pull_request"),
+    ]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
+    assert_eq!(info.name.unwrap(), "GitHub Actions");
+}
+
+#[test]
 fn get_gitlab_ci() {
     setup_env(vec![("GITLAB_CI", "")]);
 
@@ -392,6 +438,27 @@ fn get_gocd() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::GoCD);
     assert_eq!(info.name.unwrap(), "GoCD");
+}
+
+#[test]
+fn get_heroku() {
+    setup_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Heroku);
+    assert_eq!(info.name.unwrap(), "Heroku");
+}
+
+#[test]
+fn get_heroku_not_ci() {
+    setup_env(vec![("NODE", "test")]);
+
+    let info = get();
+
+    assert!(!info.ci);
 }
 
 #[test]
@@ -554,6 +621,30 @@ fn get_pr2_nevercode_ci() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
     assert_eq!(info.name.unwrap(), "Nevercode");
+}
+
+#[test]
+fn get_no_pr_render_ci() {
+    setup_env(vec![("RENDER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Render);
+    assert_eq!(info.name.unwrap(), "Render");
+}
+
+#[test]
+fn get_pr_render_ci() {
+    setup_env(vec![("RENDER", ""), ("IS_PULL_REQUEST", "true")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Render);
+    assert_eq!(info.name.unwrap(), "Render");
 }
 
 #[test]
@@ -756,6 +847,18 @@ fn get_pr2_travis() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
     assert_eq!(info.name.unwrap(), "Travis CI");
+}
+
+#[test]
+fn get_ziet_now() {
+    setup_env(vec![("NOW_BUILDER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::ZEITNow);
+    assert_eq!(info.name.unwrap(), "ZEIT Now");
 }
 
 #[test]

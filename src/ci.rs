@@ -23,6 +23,7 @@ pub(crate) fn get() -> CiInfo {
             EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
             EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
             EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
+            EnvValue::Contains(ref key, ref value) => envmnt::contains_ignore_case(key, value),
         };
 
         if found {
@@ -44,6 +45,9 @@ pub(crate) fn get() -> CiInfo {
                         EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
                         EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
                         EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
+                        EnvValue::Contains(ref key, ref value) => {
+                            envmnt::contains_ignore_case(key, value)
+                        }
                     };
 
                     Some(is_pr)

@@ -1,6 +1,6 @@
 [package]
 name = "ci_info"
-version = "0.8.0"
+version = "0.8.1"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Provides current CI environment information."
 license = "Apache-2.0"
@@ -24,7 +24,7 @@ include = [
 ]
 
 [dependencies]
-envmnt = "^0.6"
+envmnt = "^0.7"
 serde = { version = "1", optional = true }
 serde_derive = { version = "1", optional = true }
 
