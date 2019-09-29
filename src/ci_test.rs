@@ -39,6 +39,7 @@ fn setup_env(vars: Vec<(&str, &str)>) {
         "PULL_REQUEST",
         "NEVERCODE",
         "NEVERCODE_PULL_REQUEST",
+        "RENDER",
         "SAILCI",
         "SAIL_PULL_REQUEST_NUMBER",
         "SEMAPHORE",
@@ -556,6 +557,30 @@ fn get_pr2_nevercode_ci() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
     assert_eq!(info.name.unwrap(), "Nevercode");
+}
+
+#[test]
+fn get_no_pr_render_ci() {
+    setup_env(vec![("RENDER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Render);
+    assert_eq!(info.name.unwrap(), "Render");
+}
+
+#[test]
+fn get_pr_render_ci() {
+    setup_env(vec![("RENDER", ""), ("IS_PULL_REQUEST", "true")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Render);
+    assert_eq!(info.name.unwrap(), "Render");
 }
 
 #[test]

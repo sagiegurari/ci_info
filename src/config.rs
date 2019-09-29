@@ -168,6 +168,16 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Render".to_string(),
+        vendor: Vendor::Render,
+        ci_env: EnvValue::Exists("RENDER".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "IS_PULL_REQUEST".to_string(),
+            "true".to_string(),
+        )),
+    });
+
+    config.push(VendorConfig {
         name: "Sail CI".to_string(),
         vendor: Vendor::SailCI,
         ci_env: EnvValue::Exists("SAILCI".to_string()),

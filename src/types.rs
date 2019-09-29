@@ -52,6 +52,8 @@ pub enum Vendor {
     /// CI vendor
     Nevercode,
     /// CI vendor
+    Render,
+    /// CI vendor
     SailCI,
     /// CI vendor
     Semaphore,
