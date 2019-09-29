@@ -70,6 +70,8 @@ pub enum Vendor {
     /// CI vendor
     TravisCI,
     /// CI vendor
+    ZEITNow,
+    /// CI vendor
     Unknown,
 }
 

@@ -240,6 +240,13 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "ZEIT Now".to_string(),
+        vendor: Vendor::ZEITNow,
+        ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
+        pr_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "Unknown".to_string(),
         vendor: Vendor::Unknown,
         ci_env: EnvValue::AnyExists(vec![

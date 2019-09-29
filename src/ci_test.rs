@@ -54,6 +54,7 @@ fn setup_env(vars: Vec<(&str, &str)>) {
         "TEAMCITY_VERSION",
         "TRAVIS",
         "TRAVIS_PULL_REQUEST",
+        "NOW_BUILDER",
         "CI",
         "CONTINUOUS_INTEGRATION",
         "BUILD_NUMBER",
@@ -783,6 +784,18 @@ fn get_pr2_travis() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
     assert_eq!(info.name.unwrap(), "Travis CI");
+}
+
+#[test]
+fn get_ziet_now() {
+    setup_env(vec![("NOW_BUILDER", "")]);
+
+    let info = get();
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::ZEITNow);
+    assert_eq!(info.name.unwrap(), "ZEIT Now");
 }
 
 #[test]
