@@ -11,20 +11,24 @@ use crate::config;
 use crate::types::{CiInfo, EnvValue, Vendor};
 use envmnt;
 
+fn validate(env_info: &EnvValue) -> bool {
+    match env_info {
+        EnvValue::Exists(ref key) => envmnt::exists(key),
+        EnvValue::AllExists(ref keys) => envmnt::is_all_exists(keys),
+        EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
+        EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
+        EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
+        EnvValue::Contains(ref key, ref value) => envmnt::contains_ignore_case(key, value),
+    }
+}
+
 /// Loads and returns the CI info of the current environment.
 pub(crate) fn get() -> CiInfo {
     let mut info = CiInfo::new();
     let vendor_config_list = config::create();
 
     for vendor_config in vendor_config_list.iter() {
-        let found = match vendor_config.ci_env {
-            EnvValue::Exists(ref key) => envmnt::exists(key),
-            EnvValue::AllExists(ref keys) => envmnt::is_all_exists(keys),
-            EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
-            EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
-            EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
-            EnvValue::Contains(ref key, ref value) => envmnt::contains_ignore_case(key, value),
-        };
+        let found = validate(&vendor_config.ci_env);
 
         if found {
             info.ci = true;
@@ -39,16 +43,7 @@ pub(crate) fn get() -> CiInfo {
 
             info.pr = match vendor_config.pr_env {
                 Some(ref env_value) => {
-                    let is_pr = match env_value {
-                        EnvValue::Exists(ref key) => envmnt::exists(key),
-                        EnvValue::AllExists(ref keys) => envmnt::is_all_exists(keys),
-                        EnvValue::AnyExists(ref keys) => envmnt::is_any_exists(keys),
-                        EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
-                        EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
-                        EnvValue::Contains(ref key, ref value) => {
-                            envmnt::contains_ignore_case(key, value)
-                        }
-                    };
+                    let is_pr = validate(env_value);
 
                     Some(is_pr)
                 }
