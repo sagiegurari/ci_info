@@ -1,72 +1,8 @@
 use super::*;
 
+use crate::test_env::setup_env;
+
 use std::env;
-
-fn setup_env(vars: Vec<(&str, &str)>) {
-    envmnt::remove_all(&vec![
-        "APPVEYOR",
-        "APPVEYOR_PULL_REQUEST_NUMBER",
-        "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI",
-        "SYSTEM_PULLREQUEST_PULLREQUESTID",
-        "bamboo_planKey",
-        "BITBUCKET_COMMIT",
-        "BITBUCKET_PR_ID",
-        "BITRISE_IO",
-        "BITRISE_PULL_REQUEST",
-        "BUDDY_WORKSPACE_ID",
-        "BUDDY_EXECUTION_PULL_REQUEST_ID",
-        "BUILDKITE",
-        "BUILDKITE_PULL_REQUEST",
-        "CIRCLECI",
-        "CIRCLE_PULL_REQUEST",
-        "CIRRUS_CI",
-        "CIRRUS_PR",
-        "CODEBUILD_BUILD_ARN",
-        "CI_NAME",
-        "DRONE",
-        "DRONE_BUILD_EVENT",
-        "pull_request",
-        "DSARI",
-        "GITHUB_ACTIONS",
-        "GITHUB_EVENT_NAME",
-        "GITLAB_CI",
-        "GO_PIPELINE_LABEL",
-        "NODE",
-        "HUDSON_URL",
-        "JENKINS_URL",
-        "BUILD_ID",
-        "ghprbPullId",
-        "CHANGE_ID",
-        "MAGNUM",
-        "NETLIFY_BUILD_BASE",
-        "PULL_REQUEST",
-        "NEVERCODE",
-        "NEVERCODE_PULL_REQUEST",
-        "RENDER",
-        "SAILCI",
-        "SAIL_PULL_REQUEST_NUMBER",
-        "SEMAPHORE",
-        "PULL_REQUEST_NUMBER",
-        "SHIPPABLE",
-        "IS_PULL_REQUEST",
-        "TDDIUM",
-        "TDDIUM_PR_ID",
-        "STRIDER",
-        "TASK_ID",
-        "RUN_ID",
-        "TEAMCITY_VERSION",
-        "TRAVIS",
-        "TRAVIS_PULL_REQUEST",
-        "NOW_BUILDER",
-        "CI",
-        "CONTINUOUS_INTEGRATION",
-        "BUILD_NUMBER",
-    ]);
-
-    for env_var in vars {
-        env::set_var(env_var.0, env_var.1);
-    }
-}
 
 #[test]
 fn validate_exists_true() {
@@ -210,6 +146,7 @@ fn validate_contains_not_exists() {
 
 #[test]
 fn is_ci_test() {
+    let _lock = setup_env(vec![]);
     let info = get();
     let ci = is_ci();
 
@@ -218,6 +155,7 @@ fn is_ci_test() {
 
 #[test]
 fn get_test() {
+    let _lock = setup_env(vec![]);
     let info = get();
 
     assert_eq!(info.name.is_some(), info.vendor.is_some());
@@ -225,7 +163,7 @@ fn get_test() {
 
 #[test]
 fn get_no_pr_appveyor() {
-    setup_env(vec![("APPVEYOR", "")]);
+    let _lock = setup_env(vec![("APPVEYOR", "")]);
 
     let info = get();
 
@@ -237,7 +175,7 @@ fn get_no_pr_appveyor() {
 
 #[test]
 fn get_pr_appveyor() {
-    setup_env(vec![("APPVEYOR", ""), ("APPVEYOR_PULL_REQUEST_NUMBER", "")]);
+    let _lock = setup_env(vec![("APPVEYOR", ""), ("APPVEYOR_PULL_REQUEST_NUMBER", "")]);
 
     let info = get();
 
@@ -249,7 +187,7 @@ fn get_pr_appveyor() {
 
 #[test]
 fn get_no_pr_azure_piplines() {
-    setup_env(vec![("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "")]);
+    let _lock = setup_env(vec![("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "")]);
 
     let info = get();
 
@@ -261,7 +199,7 @@ fn get_no_pr_azure_piplines() {
 
 #[test]
 fn get_pr_azure_piplines() {
-    setup_env(vec![
+    let _lock = setup_env(vec![
         ("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", ""),
         ("SYSTEM_PULLREQUEST_PULLREQUESTID", ""),
     ]);
@@ -276,7 +214,7 @@ fn get_pr_azure_piplines() {
 
 #[test]
 fn get_bamboo() {
-    setup_env(vec![("bamboo_planKey", "")]);
+    let _lock = setup_env(vec![("bamboo_planKey", "")]);
 
     let info = get();
 
@@ -288,7 +226,7 @@ fn get_bamboo() {
 
 #[test]
 fn get_no_pr_bitbucket_piplines() {
-    setup_env(vec![("BITBUCKET_COMMIT", "")]);
+    let _lock = setup_env(vec![("BITBUCKET_COMMIT", "")]);
 
     let info = get();
 
@@ -300,7 +238,7 @@ fn get_no_pr_bitbucket_piplines() {
 
 #[test]
 fn get_pr_bitbucket_piplines() {
-    setup_env(vec![("BITBUCKET_COMMIT", ""), ("BITBUCKET_PR_ID", "")]);
+    let _lock = setup_env(vec![("BITBUCKET_COMMIT", ""), ("BITBUCKET_PR_ID", "")]);
 
     let info = get();
 
@@ -312,7 +250,7 @@ fn get_pr_bitbucket_piplines() {
 
 #[test]
 fn get_no_pr_bitrise() {
-    setup_env(vec![("BITRISE_IO", "")]);
+    let _lock = setup_env(vec![("BITRISE_IO", "")]);
 
     let info = get();
 
@@ -324,7 +262,7 @@ fn get_no_pr_bitrise() {
 
 #[test]
 fn get_pr_bitrise() {
-    setup_env(vec![("BITRISE_IO", ""), ("BITRISE_PULL_REQUEST", "")]);
+    let _lock = setup_env(vec![("BITRISE_IO", ""), ("BITRISE_PULL_REQUEST", "")]);
 
     let info = get();
 
@@ -336,7 +274,7 @@ fn get_pr_bitrise() {
 
 #[test]
 fn get_no_pr_buddy() {
-    setup_env(vec![("BUDDY_WORKSPACE_ID", "")]);
+    let _lock = setup_env(vec![("BUDDY_WORKSPACE_ID", "")]);
 
     let info = get();
 
@@ -348,7 +286,7 @@ fn get_no_pr_buddy() {
 
 #[test]
 fn get_pr_buddy() {
-    setup_env(vec![
+    let _lock = setup_env(vec![
         ("BUDDY_WORKSPACE_ID", ""),
         ("BUDDY_EXECUTION_PULL_REQUEST_ID", ""),
     ]);
@@ -363,7 +301,7 @@ fn get_pr_buddy() {
 
 #[test]
 fn get_no_pr_buildkite() {
-    setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "false")]);
+    let _lock = setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "false")]);
 
     let info = get();
 
@@ -375,7 +313,7 @@ fn get_no_pr_buildkite() {
 
 #[test]
 fn get_pr_buildkite() {
-    setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "123")]);
+    let _lock = setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "123")]);
 
     let info = get();
 
@@ -387,7 +325,7 @@ fn get_pr_buildkite() {
 
 #[test]
 fn get_pr2_buildkite() {
-    setup_env(vec![("BUILDKITE", "")]);
+    let _lock = setup_env(vec![("BUILDKITE", "")]);
 
     let info = get();
 
@@ -399,7 +337,7 @@ fn get_pr2_buildkite() {
 
 #[test]
 fn get_no_pr_circle_ci() {
-    setup_env(vec![("CIRCLECI", "")]);
+    let _lock = setup_env(vec![("CIRCLECI", "")]);
 
     let info = get();
 
@@ -411,7 +349,7 @@ fn get_no_pr_circle_ci() {
 
 #[test]
 fn get_pr_circle_ci() {
-    setup_env(vec![("CIRCLECI", ""), ("CIRCLE_PULL_REQUEST", "")]);
+    let _lock = setup_env(vec![("CIRCLECI", ""), ("CIRCLE_PULL_REQUEST", "")]);
 
     let info = get();
 
@@ -423,7 +361,7 @@ fn get_pr_circle_ci() {
 
 #[test]
 fn get_no_pr_cirrus_ci() {
-    setup_env(vec![("CIRRUS_CI", "")]);
+    let _lock = setup_env(vec![("CIRRUS_CI", "")]);
 
     let info = get();
 
@@ -435,7 +373,7 @@ fn get_no_pr_cirrus_ci() {
 
 #[test]
 fn get_pr_cirrus_ci() {
-    setup_env(vec![("CIRRUS_CI", ""), ("CIRRUS_PR", "")]);
+    let _lock = setup_env(vec![("CIRRUS_CI", ""), ("CIRRUS_PR", "")]);
 
     let info = get();
 
@@ -447,7 +385,7 @@ fn get_pr_cirrus_ci() {
 
 #[test]
 fn get_aws_codebuild() {
-    setup_env(vec![("CODEBUILD_BUILD_ARN", "")]);
+    let _lock = setup_env(vec![("CODEBUILD_BUILD_ARN", "")]);
 
     let info = get();
 
@@ -459,7 +397,7 @@ fn get_aws_codebuild() {
 
 #[test]
 fn get_codeship() {
-    setup_env(vec![("CI_NAME", "codeship")]);
+    let _lock = setup_env(vec![("CI_NAME", "codeship")]);
 
     let info = get();
 
@@ -471,7 +409,7 @@ fn get_codeship() {
 
 #[test]
 fn get_no_pr_drone() {
-    setup_env(vec![("DRONE", "")]);
+    let _lock = setup_env(vec![("DRONE", "")]);
 
     let info = get();
 
@@ -483,7 +421,7 @@ fn get_no_pr_drone() {
 
 #[test]
 fn get_no_pr2_drone() {
-    setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "test")]);
+    let _lock = setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "test")]);
 
     let info = get();
 
@@ -495,7 +433,7 @@ fn get_no_pr2_drone() {
 
 #[test]
 fn get_pr_drone() {
-    setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "pull_request")]);
+    let _lock = setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "pull_request")]);
 
     let info = get();
 
@@ -507,7 +445,7 @@ fn get_pr_drone() {
 
 #[test]
 fn get_dsari() {
-    setup_env(vec![("DSARI", "")]);
+    let _lock = setup_env(vec![("DSARI", "")]);
 
     let info = get();
 
@@ -519,7 +457,7 @@ fn get_dsari() {
 
 #[test]
 fn get_no_pr_github_actions() {
-    setup_env(vec![("GITHUB_ACTIONS", "")]);
+    let _lock = setup_env(vec![("GITHUB_ACTIONS", "")]);
 
     let info = get();
 
@@ -531,7 +469,7 @@ fn get_no_pr_github_actions() {
 
 #[test]
 fn get_no_pr2_github_actions() {
-    setup_env(vec![("GITHUB_ACTIONS", ""), ("GITHUB_EVENT_NAME", "test")]);
+    let _lock = setup_env(vec![("GITHUB_ACTIONS", ""), ("GITHUB_EVENT_NAME", "test")]);
 
     let info = get();
 
@@ -543,7 +481,7 @@ fn get_no_pr2_github_actions() {
 
 #[test]
 fn get_pr_github_actions() {
-    setup_env(vec![
+    let _lock = setup_env(vec![
         ("GITHUB_ACTIONS", ""),
         ("GITHUB_EVENT_NAME", "pull_request"),
     ]);
@@ -558,7 +496,7 @@ fn get_pr_github_actions() {
 
 #[test]
 fn get_gitlab_ci() {
-    setup_env(vec![("GITLAB_CI", "")]);
+    let _lock = setup_env(vec![("GITLAB_CI", "")]);
 
     let info = get();
 
@@ -570,7 +508,7 @@ fn get_gitlab_ci() {
 
 #[test]
 fn get_gocd() {
-    setup_env(vec![("GO_PIPELINE_LABEL", "")]);
+    let _lock = setup_env(vec![("GO_PIPELINE_LABEL", "")]);
 
     let info = get();
 
@@ -582,7 +520,7 @@ fn get_gocd() {
 
 #[test]
 fn get_heroku() {
-    setup_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
+    let _lock = setup_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
 
     let info = get();
 
@@ -594,7 +532,7 @@ fn get_heroku() {
 
 #[test]
 fn get_heroku_not_ci() {
-    setup_env(vec![("NODE", "test")]);
+    let _lock = setup_env(vec![("NODE", "test")]);
 
     let info = get();
 
@@ -603,7 +541,7 @@ fn get_heroku_not_ci() {
 
 #[test]
 fn get_hudson() {
-    setup_env(vec![("HUDSON_URL", "")]);
+    let _lock = setup_env(vec![("HUDSON_URL", "")]);
 
     let info = get();
 
@@ -615,7 +553,7 @@ fn get_hudson() {
 
 #[test]
 fn get_no_pr_jenkins() {
-    setup_env(vec![("JENKINS_URL", ""), ("BUILD_ID", "")]);
+    let _lock = setup_env(vec![("JENKINS_URL", ""), ("BUILD_ID", "")]);
 
     let info = get();
 
@@ -627,7 +565,7 @@ fn get_no_pr_jenkins() {
 
 #[test]
 fn get_partial1_jenkins() {
-    setup_env(vec![("JENKINS_URL", "")]);
+    let _lock = setup_env(vec![("JENKINS_URL", "")]);
 
     let info = get();
 
@@ -638,7 +576,7 @@ fn get_partial1_jenkins() {
 
 #[test]
 fn get_partial2_jenkins() {
-    setup_env(vec![("BUILD_ID", "")]);
+    let _lock = setup_env(vec![("BUILD_ID", "")]);
 
     let info = get();
 
@@ -649,7 +587,7 @@ fn get_partial2_jenkins() {
 
 #[test]
 fn get_pr_jenkins() {
-    setup_env(vec![
+    let _lock = setup_env(vec![
         ("JENKINS_URL", ""),
         ("BUILD_ID", ""),
         ("ghprbPullId", ""),
@@ -665,7 +603,7 @@ fn get_pr_jenkins() {
 
 #[test]
 fn get_pr2_jenkins() {
-    setup_env(vec![
+    let _lock = setup_env(vec![
         ("JENKINS_URL", ""),
         ("BUILD_ID", ""),
         ("CHANGE_ID", ""),
@@ -681,7 +619,7 @@ fn get_pr2_jenkins() {
 
 #[test]
 fn get_magnum_ci() {
-    setup_env(vec![("MAGNUM", "")]);
+    let _lock = setup_env(vec![("MAGNUM", "")]);
 
     let info = get();
 
@@ -693,7 +631,7 @@ fn get_magnum_ci() {
 
 #[test]
 fn get_no_pr_netlify_ci() {
-    setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "false")]);
+    let _lock = setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "false")]);
 
     let info = get();
 
@@ -705,7 +643,7 @@ fn get_no_pr_netlify_ci() {
 
 #[test]
 fn get_pr_netlify_ci() {
-    setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "123")]);
+    let _lock = setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "123")]);
 
     let info = get();
 
@@ -717,7 +655,7 @@ fn get_pr_netlify_ci() {
 
 #[test]
 fn get_pr2_netlify_ci() {
-    setup_env(vec![("NETLIFY_BUILD_BASE", "")]);
+    let _lock = setup_env(vec![("NETLIFY_BUILD_BASE", "")]);
 
     let info = get();
 
@@ -729,7 +667,7 @@ fn get_pr2_netlify_ci() {
 
 #[test]
 fn get_no_pr_nevercode_ci() {
-    setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "false")]);
+    let _lock = setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "false")]);
 
     let info = get();
 
@@ -741,7 +679,7 @@ fn get_no_pr_nevercode_ci() {
 
 #[test]
 fn get_pr_nevercode_ci() {
-    setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "123")]);
+    let _lock = setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "123")]);
 
     let info = get();
 
@@ -753,7 +691,7 @@ fn get_pr_nevercode_ci() {
 
 #[test]
 fn get_pr2_nevercode_ci() {
-    setup_env(vec![("NEVERCODE", "")]);
+    let _lock = setup_env(vec![("NEVERCODE", "")]);
 
     let info = get();
 
@@ -765,7 +703,7 @@ fn get_pr2_nevercode_ci() {
 
 #[test]
 fn get_no_pr_render_ci() {
-    setup_env(vec![("RENDER", "")]);
+    let _lock = setup_env(vec![("RENDER", "")]);
 
     let info = get();
 
@@ -777,7 +715,7 @@ fn get_no_pr_render_ci() {
 
 #[test]
 fn get_pr_render_ci() {
-    setup_env(vec![("RENDER", ""), ("IS_PULL_REQUEST", "true")]);
+    let _lock = setup_env(vec![("RENDER", ""), ("IS_PULL_REQUEST", "true")]);
 
     let info = get();
 
@@ -789,7 +727,7 @@ fn get_pr_render_ci() {
 
 #[test]
 fn get_no_pr_sail_ci() {
-    setup_env(vec![("SAILCI", "")]);
+    let _lock = setup_env(vec![("SAILCI", "")]);
 
     let info = get();
 
@@ -801,7 +739,7 @@ fn get_no_pr_sail_ci() {
 
 #[test]
 fn get_pr_sail_ci() {
-    setup_env(vec![("SAILCI", ""), ("SAIL_PULL_REQUEST_NUMBER", "")]);
+    let _lock = setup_env(vec![("SAILCI", ""), ("SAIL_PULL_REQUEST_NUMBER", "")]);
 
     let info = get();
 
@@ -813,7 +751,7 @@ fn get_pr_sail_ci() {
 
 #[test]
 fn get_no_pr_semaphore() {
-    setup_env(vec![("SEMAPHORE", "")]);
+    let _lock = setup_env(vec![("SEMAPHORE", "")]);
 
     let info = get();
 
@@ -825,7 +763,7 @@ fn get_no_pr_semaphore() {
 
 #[test]
 fn get_pr_semaphore() {
-    setup_env(vec![("SEMAPHORE", ""), ("PULL_REQUEST_NUMBER", "")]);
+    let _lock = setup_env(vec![("SEMAPHORE", ""), ("PULL_REQUEST_NUMBER", "")]);
 
     let info = get();
 
@@ -837,7 +775,7 @@ fn get_pr_semaphore() {
 
 #[test]
 fn get_no_pr_shippable() {
-    setup_env(vec![("SHIPPABLE", "")]);
+    let _lock = setup_env(vec![("SHIPPABLE", "")]);
 
     let info = get();
 
@@ -849,7 +787,7 @@ fn get_no_pr_shippable() {
 
 #[test]
 fn get_no_pr2_shippable() {
-    setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "123")]);
+    let _lock = setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "123")]);
 
     let info = get();
 
@@ -861,7 +799,7 @@ fn get_no_pr2_shippable() {
 
 #[test]
 fn get_pr_shippable() {
-    setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "true")]);
+    let _lock = setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "true")]);
 
     let info = get();
 
@@ -873,7 +811,7 @@ fn get_pr_shippable() {
 
 #[test]
 fn get_no_pr_solano_ci() {
-    setup_env(vec![("TDDIUM", "")]);
+    let _lock = setup_env(vec![("TDDIUM", "")]);
 
     let info = get();
 
@@ -885,7 +823,7 @@ fn get_no_pr_solano_ci() {
 
 #[test]
 fn get_pr_solano_ci() {
-    setup_env(vec![("TDDIUM", ""), ("TDDIUM_PR_ID", "")]);
+    let _lock = setup_env(vec![("TDDIUM", ""), ("TDDIUM_PR_ID", "")]);
 
     let info = get();
 
@@ -897,7 +835,7 @@ fn get_pr_solano_ci() {
 
 #[test]
 fn get_strider_cd() {
-    setup_env(vec![("STRIDER", "")]);
+    let _lock = setup_env(vec![("STRIDER", "")]);
 
     let info = get();
 
@@ -909,7 +847,7 @@ fn get_strider_cd() {
 
 #[test]
 fn get_taskcluster() {
-    setup_env(vec![("TASK_ID", ""), ("RUN_ID", "")]);
+    let _lock = setup_env(vec![("TASK_ID", ""), ("RUN_ID", "")]);
 
     let info = get();
 
@@ -921,7 +859,7 @@ fn get_taskcluster() {
 
 #[test]
 fn get_partial1_taskcluster() {
-    setup_env(vec![("TASK_ID", "")]);
+    let _lock = setup_env(vec![("TASK_ID", "")]);
 
     let info = get();
 
@@ -932,7 +870,7 @@ fn get_partial1_taskcluster() {
 
 #[test]
 fn get_partial2_taskcluster() {
-    setup_env(vec![("RUN_ID", "")]);
+    let _lock = setup_env(vec![("RUN_ID", "")]);
 
     let info = get();
 
@@ -943,7 +881,7 @@ fn get_partial2_taskcluster() {
 
 #[test]
 fn get_teamcity() {
-    setup_env(vec![("TEAMCITY_VERSION", "")]);
+    let _lock = setup_env(vec![("TEAMCITY_VERSION", "")]);
 
     let info = get();
 
@@ -955,7 +893,7 @@ fn get_teamcity() {
 
 #[test]
 fn get_no_pr_travis() {
-    setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "false")]);
+    let _lock = setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "false")]);
 
     let info = get();
 
@@ -967,7 +905,7 @@ fn get_no_pr_travis() {
 
 #[test]
 fn get_pr_travis() {
-    setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "123")]);
+    let _lock = setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "123")]);
 
     let info = get();
 
@@ -979,7 +917,7 @@ fn get_pr_travis() {
 
 #[test]
 fn get_pr2_travis() {
-    setup_env(vec![("TRAVIS", "")]);
+    let _lock = setup_env(vec![("TRAVIS", "")]);
 
     let info = get();
 
@@ -991,7 +929,7 @@ fn get_pr2_travis() {
 
 #[test]
 fn get_ziet_now() {
-    setup_env(vec![("NOW_BUILDER", "")]);
+    let _lock = setup_env(vec![("NOW_BUILDER", "")]);
 
     let info = get();
 
@@ -1003,7 +941,7 @@ fn get_ziet_now() {
 
 #[test]
 fn get_ci_unknown_1() {
-    setup_env(vec![("CI", "")]);
+    let _lock = setup_env(vec![("CI", "")]);
 
     let info = get();
 
@@ -1015,7 +953,7 @@ fn get_ci_unknown_1() {
 
 #[test]
 fn get_ci_unknown_2() {
-    setup_env(vec![("CONTINUOUS_INTEGRATION", "")]);
+    let _lock = setup_env(vec![("CONTINUOUS_INTEGRATION", "")]);
 
     let info = get();
 
@@ -1027,7 +965,7 @@ fn get_ci_unknown_2() {
 
 #[test]
 fn get_ci_unknown_3() {
-    setup_env(vec![("BUILD_NUMBER", "")]);
+    let _lock = setup_env(vec![("BUILD_NUMBER", "")]);
 
     let info = get();
 
@@ -1039,7 +977,7 @@ fn get_ci_unknown_3() {
 
 #[test]
 fn get_ci_unknown_4() {
-    setup_env(vec![("RUN_ID", "")]);
+    let _lock = setup_env(vec![("RUN_ID", "")]);
 
     let info = get();
 
