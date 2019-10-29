@@ -1,6 +1,6 @@
 use super::*;
 
-use crate::test_env::setup_env;
+use crate::test_env::{get_with_env,setup_env};
 
 use std::env;
 
@@ -146,26 +146,22 @@ fn validate_contains_not_exists() {
 
 #[test]
 fn is_ci_test() {
-    let _lock = setup_env(vec![]);
+    let lock = setup_env(vec![]);
     let info = get();
     let ci = is_ci();
-
+    drop(lock);
     assert_eq!(info.ci, ci);
 }
 
 #[test]
 fn get_test() {
-    let _lock = setup_env(vec![]);
-    let info = get();
-
+    let info = get_with_env(vec![]);
     assert_eq!(info.name.is_some(), info.vendor.is_some());
 }
 
 #[test]
 fn get_no_pr_appveyor() {
-    let _lock = setup_env(vec![("APPVEYOR", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("APPVEYOR", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -175,9 +171,7 @@ fn get_no_pr_appveyor() {
 
 #[test]
 fn get_pr_appveyor() {
-    let _lock = setup_env(vec![("APPVEYOR", ""), ("APPVEYOR_PULL_REQUEST_NUMBER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("APPVEYOR", ""), ("APPVEYOR_PULL_REQUEST_NUMBER", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -187,9 +181,7 @@ fn get_pr_appveyor() {
 
 #[test]
 fn get_no_pr_azure_piplines() {
-    let _lock = setup_env(vec![("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -199,12 +191,10 @@ fn get_no_pr_azure_piplines() {
 
 #[test]
 fn get_pr_azure_piplines() {
-    let _lock = setup_env(vec![
+    let info = get_with_env(vec![
         ("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", ""),
         ("SYSTEM_PULLREQUEST_PULLREQUESTID", ""),
     ]);
-
-    let info = get();
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -214,9 +204,7 @@ fn get_pr_azure_piplines() {
 
 #[test]
 fn get_bamboo() {
-    let _lock = setup_env(vec![("bamboo_planKey", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("bamboo_planKey", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -226,9 +214,7 @@ fn get_bamboo() {
 
 #[test]
 fn get_no_pr_bitbucket_piplines() {
-    let _lock = setup_env(vec![("BITBUCKET_COMMIT", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BITBUCKET_COMMIT", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -238,9 +224,7 @@ fn get_no_pr_bitbucket_piplines() {
 
 #[test]
 fn get_pr_bitbucket_piplines() {
-    let _lock = setup_env(vec![("BITBUCKET_COMMIT", ""), ("BITBUCKET_PR_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BITBUCKET_COMMIT", ""), ("BITBUCKET_PR_ID", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -250,21 +234,18 @@ fn get_pr_bitbucket_piplines() {
 
 #[test]
 fn get_no_pr_bitrise() {
-    let _lock = setup_env(vec![("BITRISE_IO", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BITRISE_IO", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Bitrise);
     assert_eq!(info.name.unwrap(), "Bitrise");
+
 }
 
 #[test]
 fn get_pr_bitrise() {
-    let _lock = setup_env(vec![("BITRISE_IO", ""), ("BITRISE_PULL_REQUEST", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BITRISE_IO", ""), ("BITRISE_PULL_REQUEST", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -274,9 +255,7 @@ fn get_pr_bitrise() {
 
 #[test]
 fn get_no_pr_buddy() {
-    let _lock = setup_env(vec![("BUDDY_WORKSPACE_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BUDDY_WORKSPACE_ID", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -286,12 +265,10 @@ fn get_no_pr_buddy() {
 
 #[test]
 fn get_pr_buddy() {
-    let _lock = setup_env(vec![
+    let info = get_with_env(vec![
         ("BUDDY_WORKSPACE_ID", ""),
         ("BUDDY_EXECUTION_PULL_REQUEST_ID", ""),
     ]);
-
-    let info = get();
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -301,9 +278,7 @@ fn get_pr_buddy() {
 
 #[test]
 fn get_no_pr_buildkite() {
-    let _lock = setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "false")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "false")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -313,9 +288,7 @@ fn get_no_pr_buildkite() {
 
 #[test]
 fn get_pr_buildkite() {
-    let _lock = setup_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "123")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BUILDKITE", ""), ("BUILDKITE_PULL_REQUEST", "123")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -325,9 +298,7 @@ fn get_pr_buildkite() {
 
 #[test]
 fn get_pr2_buildkite() {
-    let _lock = setup_env(vec![("BUILDKITE", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BUILDKITE", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -337,9 +308,7 @@ fn get_pr2_buildkite() {
 
 #[test]
 fn get_no_pr_circle_ci() {
-    let _lock = setup_env(vec![("CIRCLECI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CIRCLECI", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -349,9 +318,7 @@ fn get_no_pr_circle_ci() {
 
 #[test]
 fn get_pr_circle_ci() {
-    let _lock = setup_env(vec![("CIRCLECI", ""), ("CIRCLE_PULL_REQUEST", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CIRCLECI", ""), ("CIRCLE_PULL_REQUEST", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -361,9 +328,7 @@ fn get_pr_circle_ci() {
 
 #[test]
 fn get_no_pr_cirrus_ci() {
-    let _lock = setup_env(vec![("CIRRUS_CI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CIRRUS_CI", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -373,9 +338,7 @@ fn get_no_pr_cirrus_ci() {
 
 #[test]
 fn get_pr_cirrus_ci() {
-    let _lock = setup_env(vec![("CIRRUS_CI", ""), ("CIRRUS_PR", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CIRRUS_CI", ""), ("CIRRUS_PR", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -385,9 +348,7 @@ fn get_pr_cirrus_ci() {
 
 #[test]
 fn get_aws_codebuild() {
-    let _lock = setup_env(vec![("CODEBUILD_BUILD_ARN", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CODEBUILD_BUILD_ARN", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -397,9 +358,7 @@ fn get_aws_codebuild() {
 
 #[test]
 fn get_codeship() {
-    let _lock = setup_env(vec![("CI_NAME", "codeship")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CI_NAME", "codeship")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -409,9 +368,7 @@ fn get_codeship() {
 
 #[test]
 fn get_no_pr_drone() {
-    let _lock = setup_env(vec![("DRONE", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("DRONE", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -421,9 +378,7 @@ fn get_no_pr_drone() {
 
 #[test]
 fn get_no_pr2_drone() {
-    let _lock = setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "test")]);
-
-    let info = get();
+    let info = get_with_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "test")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -433,9 +388,7 @@ fn get_no_pr2_drone() {
 
 #[test]
 fn get_pr_drone() {
-    let _lock = setup_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "pull_request")]);
-
-    let info = get();
+    let info = get_with_env(vec![("DRONE", ""), ("DRONE_BUILD_EVENT", "pull_request")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -445,9 +398,7 @@ fn get_pr_drone() {
 
 #[test]
 fn get_dsari() {
-    let _lock = setup_env(vec![("DSARI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("DSARI", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -457,9 +408,7 @@ fn get_dsari() {
 
 #[test]
 fn get_no_pr_github_actions() {
-    let _lock = setup_env(vec![("GITHUB_ACTIONS", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("GITHUB_ACTIONS", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -469,9 +418,7 @@ fn get_no_pr_github_actions() {
 
 #[test]
 fn get_no_pr2_github_actions() {
-    let _lock = setup_env(vec![("GITHUB_ACTIONS", ""), ("GITHUB_EVENT_NAME", "test")]);
-
-    let info = get();
+    let info = get_with_env(vec![("GITHUB_ACTIONS", ""), ("GITHUB_EVENT_NAME", "test")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -481,12 +428,10 @@ fn get_no_pr2_github_actions() {
 
 #[test]
 fn get_pr_github_actions() {
-    let _lock = setup_env(vec![
+    let info = get_with_env(vec![
         ("GITHUB_ACTIONS", ""),
         ("GITHUB_EVENT_NAME", "pull_request"),
     ]);
-
-    let info = get();
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -496,9 +441,7 @@ fn get_pr_github_actions() {
 
 #[test]
 fn get_gitlab_ci() {
-    let _lock = setup_env(vec![("GITLAB_CI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("GITLAB_CI", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -508,9 +451,7 @@ fn get_gitlab_ci() {
 
 #[test]
 fn get_gocd() {
-    let _lock = setup_env(vec![("GO_PIPELINE_LABEL", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("GO_PIPELINE_LABEL", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -520,9 +461,7 @@ fn get_gocd() {
 
 #[test]
 fn get_heroku() {
-    let _lock = setup_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -532,18 +471,14 @@ fn get_heroku() {
 
 #[test]
 fn get_heroku_not_ci() {
-    let _lock = setup_env(vec![("NODE", "test")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NODE", "test")]);
 
     assert!(!info.ci);
 }
 
 #[test]
 fn get_hudson() {
-    let _lock = setup_env(vec![("HUDSON_URL", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("HUDSON_URL", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -553,9 +488,7 @@ fn get_hudson() {
 
 #[test]
 fn get_no_pr_jenkins() {
-    let _lock = setup_env(vec![("JENKINS_URL", ""), ("BUILD_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("JENKINS_URL", ""), ("BUILD_ID", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -565,9 +498,7 @@ fn get_no_pr_jenkins() {
 
 #[test]
 fn get_partial1_jenkins() {
-    let _lock = setup_env(vec![("JENKINS_URL", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("JENKINS_URL", "")]);
 
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
@@ -576,9 +507,7 @@ fn get_partial1_jenkins() {
 
 #[test]
 fn get_partial2_jenkins() {
-    let _lock = setup_env(vec![("BUILD_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BUILD_ID", "")]);
 
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
@@ -587,13 +516,11 @@ fn get_partial2_jenkins() {
 
 #[test]
 fn get_pr_jenkins() {
-    let _lock = setup_env(vec![
+    let info = get_with_env(vec![
         ("JENKINS_URL", ""),
         ("BUILD_ID", ""),
         ("ghprbPullId", ""),
     ]);
-
-    let info = get();
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -603,13 +530,11 @@ fn get_pr_jenkins() {
 
 #[test]
 fn get_pr2_jenkins() {
-    let _lock = setup_env(vec![
+    let info = get_with_env(vec![
         ("JENKINS_URL", ""),
         ("BUILD_ID", ""),
         ("CHANGE_ID", ""),
     ]);
-
-    let info = get();
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -619,9 +544,7 @@ fn get_pr2_jenkins() {
 
 #[test]
 fn get_magnum_ci() {
-    let _lock = setup_env(vec![("MAGNUM", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("MAGNUM", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -631,9 +554,7 @@ fn get_magnum_ci() {
 
 #[test]
 fn get_no_pr_netlify_ci() {
-    let _lock = setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "false")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "false")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -643,9 +564,7 @@ fn get_no_pr_netlify_ci() {
 
 #[test]
 fn get_pr_netlify_ci() {
-    let _lock = setup_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "123")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "123")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -655,9 +574,7 @@ fn get_pr_netlify_ci() {
 
 #[test]
 fn get_pr2_netlify_ci() {
-    let _lock = setup_env(vec![("NETLIFY_BUILD_BASE", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -667,9 +584,7 @@ fn get_pr2_netlify_ci() {
 
 #[test]
 fn get_no_pr_nevercode_ci() {
-    let _lock = setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "false")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "false")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -679,9 +594,7 @@ fn get_no_pr_nevercode_ci() {
 
 #[test]
 fn get_pr_nevercode_ci() {
-    let _lock = setup_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "123")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "123")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -691,9 +604,7 @@ fn get_pr_nevercode_ci() {
 
 #[test]
 fn get_pr2_nevercode_ci() {
-    let _lock = setup_env(vec![("NEVERCODE", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NEVERCODE", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -703,9 +614,7 @@ fn get_pr2_nevercode_ci() {
 
 #[test]
 fn get_no_pr_render_ci() {
-    let _lock = setup_env(vec![("RENDER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("RENDER", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -715,9 +624,7 @@ fn get_no_pr_render_ci() {
 
 #[test]
 fn get_pr_render_ci() {
-    let _lock = setup_env(vec![("RENDER", ""), ("IS_PULL_REQUEST", "true")]);
-
-    let info = get();
+    let info = get_with_env(vec![("RENDER", ""), ("IS_PULL_REQUEST", "true")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -727,9 +634,7 @@ fn get_pr_render_ci() {
 
 #[test]
 fn get_no_pr_sail_ci() {
-    let _lock = setup_env(vec![("SAILCI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SAILCI", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -739,9 +644,7 @@ fn get_no_pr_sail_ci() {
 
 #[test]
 fn get_pr_sail_ci() {
-    let _lock = setup_env(vec![("SAILCI", ""), ("SAIL_PULL_REQUEST_NUMBER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SAILCI", ""), ("SAIL_PULL_REQUEST_NUMBER", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -751,9 +654,7 @@ fn get_pr_sail_ci() {
 
 #[test]
 fn get_no_pr_semaphore() {
-    let _lock = setup_env(vec![("SEMAPHORE", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SEMAPHORE", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -763,9 +664,7 @@ fn get_no_pr_semaphore() {
 
 #[test]
 fn get_pr_semaphore() {
-    let _lock = setup_env(vec![("SEMAPHORE", ""), ("PULL_REQUEST_NUMBER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SEMAPHORE", ""), ("PULL_REQUEST_NUMBER", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -775,9 +674,7 @@ fn get_pr_semaphore() {
 
 #[test]
 fn get_no_pr_shippable() {
-    let _lock = setup_env(vec![("SHIPPABLE", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SHIPPABLE", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -787,9 +684,7 @@ fn get_no_pr_shippable() {
 
 #[test]
 fn get_no_pr2_shippable() {
-    let _lock = setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "123")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "123")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -799,9 +694,7 @@ fn get_no_pr2_shippable() {
 
 #[test]
 fn get_pr_shippable() {
-    let _lock = setup_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "true")]);
-
-    let info = get();
+    let info = get_with_env(vec![("SHIPPABLE", ""), ("IS_PULL_REQUEST", "true")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -811,9 +704,7 @@ fn get_pr_shippable() {
 
 #[test]
 fn get_no_pr_solano_ci() {
-    let _lock = setup_env(vec![("TDDIUM", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TDDIUM", "")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -823,9 +714,7 @@ fn get_no_pr_solano_ci() {
 
 #[test]
 fn get_pr_solano_ci() {
-    let _lock = setup_env(vec![("TDDIUM", ""), ("TDDIUM_PR_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TDDIUM", ""), ("TDDIUM_PR_ID", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -835,9 +724,7 @@ fn get_pr_solano_ci() {
 
 #[test]
 fn get_strider_cd() {
-    let _lock = setup_env(vec![("STRIDER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("STRIDER", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -847,9 +734,7 @@ fn get_strider_cd() {
 
 #[test]
 fn get_taskcluster() {
-    let _lock = setup_env(vec![("TASK_ID", ""), ("RUN_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TASK_ID", ""), ("RUN_ID", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -859,9 +744,7 @@ fn get_taskcluster() {
 
 #[test]
 fn get_partial1_taskcluster() {
-    let _lock = setup_env(vec![("TASK_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TASK_ID", "")]);
 
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
@@ -870,9 +753,7 @@ fn get_partial1_taskcluster() {
 
 #[test]
 fn get_partial2_taskcluster() {
-    let _lock = setup_env(vec![("RUN_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("RUN_ID", "")]);
 
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
@@ -881,9 +762,7 @@ fn get_partial2_taskcluster() {
 
 #[test]
 fn get_teamcity() {
-    let _lock = setup_env(vec![("TEAMCITY_VERSION", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TEAMCITY_VERSION", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -893,9 +772,7 @@ fn get_teamcity() {
 
 #[test]
 fn get_no_pr_travis() {
-    let _lock = setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "false")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "false")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
@@ -905,9 +782,7 @@ fn get_no_pr_travis() {
 
 #[test]
 fn get_pr_travis() {
-    let _lock = setup_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "123")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "123")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -917,9 +792,7 @@ fn get_pr_travis() {
 
 #[test]
 fn get_pr2_travis() {
-    let _lock = setup_env(vec![("TRAVIS", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("TRAVIS", "")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
@@ -929,9 +802,7 @@ fn get_pr2_travis() {
 
 #[test]
 fn get_ziet_now() {
-    let _lock = setup_env(vec![("NOW_BUILDER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("NOW_BUILDER", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -941,9 +812,7 @@ fn get_ziet_now() {
 
 #[test]
 fn get_ci_unknown_1() {
-    let _lock = setup_env(vec![("CI", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CI", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -953,9 +822,7 @@ fn get_ci_unknown_1() {
 
 #[test]
 fn get_ci_unknown_2() {
-    let _lock = setup_env(vec![("CONTINUOUS_INTEGRATION", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("CONTINUOUS_INTEGRATION", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -965,9 +832,7 @@ fn get_ci_unknown_2() {
 
 #[test]
 fn get_ci_unknown_3() {
-    let _lock = setup_env(vec![("BUILD_NUMBER", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("BUILD_NUMBER", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
@@ -977,9 +842,7 @@ fn get_ci_unknown_3() {
 
 #[test]
 fn get_ci_unknown_4() {
-    let _lock = setup_env(vec![("RUN_ID", "")]);
-
-    let info = get();
+    let info = get_with_env(vec![("RUN_ID", "")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());

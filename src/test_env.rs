@@ -11,6 +11,11 @@ lazy_static! {
     };
 }
 
+pub (crate) fn get_with_env(vars: Vec<(&str,&str)>) -> crate::CiInfo {
+    let _lock = setup_env(vars);
+    crate::get()
+}
+
 #[inline(always)]
 pub (crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInner>  {
     let lock = ENVLOCK.lock().unwrap();
