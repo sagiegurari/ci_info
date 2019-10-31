@@ -1,6 +1,6 @@
 use super::*;
 
-use crate::test_env::{get_with_env,setup_env};
+use crate::test_env::{get_with_env, setup_env};
 
 use std::env;
 
@@ -240,7 +240,6 @@ fn get_no_pr_bitrise() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Bitrise);
     assert_eq!(info.name.unwrap(), "Bitrise");
-
 }
 
 #[test]

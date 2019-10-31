@@ -1,23 +1,21 @@
-use std::sync::{Mutex,MutexGuard};
+use envmnt;
 use lazy_static::lazy_static;
 use std::env;
-use envmnt;
+use std::sync::{Mutex, MutexGuard};
 
-pub (crate) struct MutexInner;
+pub(crate) struct MutexInner;
 
 lazy_static! {
-    pub(crate) static ref ENVLOCK: Mutex<MutexInner> = {
-        Mutex::new(MutexInner)
-    };
+    pub(crate) static ref ENVLOCK: Mutex<MutexInner> = { Mutex::new(MutexInner) };
 }
 
-pub (crate) fn get_with_env(vars: Vec<(&str,&str)>) -> crate::CiInfo {
+pub(crate) fn get_with_env(vars: Vec<(&str, &str)>) -> crate::CiInfo {
     let _lock = setup_env(vars);
     crate::get()
 }
 
 #[inline(always)]
-pub (crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInner>  {
+pub(crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInner> {
     let lock = ENVLOCK.lock().unwrap();
     envmnt::remove_all(&vec![
         "APPVEYOR",
