@@ -161,38 +161,52 @@ fn get_test() {
 
 #[test]
 fn get_no_pr_appveyor() {
-    let info = get_with_env(vec![("APPVEYOR", "")]);
+    let info = get_with_env(vec![
+        ("APPVEYOR", ""),
+        ("APPVEYOR_REPO_BRANCH", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::AppVeyor);
     assert_eq!(info.name.unwrap(), "AppVeyor");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_appveyor() {
-    let info = get_with_env(vec![("APPVEYOR", ""), ("APPVEYOR_PULL_REQUEST_NUMBER", "")]);
+    let info = get_with_env(vec![
+        ("APPVEYOR", ""),
+        ("APPVEYOR_REPO_BRANCH", "test_branch"),
+        ("APPVEYOR_PULL_REQUEST_NUMBER", ""),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::AppVeyor);
     assert_eq!(info.name.unwrap(), "AppVeyor");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_no_pr_azure_piplines() {
-    let info = get_with_env(vec![("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "")]);
+    let info = get_with_env(vec![
+        ("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", ""),
+        ("BUILD_SOURCEBRANCHNAME", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::AzurePipelines);
     assert_eq!(info.name.unwrap(), "Azure Pipelines");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_azure_piplines() {
     let info = get_with_env(vec![
         ("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", ""),
+        ("BUILD_SOURCEBRANCHNAME", "test_branch"),
         ("SYSTEM_PULLREQUEST_PULLREQUESTID", ""),
     ]);
 
@@ -200,6 +214,7 @@ fn get_pr_azure_piplines() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::AzurePipelines);
     assert_eq!(info.name.unwrap(), "Azure Pipelines");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -210,62 +225,86 @@ fn get_bamboo() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::Bamboo);
     assert_eq!(info.name.unwrap(), "Bamboo");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_no_pr_bitbucket_piplines() {
-    let info = get_with_env(vec![("BITBUCKET_COMMIT", "")]);
+    let info = get_with_env(vec![
+        ("BITBUCKET_COMMIT", ""),
+        ("BITBUCKET_BRANCH", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::BitbucketPipelines);
     assert_eq!(info.name.unwrap(), "Bitbucket Pipelines");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_bitbucket_piplines() {
-    let info = get_with_env(vec![("BITBUCKET_COMMIT", ""), ("BITBUCKET_PR_ID", "")]);
+    let info = get_with_env(vec![
+        ("BITBUCKET_COMMIT", ""),
+        ("BITBUCKET_BRANCH", "test_branch"),
+        ("BITBUCKET_PR_ID", ""),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::BitbucketPipelines);
     assert_eq!(info.name.unwrap(), "Bitbucket Pipelines");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_no_pr_bitrise() {
-    let info = get_with_env(vec![("BITRISE_IO", "")]);
+    let info = get_with_env(vec![
+        ("BITRISE_IO", ""),
+        ("BITRISE_GIT_BRANCH", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Bitrise);
     assert_eq!(info.name.unwrap(), "Bitrise");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_bitrise() {
-    let info = get_with_env(vec![("BITRISE_IO", ""), ("BITRISE_PULL_REQUEST", "")]);
+    let info = get_with_env(vec![
+        ("BITRISE_IO", ""),
+        ("BITRISE_GIT_BRANCH", "test_branch"),
+        ("BITRISE_PULL_REQUEST", ""),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Bitrise);
     assert_eq!(info.name.unwrap(), "Bitrise");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_no_pr_buddy() {
-    let info = get_with_env(vec![("BUDDY_WORKSPACE_ID", "")]);
+    let info = get_with_env(vec![
+        ("BUDDY_WORKSPACE_ID", ""),
+        ("BUDDY_EXECUTION_BRANCH", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Buddy);
     assert_eq!(info.name.unwrap(), "Buddy");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_buddy() {
     let info = get_with_env(vec![
         ("BUDDY_WORKSPACE_ID", ""),
+        ("BUDDY_EXECUTION_BRANCH", "test_branch"),
         ("BUDDY_EXECUTION_PULL_REQUEST_ID", ""),
     ]);
 
@@ -273,6 +312,7 @@ fn get_pr_buddy() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Buddy);
     assert_eq!(info.name.unwrap(), "Buddy");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -283,6 +323,7 @@ fn get_no_pr_buildkite() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Buildkite);
     assert_eq!(info.name.unwrap(), "Buildkite");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -293,6 +334,7 @@ fn get_pr_buildkite() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Buildkite);
     assert_eq!(info.name.unwrap(), "Buildkite");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -303,46 +345,59 @@ fn get_pr2_buildkite() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Buildkite);
     assert_eq!(info.name.unwrap(), "Buildkite");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_no_pr_circle_ci() {
-    let info = get_with_env(vec![("CIRCLECI", "")]);
+    let info = get_with_env(vec![("CIRCLECI", ""), ("CIRCLE_BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::CircleCI);
     assert_eq!(info.name.unwrap(), "CircleCI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_circle_ci() {
-    let info = get_with_env(vec![("CIRCLECI", ""), ("CIRCLE_PULL_REQUEST", "")]);
+    let info = get_with_env(vec![
+        ("CIRCLECI", ""),
+        ("CIRCLE_BRANCH", "test_branch"),
+        ("CIRCLE_PULL_REQUEST", ""),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::CircleCI);
     assert_eq!(info.name.unwrap(), "CircleCI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_no_pr_cirrus_ci() {
-    let info = get_with_env(vec![("CIRRUS_CI", "")]);
+    let info = get_with_env(vec![("CIRRUS_CI", ""), ("CIRRUS_BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::CirrusCI);
     assert_eq!(info.name.unwrap(), "Cirrus CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_cirrus_ci() {
-    let info = get_with_env(vec![("CIRRUS_CI", ""), ("CIRRUS_PR", "")]);
+    let info = get_with_env(vec![
+        ("CIRRUS_CI", ""),
+        ("CIRRUS_BRANCH", "test_branch"),
+        ("CIRRUS_PR", ""),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::CirrusCI);
     assert_eq!(info.name.unwrap(), "Cirrus CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -353,16 +408,18 @@ fn get_aws_codebuild() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::AWSCodeBuild);
     assert_eq!(info.name.unwrap(), "AWS CodeBuild");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_codeship() {
-    let info = get_with_env(vec![("CI_NAME", "codeship")]);
+    let info = get_with_env(vec![("CI_NAME", "codeship"), ("CI_BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::Codeship);
     assert_eq!(info.name.unwrap(), "Codeship");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -373,6 +430,7 @@ fn get_no_pr_drone() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Drone);
     assert_eq!(info.name.unwrap(), "Drone");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -383,6 +441,7 @@ fn get_no_pr2_drone() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Drone);
     assert_eq!(info.name.unwrap(), "Drone");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -393,6 +452,7 @@ fn get_pr_drone() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Drone);
     assert_eq!(info.name.unwrap(), "Drone");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -403,6 +463,7 @@ fn get_dsari() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::DSARI);
     assert_eq!(info.name.unwrap(), "dsari");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -413,6 +474,7 @@ fn get_no_pr_github_actions() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
     assert_eq!(info.name.unwrap(), "GitHub Actions");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -423,6 +485,7 @@ fn get_no_pr2_github_actions() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
     assert_eq!(info.name.unwrap(), "GitHub Actions");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -436,16 +499,21 @@ fn get_pr_github_actions() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::GitHubActions);
     assert_eq!(info.name.unwrap(), "GitHub Actions");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_gitlab_ci() {
-    let info = get_with_env(vec![("GITLAB_CI", "")]);
+    let info = get_with_env(vec![
+        ("GITLAB_CI", ""),
+        ("CI_COMMIT_REF_NAME", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::GitLabCI);
     assert_eq!(info.name.unwrap(), "GitLab CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -456,16 +524,21 @@ fn get_gocd() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::GoCD);
     assert_eq!(info.name.unwrap(), "GoCD");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_heroku() {
-    let info = get_with_env(vec![("NODE", "/app/.heroku/node/bin/node")]);
+    let info = get_with_env(vec![
+        ("NODE", "/app/.heroku/node/bin/node"),
+        ("HEROKU_TEST_RUN_BRANCH", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::Heroku);
     assert_eq!(info.name.unwrap(), "Heroku");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -477,22 +550,28 @@ fn get_heroku_not_ci() {
 
 #[test]
 fn get_hudson() {
-    let info = get_with_env(vec![("HUDSON_URL", "")]);
+    let info = get_with_env(vec![("HUDSON_URL", ""), ("BRANCH_NAME", "test_branch")]);
 
     assert!(info.ci);
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::Hudson);
     assert_eq!(info.name.unwrap(), "Hudson");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_no_pr_jenkins() {
-    let info = get_with_env(vec![("JENKINS_URL", ""), ("BUILD_ID", "")]);
+    let info = get_with_env(vec![
+        ("JENKINS_URL", ""),
+        ("BRANCH_NAME", "test_branch"),
+        ("BUILD_ID", ""),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Jenkins);
     assert_eq!(info.name.unwrap(), "Jenkins");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -502,6 +581,7 @@ fn get_partial1_jenkins() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -511,6 +591,7 @@ fn get_partial2_jenkins() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -518,6 +599,7 @@ fn get_pr_jenkins() {
     let info = get_with_env(vec![
         ("JENKINS_URL", ""),
         ("BUILD_ID", ""),
+        ("BRANCH_NAME", "test_branch"),
         ("ghprbPullId", ""),
     ]);
 
@@ -525,6 +607,7 @@ fn get_pr_jenkins() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Jenkins);
     assert_eq!(info.name.unwrap(), "Jenkins");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -532,6 +615,7 @@ fn get_pr2_jenkins() {
     let info = get_with_env(vec![
         ("JENKINS_URL", ""),
         ("BUILD_ID", ""),
+        ("BRANCH_NAME", "test_branch"),
         ("CHANGE_ID", ""),
     ]);
 
@@ -539,6 +623,7 @@ fn get_pr2_jenkins() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Jenkins);
     assert_eq!(info.name.unwrap(), "Jenkins");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -549,66 +634,89 @@ fn get_magnum_ci() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::MagnumCI);
     assert_eq!(info.name.unwrap(), "Magnum CI");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_no_pr_netlify_ci() {
-    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "false")]);
+    let info = get_with_env(vec![
+        ("NETLIFY_BUILD_BASE", ""),
+        ("BRANCH", "test_branch"),
+        ("PULL_REQUEST", "false"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
     assert_eq!(info.name.unwrap(), "Netlify CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_netlify_ci() {
-    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", ""), ("PULL_REQUEST", "123")]);
+    let info = get_with_env(vec![
+        ("NETLIFY_BUILD_BASE", ""),
+        ("BRANCH", "test_branch"),
+        ("PULL_REQUEST", "123"),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
     assert_eq!(info.name.unwrap(), "Netlify CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr2_netlify_ci() {
-    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", "")]);
+    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", ""), ("BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::NetlifyCI);
     assert_eq!(info.name.unwrap(), "Netlify CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_no_pr_nevercode_ci() {
-    let info = get_with_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "false")]);
+    let info = get_with_env(vec![
+        ("NEVERCODE", ""),
+        ("NEVERCODE_BRANCH", "test_branch"),
+        ("NEVERCODE_PULL_REQUEST", "false"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
     assert_eq!(info.name.unwrap(), "Nevercode");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_nevercode_ci() {
-    let info = get_with_env(vec![("NEVERCODE", ""), ("NEVERCODE_PULL_REQUEST", "123")]);
+    let info = get_with_env(vec![
+        ("NEVERCODE", ""),
+        ("NEVERCODE_BRANCH", "test_branch"),
+        ("NEVERCODE_PULL_REQUEST", "123"),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
     assert_eq!(info.name.unwrap(), "Nevercode");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr2_nevercode_ci() {
-    let info = get_with_env(vec![("NEVERCODE", "")]);
+    let info = get_with_env(vec![("NEVERCODE", ""), ("NEVERCODE_BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Nevercode);
     assert_eq!(info.name.unwrap(), "Nevercode");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -619,6 +727,7 @@ fn get_no_pr_render_ci() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Render);
     assert_eq!(info.name.unwrap(), "Render");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -629,6 +738,7 @@ fn get_pr_render_ci() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Render);
     assert_eq!(info.name.unwrap(), "Render");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -639,6 +749,7 @@ fn get_no_pr_sail_ci() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::SailCI);
     assert_eq!(info.name.unwrap(), "Sail CI");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -649,26 +760,36 @@ fn get_pr_sail_ci() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::SailCI);
     assert_eq!(info.name.unwrap(), "Sail CI");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_no_pr_semaphore() {
-    let info = get_with_env(vec![("SEMAPHORE", "")]);
+    let info = get_with_env(vec![
+        ("SEMAPHORE", ""),
+        ("SEMAPHORE_GIT_BRANCH", "test_branch"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Semaphore);
     assert_eq!(info.name.unwrap(), "Semaphore");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_semaphore() {
-    let info = get_with_env(vec![("SEMAPHORE", ""), ("PULL_REQUEST_NUMBER", "")]);
+    let info = get_with_env(vec![
+        ("SEMAPHORE", ""),
+        ("SEMAPHORE_GIT_BRANCH", "test_branch"),
+        ("PULL_REQUEST_NUMBER", ""),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Semaphore);
     assert_eq!(info.name.unwrap(), "Semaphore");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -679,6 +800,7 @@ fn get_no_pr_shippable() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Shippable);
     assert_eq!(info.name.unwrap(), "Shippable");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -689,6 +811,7 @@ fn get_no_pr2_shippable() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Shippable);
     assert_eq!(info.name.unwrap(), "Shippable");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -699,6 +822,7 @@ fn get_pr_shippable() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Shippable);
     assert_eq!(info.name.unwrap(), "Shippable");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -709,6 +833,7 @@ fn get_no_pr_solano_ci() {
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::SolanoCI);
     assert_eq!(info.name.unwrap(), "Solano CI");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -719,6 +844,7 @@ fn get_pr_solano_ci() {
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::SolanoCI);
     assert_eq!(info.name.unwrap(), "Solano CI");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -729,6 +855,7 @@ fn get_strider_cd() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::StriderCD);
     assert_eq!(info.name.unwrap(), "Strider CD");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -739,6 +866,7 @@ fn get_taskcluster() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::TaskCluster);
     assert_eq!(info.name.unwrap(), "TaskCluster");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -748,6 +876,7 @@ fn get_partial1_taskcluster() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -757,6 +886,7 @@ fn get_partial2_taskcluster() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -767,36 +897,48 @@ fn get_teamcity() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::TeamCity);
     assert_eq!(info.name.unwrap(), "TeamCity");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
 fn get_no_pr_travis() {
-    let info = get_with_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "false")]);
+    let info = get_with_env(vec![
+        ("TRAVIS", ""),
+        ("TRAVIS_BRANCH", "test_branch"),
+        ("TRAVIS_PULL_REQUEST", "false"),
+    ]);
 
     assert!(info.ci);
     assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
     assert_eq!(info.name.unwrap(), "Travis CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr_travis() {
-    let info = get_with_env(vec![("TRAVIS", ""), ("TRAVIS_PULL_REQUEST", "123")]);
+    let info = get_with_env(vec![
+        ("TRAVIS", ""),
+        ("TRAVIS_BRANCH", "test_branch"),
+        ("TRAVIS_PULL_REQUEST", "123"),
+    ]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
     assert_eq!(info.name.unwrap(), "Travis CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
 fn get_pr2_travis() {
-    let info = get_with_env(vec![("TRAVIS", "")]);
+    let info = get_with_env(vec![("TRAVIS", ""), ("TRAVIS_BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
     assert_eq!(info.name.unwrap(), "Travis CI");
+    assert_eq!(info.branch_name.unwrap(), "test_branch");
 }
 
 #[test]
@@ -807,6 +949,7 @@ fn get_ziet_now() {
     assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::ZEITNow);
     assert_eq!(info.name.unwrap(), "ZEIT Now");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -817,6 +960,7 @@ fn get_ci_unknown_1() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -827,6 +971,7 @@ fn get_ci_unknown_2() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -837,6 +982,7 @@ fn get_ci_unknown_3() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -847,4 +993,5 @@ fn get_ci_unknown_4() {
     assert!(info.pr.is_none());
     assert!(info.vendor.is_none());
     assert!(info.name.is_none());
+    assert!(info.branch_name.is_none());
 }

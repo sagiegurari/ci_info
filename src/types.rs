@@ -104,6 +104,8 @@ pub(crate) struct VendorConfig {
     pub(crate) ci_env: EnvValue,
     /// PR env var name
     pub(crate) pr_env: Option<EnvValue>,
+    /// Branch name env var name
+    pub(crate) branch_name_env: Option<String>,
 }
 
 #[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
@@ -118,6 +120,8 @@ pub struct CiInfo {
     pub ci: bool,
     /// True if currently running a PR build, None if unknown
     pub pr: Option<bool>,
+    /// The branch name for the given build
+    pub branch_name: Option<String>,
 }
 
 impl CiInfo {
@@ -128,6 +132,7 @@ impl CiInfo {
             name: None,
             ci: false,
             pr: None,
+            branch_name: None,
         }
     }
 }

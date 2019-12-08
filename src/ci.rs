@@ -50,6 +50,19 @@ pub(crate) fn get() -> CiInfo {
                 None => None,
             };
 
+            info.branch_name = match vendor_config.branch_name_env {
+                Some(ref env_key) => {
+                    let value = envmnt::get_or(env_key, "");
+
+                    if value.len() > 0 {
+                        Some(value.to_string())
+                    } else {
+                        None
+                    }
+                }
+                None => None,
+            };
+
             break;
         }
     }

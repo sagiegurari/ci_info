@@ -15,4 +15,7 @@ fn main() {
     if info.pr.is_some() {
         println!("Is PR: {:#?}", info.pr.unwrap());
     }
+    if info.branch_name.is_some() {
+        println!("Branch Name: {:#?}", info.branch_name.unwrap());
+    }
 }

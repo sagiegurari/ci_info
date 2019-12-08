@@ -8,4 +8,5 @@ fn ci_info_new() {
     assert!(info.name.is_none());
     assert!(!info.ci);
     assert!(info.pr.is_none());
+    assert!(info.branch_name.is_none());
 }

@@ -75,6 +75,21 @@ pub(crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInn
         "CI",
         "CONTINUOUS_INTEGRATION",
         "BUILD_NUMBER",
+        "APPVEYOR_REPO_BRANCH",
+        "BUILD_SOURCEBRANCHNAME",
+        "BITBUCKET_BRANCH",
+        "BITRISE_GIT_BRANCH",
+        "BUDDY_EXECUTION_BRANCH",
+        "CIRCLE_BRANCH",
+        "CIRRUS_BRANCH",
+        "CI_BRANCH",
+        "CI_COMMIT_REF_NAME",
+        "HEROKU_TEST_RUN_BRANCH",
+        "BRANCH_NAME",
+        "BRANCH",
+        "NEVERCODE_BRANCH",
+        "SEMAPHORE_GIT_BRANCH",
+        "TRAVIS_BRANCH",
     ]);
 
     for env_var in vars {

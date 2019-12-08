@@ -11,7 +11,7 @@
 * [Installation](#installation)
 * [API Documentation](https://sagiegurari.github.io/ci_info/)
 * [Contributing](.github/CONTRIBUTING.md)
-* [Release History](#history)
+* [Release History](https://github.com/sagiegurari/ci_info/blob/master/CHANGELOG.md)
 * [License](#license)
 
 <a name="overview"></a>
@@ -41,6 +41,9 @@ fn main() {
     if info.pr.is_some() {
         println!("Is PR: {:#?}", info.pr.unwrap());
     }
+    if info.branch_name.is_some() {
+        println!("Branch Name: {:#?}", info.branch_name.unwrap());
+    }
 }
 ```
 
@@ -69,14 +72,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 <a name="history"></a>
 ## Release History
 
-| Date        | Version | Description |
-| ----------- | ------- | ----------- |
-| 2019-09-29  | v0.8.1  | Adding support for GitHub Actions, Heroku, Renderer and Now |
-| 2019-08-13  | v0.8.0  | Adding support for Nevercode |
-| 2019-05-08  | v0.5.0  | Use envmnt library for environment variables support |
-| 2019-03-13  | v0.4.0  | Added pr flag and vendor name |
-| 2018-12-10  | v0.3.0  | Added optional serde support |
-| 2017-10-10  | v0.1.0  | Initial release. |
+See [Changelog](https://github.com/sagiegurari/ci_info/blob/master/CHANGELOG.md)
 
 <a name="license"></a>
 ## License

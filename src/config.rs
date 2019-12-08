@@ -13,6 +13,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::AppVeyor,
         ci_env: EnvValue::Exists("APPVEYOR".to_string()),
         pr_env: Some(EnvValue::Exists("APPVEYOR_PULL_REQUEST_NUMBER".to_string())),
+        branch_name_env: Some("APPVEYOR_REPO_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -22,6 +23,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         pr_env: Some(EnvValue::Exists(
             "SYSTEM_PULLREQUEST_PULLREQUESTID".to_string(),
         )),
+        branch_name_env: Some("BUILD_SOURCEBRANCHNAME".to_string()),
     });
 
     config.push(VendorConfig {
@@ -29,6 +31,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::Bamboo,
         ci_env: EnvValue::Exists("bamboo_planKey".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -36,6 +39,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::BitbucketPipelines,
         ci_env: EnvValue::Exists("BITBUCKET_COMMIT".to_string()),
         pr_env: Some(EnvValue::Exists("BITBUCKET_PR_ID".to_string())),
+        branch_name_env: Some("BITBUCKET_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -43,6 +47,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::Bitrise,
         ci_env: EnvValue::Exists("BITRISE_IO".to_string()),
         pr_env: Some(EnvValue::Exists("BITRISE_PULL_REQUEST".to_string())),
+        branch_name_env: Some("BITRISE_GIT_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -52,6 +57,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         pr_env: Some(EnvValue::Exists(
             "BUDDY_EXECUTION_PULL_REQUEST_ID".to_string(),
         )),
+        branch_name_env: Some("BUDDY_EXECUTION_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -62,6 +68,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "BUILDKITE_PULL_REQUEST".to_string(),
             "false".to_string(),
         )),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -69,6 +76,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::CircleCI,
         ci_env: EnvValue::Exists("CIRCLECI".to_string()),
         pr_env: Some(EnvValue::Exists("CIRCLE_PULL_REQUEST".to_string())),
+        branch_name_env: Some("CIRCLE_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -76,6 +84,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::CirrusCI,
         ci_env: EnvValue::Exists("CIRRUS_CI".to_string()),
         pr_env: Some(EnvValue::Exists("CIRRUS_PR".to_string())),
+        branch_name_env: Some("CIRRUS_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -83,6 +92,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::AWSCodeBuild,
         ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -90,6 +100,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::Codeship,
         ci_env: EnvValue::Value("CI_NAME".to_string(), "codeship".to_string()),
         pr_env: None,
+        branch_name_env: Some("CI_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -100,6 +111,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "DRONE_BUILD_EVENT".to_string(),
             "pull_request".to_string(),
         )),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -107,6 +119,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::DSARI,
         ci_env: EnvValue::Exists("DSARI".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -117,6 +130,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "GITHUB_EVENT_NAME".to_string(),
             "pull_request".to_string(),
         )),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -124,6 +138,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::GitLabCI,
         ci_env: EnvValue::Exists("GITLAB_CI".to_string()),
         pr_env: None,
+        branch_name_env: Some("CI_COMMIT_REF_NAME".to_string()),
     });
 
     config.push(VendorConfig {
@@ -131,6 +146,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::GoCD,
         ci_env: EnvValue::Exists("GO_PIPELINE_LABEL".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -138,6 +154,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::Heroku,
         ci_env: EnvValue::Contains("NODE".to_string(), "heroku".to_string()),
         pr_env: None,
+        branch_name_env: Some("HEROKU_TEST_RUN_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -145,6 +162,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::Hudson,
         ci_env: EnvValue::Exists("HUDSON_URL".to_string()),
         pr_env: None,
+        branch_name_env: Some("BRANCH_NAME".to_string()),
     });
 
     config.push(VendorConfig {
@@ -155,6 +173,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "ghprbPullId".to_string(),
             "CHANGE_ID".to_string(),
         ])),
+        branch_name_env: Some("BRANCH_NAME".to_string()),
     });
 
     config.push(VendorConfig {
@@ -162,6 +181,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::MagnumCI,
         ci_env: EnvValue::Exists("MAGNUM".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -172,6 +192,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "PULL_REQUEST".to_string(),
             "false".to_string(),
         )),
+        branch_name_env: Some("BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -182,6 +203,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "NEVERCODE_PULL_REQUEST".to_string(),
             "false".to_string(),
         )),
+        branch_name_env: Some("NEVERCODE_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -192,6 +214,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "IS_PULL_REQUEST".to_string(),
             "true".to_string(),
         )),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -199,6 +222,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::SailCI,
         ci_env: EnvValue::Exists("SAILCI".to_string()),
         pr_env: Some(EnvValue::Exists("SAIL_PULL_REQUEST_NUMBER".to_string())),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -206,6 +230,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::Semaphore,
         ci_env: EnvValue::Exists("SEMAPHORE".to_string()),
         pr_env: Some(EnvValue::Exists("PULL_REQUEST_NUMBER".to_string())),
+        branch_name_env: Some("SEMAPHORE_GIT_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -216,6 +241,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "IS_PULL_REQUEST".to_string(),
             "true".to_string(),
         )),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -223,6 +249,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::SolanoCI,
         ci_env: EnvValue::Exists("TDDIUM".to_string()),
         pr_env: Some(EnvValue::Exists("TDDIUM_PR_ID".to_string())),
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -230,6 +257,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::StriderCD,
         ci_env: EnvValue::Exists("STRIDER".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -237,6 +265,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::TaskCluster,
         ci_env: EnvValue::AllExists(vec!["TASK_ID".to_string(), "RUN_ID".to_string()]),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -244,6 +273,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::TeamCity,
         ci_env: EnvValue::Exists("TEAMCITY_VERSION".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -254,6 +284,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "TRAVIS_PULL_REQUEST".to_string(),
             "false".to_string(),
         )),
+        branch_name_env: Some("TRAVIS_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {
@@ -261,6 +292,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         vendor: Vendor::ZEITNow,
         ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -273,6 +305,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
             "RUN_ID".to_string(),
         ]),
         pr_env: None,
+        branch_name_env: None,
     });
 
     config
