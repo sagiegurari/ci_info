@@ -131,6 +131,11 @@
 <span id="131">131</span>
 <span id="132">132</span>
 <span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # types</span>
 <span class="doccomment">//!</span>
@@ -238,6 +243,8 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>,
     <span class="doccomment">/// PR env var name</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">pr_env</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EnvValue</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Branch name env var name</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">branch_name_env</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -252,6 +259,8 @@
     <span class="kw">pub</span> <span class="ident">ci</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// True if currently running a PR build, None if unknown</span>
     <span class="kw">pub</span> <span class="ident">pr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The branch name for the given build</span>
+    <span class="kw">pub</span> <span class="ident">branch_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CiInfo</span> {
@@ -262,6 +271,7 @@
             <span class="ident">name</span>: <span class="prelude-val">None</span>,
             <span class="ident">ci</span>: <span class="bool-val">false</span>,
             <span class="ident">pr</span>: <span class="prelude-val">None</span>,
+            <span class="ident">branch_name</span>: <span class="prelude-val">None</span>,
         }
     }
 }

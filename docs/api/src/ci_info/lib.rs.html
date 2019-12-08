@@ -219,6 +219,14 @@
 <span id="219">219</span>
 <span id="220">220</span>
 <span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(
     <span class="ident">absolute_paths_not_starting_with_crate</span>,
@@ -320,7 +328,6 @@
     <span class="ident">warnings</span>,
     <span class="ident">renamed_and_removed_lints</span>
 )]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">feature</span>(<span class="ident">plugin</span>))]</span>
 
 <span class="doccomment">//! # ci_info</span>
 <span class="doccomment">//!</span>
@@ -346,6 +353,9 @@
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     if info.pr.is_some() {</span>
 <span class="doccomment">//!         println!(&quot;Is PR: {:#?}&quot;, info.pr.unwrap());</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//!     if info.branch_name.is_some() {</span>
+<span class="doccomment">//!         println!(&quot;Branch Name: {:#?}&quot;, info.branch_name.unwrap());</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
@@ -391,6 +401,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./lib_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">lib_test</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./test_env.rs&quot;</span>]</span>
+<span class="kw">mod</span> <span class="ident">test_env</span>;
 
 <span class="kw">mod</span> <span class="ident">ci</span>;
 <span class="kw">mod</span> <span class="ident">config</span>;
@@ -418,6 +431,9 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">///     if info.pr.is_some() {</span>
 <span class="doccomment">///         println!(&quot;Is PR: {:#?}&quot;, info.pr.unwrap());</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">///     if info.branch_name.is_some() {</span>
+<span class="doccomment">///         println!(&quot;Branch Name: {:#?}&quot;, info.branch_name.unwrap());</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>

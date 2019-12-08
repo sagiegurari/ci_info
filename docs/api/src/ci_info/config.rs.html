@@ -277,6 +277,39 @@
 <span id="277">277</span>
 <span id="278">278</span>
 <span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # config</span>
 <span class="doccomment">//!</span>
@@ -293,6 +326,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">AppVeyor</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;APPVEYOR&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;APPVEYOR_PULL_REQUEST_NUMBER&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;APPVEYOR_REPO_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -302,6 +336,7 @@
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(
             <span class="string">&quot;SYSTEM_PULLREQUEST_PULLREQUESTID&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BUILD_SOURCEBRANCHNAME&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -309,6 +344,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Bamboo</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;bamboo_planKey&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -316,6 +352,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">BitbucketPipelines</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;BITBUCKET_COMMIT&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;BITBUCKET_PR_ID&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BITBUCKET_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -323,6 +360,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Bitrise</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;BITRISE_IO&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;BITRISE_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BITRISE_GIT_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -332,6 +370,7 @@
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(
             <span class="string">&quot;BUDDY_EXECUTION_PULL_REQUEST_ID&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BUDDY_EXECUTION_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -342,6 +381,7 @@
             <span class="string">&quot;BUILDKITE_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;false&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -349,6 +389,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">CircleCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;CIRCLECI&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;CIRCLE_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;CIRCLE_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -356,6 +397,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">CirrusCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;CIRRUS_CI&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;CIRRUS_PR&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;CIRRUS_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -363,6 +405,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">AWSCodeBuild</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;CODEBUILD_BUILD_ARN&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -370,6 +413,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Codeship</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Value</span>(<span class="string">&quot;CI_NAME&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;codeship&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;CI_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -380,6 +424,7 @@
             <span class="string">&quot;DRONE_BUILD_EVENT&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;pull_request&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -387,6 +432,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">DSARI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;DSARI&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -397,6 +443,7 @@
             <span class="string">&quot;GITHUB_EVENT_NAME&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;pull_request&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -404,6 +451,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">GitLabCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;GITLAB_CI&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;CI_COMMIT_REF_NAME&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -411,6 +459,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">GoCD</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;GO_PIPELINE_LABEL&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -418,6 +467,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Heroku</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Contains</span>(<span class="string">&quot;NODE&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;heroku&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;HEROKU_TEST_RUN_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -425,6 +475,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Hudson</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;HUDSON_URL&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BRANCH_NAME&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -435,6 +486,7 @@
             <span class="string">&quot;ghprbPullId&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;CHANGE_ID&quot;</span>.<span class="ident">to_string</span>(),
         ])),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BRANCH_NAME&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -442,6 +494,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">MagnumCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;MAGNUM&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -452,6 +505,7 @@
             <span class="string">&quot;PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;false&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -462,6 +516,7 @@
             <span class="string">&quot;NEVERCODE_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;false&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;NEVERCODE_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -472,6 +527,7 @@
             <span class="string">&quot;IS_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;true&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -479,6 +535,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">SailCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;SAILCI&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;SAIL_PULL_REQUEST_NUMBER&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -486,6 +543,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Semaphore</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;SEMAPHORE&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;PULL_REQUEST_NUMBER&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;SEMAPHORE_GIT_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -496,6 +554,7 @@
             <span class="string">&quot;IS_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;true&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -503,6 +562,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">SolanoCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;TDDIUM&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;TDDIUM_PR_ID&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -510,6 +570,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">StriderCD</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;STRIDER&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -517,6 +578,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">TaskCluster</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">AllExists</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;TASK_ID&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;RUN_ID&quot;</span>.<span class="ident">to_string</span>()]),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -524,6 +586,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">TeamCity</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;TEAMCITY_VERSION&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -534,6 +597,7 @@
             <span class="string">&quot;TRAVIS_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;false&quot;</span>.<span class="ident">to_string</span>(),
         )),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;TRAVIS_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -541,6 +605,7 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">ZEITNow</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;NOW_BUILDER&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
@@ -553,6 +618,7 @@
             <span class="string">&quot;RUN_ID&quot;</span>.<span class="ident">to_string</span>(),
         ]),
         <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 
     <span class="ident">config</span>

@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.9.0
+### v0.9.0 (2019-12-08)
 
 * Added branch name support #11
 
