@@ -500,7 +500,7 @@
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
         <span class="ident">name</span>: <span class="string">&quot;Netlify CI&quot;</span>.<span class="ident">to_string</span>(),
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">NetlifyCI</span>,
-        <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;NETLIFY_BUILD_BASE&quot;</span>.<span class="ident">to_string</span>()),
+        <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Value</span>(<span class="string">&quot;NETLIFY&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;true&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">NotEqual</span>(
             <span class="string">&quot;PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;false&quot;</span>.<span class="ident">to_string</span>(),
