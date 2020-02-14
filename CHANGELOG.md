@@ -1,8 +1,8 @@
 ## CHANGELOG
 
-### v0.9.1 (2020-01-18)
+### v0.9.2 (2020-02-14)
 
-* Upgrade dependencies.
+* Update Netlify detection to use NETLIFY environment variable.
 
 ### v0.9.0 (2019-12-08)
 

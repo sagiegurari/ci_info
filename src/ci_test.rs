@@ -640,7 +640,7 @@ fn get_magnum_ci() {
 #[test]
 fn get_no_pr_netlify_ci() {
     let info = get_with_env(vec![
-        ("NETLIFY_BUILD_BASE", ""),
+        ("NETLIFY", "true"),
         ("BRANCH", "test_branch"),
         ("PULL_REQUEST", "false"),
     ]);
@@ -655,7 +655,7 @@ fn get_no_pr_netlify_ci() {
 #[test]
 fn get_pr_netlify_ci() {
     let info = get_with_env(vec![
-        ("NETLIFY_BUILD_BASE", ""),
+        ("NETLIFY", "true"),
         ("BRANCH", "test_branch"),
         ("PULL_REQUEST", "123"),
     ]);
@@ -669,7 +669,7 @@ fn get_pr_netlify_ci() {
 
 #[test]
 fn get_pr2_netlify_ci() {
-    let info = get_with_env(vec![("NETLIFY_BUILD_BASE", ""), ("BRANCH", "test_branch")]);
+    let info = get_with_env(vec![("NETLIFY", "true"), ("BRANCH", "test_branch")]);
 
     assert!(info.ci);
     assert!(info.pr.unwrap());

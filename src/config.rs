@@ -187,7 +187,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     config.push(VendorConfig {
         name: "Netlify CI".to_string(),
         vendor: Vendor::NetlifyCI,
-        ci_env: EnvValue::Exists("NETLIFY_BUILD_BASE".to_string()),
+        ci_env: EnvValue::Value("NETLIFY".to_string(), "true".to_string()),
         pr_env: Some(EnvValue::NotEqual(
             "PULL_REQUEST".to_string(),
             "false".to_string(),

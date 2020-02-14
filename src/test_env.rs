@@ -52,7 +52,7 @@ pub(crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInn
         "ghprbPullId",
         "CHANGE_ID",
         "MAGNUM",
-        "NETLIFY_BUILD_BASE",
+        "NETLIFY",
         "PULL_REQUEST",
         "NEVERCODE",
         "NEVERCODE_PULL_REQUEST",
