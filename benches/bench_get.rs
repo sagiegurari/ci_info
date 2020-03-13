@@ -1,7 +1,7 @@
 #![feature(test)]
-extern crate ci_info;
 extern crate test;
 
+use ci_info;
 use test::Bencher;
 
 #[bench]

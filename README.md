@@ -24,8 +24,6 @@ The code is based on the [ci-info](https://github.com/watson/ci-info) npm module
 Simply include the library and invoke the get function to pull all info as follows:
 
 ```rust
-extern crate ci_info;
-
 fn main() {
     // Just check if a CI environment is detected.
     let ci = ci_info::is_ci();

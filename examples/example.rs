@@ -1,4 +1,4 @@
-extern crate ci_info;
+use ci_info;
 
 fn main() {
     // Just check if a CI environment is detected.
