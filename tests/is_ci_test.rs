@@ -1,4 +1,4 @@
-extern crate ci_info;
+use ci_info;
 
 #[test]
 fn is_ci_test() {
