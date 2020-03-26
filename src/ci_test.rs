@@ -510,10 +510,24 @@ fn get_gitlab_ci() {
     ]);
 
     assert!(info.ci);
-    assert!(info.pr.is_none());
     assert_eq!(info.vendor.unwrap(), Vendor::GitLabCI);
     assert_eq!(info.name.unwrap(), "GitLab CI");
+    assert_eq!(info.pr.unwrap(), false);
     assert_eq!(info.branch_name.unwrap(), "test_branch");
+}
+
+#[test]
+fn get_pr_gitlab_ci() {
+    let info = get_with_env(vec![
+        ("GITLAB_CI", ""),
+        ("CI_MERGE_REQUEST_ID", "10"),
+    ]);
+
+    assert!(info.ci);
+    assert!(info.branch_name.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::GitLabCI);
+    assert_eq!(info.name.unwrap(), "GitLab CI");
+    assert_eq!(info.pr.unwrap(), true);
 }
 
 #[test]
