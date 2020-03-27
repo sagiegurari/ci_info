@@ -137,7 +137,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         name: "GitLab CI".to_string(),
         vendor: Vendor::GitLabCI,
         ci_env: EnvValue::Exists("GITLAB_CI".to_string()),
-        pr_env: None,
+        pr_env: Some(EnvValue::Exists("CI_MERGE_REQUEST_ID".to_string())),
         branch_name_env: Some("CI_COMMIT_REF_NAME".to_string()),
     });
 
