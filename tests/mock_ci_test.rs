@@ -20,4 +20,12 @@ fn mock_ci() {
     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
     assert_eq!(info.name.unwrap(), "Travis CI");
     assert_eq!(info.branch_name.unwrap(), "dev_branch");
+
+    // clear CI environment
+    mock_info = CiInfo::new();
+    ci_info::mock_ci(&mock_info);
+
+    let info = ci_info::get();
+
+    assert!(!info.ci);
 }
