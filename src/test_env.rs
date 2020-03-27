@@ -44,6 +44,7 @@ pub(crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInn
         "GITHUB_ACTIONS",
         "GITHUB_EVENT_NAME",
         "GITLAB_CI",
+        "CI_MERGE_REQUEST_ID",
         "GO_PIPELINE_LABEL",
         "NODE",
         "HUDSON_URL",
