@@ -450,7 +450,7 @@
         <span class="ident">name</span>: <span class="string">&quot;GitLab CI&quot;</span>.<span class="ident">to_string</span>(),
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">GitLabCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;GITLAB_CI&quot;</span>.<span class="ident">to_string</span>()),
-        <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;CI_MERGE_REQUEST_ID&quot;</span>.<span class="ident">to_string</span>())),
         <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;CI_COMMIT_REF_NAME&quot;</span>.<span class="ident">to_string</span>()),
     });
 

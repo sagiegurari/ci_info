@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.10 (2020-03-27)
+### v0.10.0 (2020-03-27)
 
 * Gitlab: Add pr detection #13 (thanks @mathstuf)
 * Ability to manually mock CI info via new mock_ci function #12

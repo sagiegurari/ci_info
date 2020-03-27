@@ -228,19 +228,103 @@
 <span id="228">228</span>
 <span id="229">229</span>
 <span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(
     <span class="ident">absolute_paths_not_starting_with_crate</span>,
     <span class="ident">ambiguous_associated_items</span>,
     <span class="ident">anonymous_parameters</span>,
+    <span class="ident">arithmetic_overflow</span>,
     <span class="ident">array_into_iter</span>,
     <span class="ident">bindings_with_variant_name</span>,
+    <span class="ident">coherence_leak_check</span>,
+    <span class="ident">conflicting_repr_hints</span>,
     <span class="ident">const_err</span>,
     <span class="ident">dead_code</span>,
     <span class="ident">deprecated</span>,
     <span class="ident">deprecated_in_future</span>,
     <span class="ident">ellipsis_inclusive_range_patterns</span>,
-    <span class="ident">exceeding_bitshifts</span>,
     <span class="ident">explicit_outlives_requirements</span>,
     <span class="ident">exported_private_dependencies</span>,
     <span class="ident">ill_formed_attribute_input</span>,
@@ -248,6 +332,7 @@
     <span class="ident">improper_ctypes</span>,
     <span class="ident">incomplete_features</span>,
     <span class="ident">indirect_structural_match</span>,
+    <span class="ident">inline_no_sanitize</span>,
     <span class="ident">invalid_type_param_default</span>,
     <span class="ident">invalid_value</span>,
     <span class="ident">irrefutable_let_patterns</span>,
@@ -276,7 +361,7 @@
     <span class="ident">private_in_public</span>,
     <span class="ident">proc_macro_derive_resolution_fallback</span>,
     <span class="ident">pub_use_of_private_extern_crate</span>,
-    <span class="ident">redundant_semicolon</span>,
+    <span class="ident">redundant_semicolons</span>,
     <span class="ident">safe_packed_borrows</span>,
     <span class="ident">soft_unstable</span>,
     <span class="ident">stable_features</span>,
@@ -286,6 +371,7 @@
     <span class="ident">type_alias_bounds</span>,
     <span class="ident">tyvar_behind_raw_pointer</span>,
     <span class="ident">uncommon_codepoints</span>,
+    <span class="ident">unconditional_panic</span>,
     <span class="ident">unconditional_recursion</span>,
     <span class="ident">unknown_crate_types</span>,
     <span class="ident">unnameable_test_items</span>,
@@ -340,14 +426,16 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Get CI environment information.</span>
+<span class="doccomment">//! ## Get CI environment information</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! extern crate ci_info;</span>
-<span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() {</span>
-<span class="doccomment">//!     let info = ci_info::get();</span>
+<span class="doccomment">//!     // Just check if a CI environment is detected.</span>
+<span class="doccomment">//!     let ci = ci_info::is_ci();</span>
+<span class="doccomment">//!     println!(&quot;Is CI: {}&quot;, ci);</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//!     // Get CI environment information</span>
+<span class="doccomment">//!     let info = ci_info::get();</span>
 <span class="doccomment">//!     println!(&quot;Is CI: {}&quot;, info.ci);</span>
 <span class="doccomment">//!     if info.vendor.is_some() {</span>
 <span class="doccomment">//!         println!(&quot;Vendor: {:#?}&quot;, info.vendor.unwrap());</span>
@@ -362,15 +450,47 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ## Check if a CI environment is detected.</span>
+<span class="doccomment">//! ## Check if a CI environment is detected</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! extern crate ci_info;</span>
-<span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() {</span>
 <span class="doccomment">//!     let ci = ci_info::is_ci();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;Is CI: {}&quot;, ci);</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Mocking CI environment</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use ci_info::types::{CiInfo, Vendor};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() {</span>
+<span class="doccomment">//!     // create the CI info manually</span>
+<span class="doccomment">//!     let mut mock_info = CiInfo::new();</span>
+<span class="doccomment">//!     mock_info.vendor = Some(Vendor::TravisCI);</span>
+<span class="doccomment">//!     mock_info.ci = true;</span>
+<span class="doccomment">//!     mock_info.pr = Some(true);</span>
+<span class="doccomment">//!     mock_info.branch_name = Some(&quot;dev_branch&quot;.to_string());</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     // mock environment</span>
+<span class="doccomment">//!     ci_info::mock_ci(&amp;mock_info);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let info = ci_info::get();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     assert!(info.ci);</span>
+<span class="doccomment">//!     assert!(info.pr.unwrap());</span>
+<span class="doccomment">//!     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);</span>
+<span class="doccomment">//!     assert_eq!(info.name.unwrap(), &quot;Travis CI&quot;);</span>
+<span class="doccomment">//!     assert_eq!(info.branch_name.unwrap(), &quot;dev_branch&quot;);</span>
+<span class="doccomment">//!     </span>
+<span class="doccomment">//!     // clear CI environment</span>
+<span class="doccomment">//!     mock_info = CiInfo::new();</span>
+<span class="doccomment">//!     ci_info::mock_ci(&amp;mock_info);</span>
+<span class="doccomment">//!     </span>
+<span class="doccomment">//!     let info = ci_info::get();</span>
+<span class="doccomment">//!     </span>
+<span class="doccomment">//!     assert!(!info.ci);</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -406,9 +526,16 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./test_env.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">test_env</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./vendors_test.rs&quot;</span>]</span>
+<span class="kw">mod</span> <span class="ident">vendors_test</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="ident">doc_comment</span>::<span class="macro">doctest</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>);
 
 <span class="kw">mod</span> <span class="ident">ci</span>;
 <span class="kw">mod</span> <span class="ident">config</span>;
+<span class="kw">mod</span> <span class="ident">mock</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::<span class="ident">CiInfo</span>;
@@ -418,18 +545,17 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// extern crate ci_info;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let info = ci_info::get();</span>
+<span class="doccomment">///     // Just check if a CI environment is detected.</span>
+<span class="doccomment">///     let ci = ci_info::is_ci();</span>
+<span class="doccomment">///     println!(&quot;Is CI: {}&quot;, ci);</span>
 <span class="doccomment">///</span>
+<span class="doccomment">///     // Get CI environment information</span>
+<span class="doccomment">///     let info = ci_info::get();</span>
 <span class="doccomment">///     println!(&quot;Is CI: {}&quot;, info.ci);</span>
-<span class="doccomment">///     if info.ci {</span>
-<span class="doccomment">///         println!(&quot;Vendor: {:#?}&quot;, info.vendor.unwrap());</span>
-<span class="doccomment">///     }</span>
 <span class="doccomment">///     if info.vendor.is_some() {</span>
 <span class="doccomment">///         println!(&quot;Vendor: {:#?}&quot;, info.vendor.unwrap());</span>
-<span class="doccomment">///        println!(&quot;Name: {:#?}&quot;, info.name.unwrap());</span>
+<span class="doccomment">///         println!(&quot;Name: {:#?}&quot;, info.name.unwrap());</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">///     if info.pr.is_some() {</span>
 <span class="doccomment">///         println!(&quot;Is PR: {:#?}&quot;, info.pr.unwrap());</span>
@@ -448,8 +574,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// extern crate ci_info;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
 <span class="doccomment">///     let ci = ci_info::is_ci();</span>
 <span class="doccomment">///</span>
@@ -458,6 +582,46 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_ci</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="ident">ci</span>::<span class="ident">is_ci</span>()
+}
+
+<span class="doccomment">/// This function will modify the current environment variables to mock the</span>
+<span class="doccomment">/// requested CI vendor.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use ci_info::types::{CiInfo, Vendor};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// fn main() {</span>
+<span class="doccomment">///     // create the CI info manually</span>
+<span class="doccomment">///     let mut mock_info = CiInfo::new();</span>
+<span class="doccomment">///     mock_info.vendor = Some(Vendor::TravisCI);</span>
+<span class="doccomment">///     mock_info.ci = true;</span>
+<span class="doccomment">///     mock_info.pr = Some(true);</span>
+<span class="doccomment">///     mock_info.branch_name = Some(&quot;dev_branch&quot;.to_string());</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     // mock environment</span>
+<span class="doccomment">///     ci_info::mock_ci(&amp;mock_info);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     let info = ci_info::get();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     assert!(info.ci);</span>
+<span class="doccomment">///     assert!(info.pr.unwrap());</span>
+<span class="doccomment">///     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);</span>
+<span class="doccomment">///     assert_eq!(info.name.unwrap(), &quot;Travis CI&quot;);</span>
+<span class="doccomment">///     assert_eq!(info.branch_name.unwrap(), &quot;dev_branch&quot;);</span>
+<span class="doccomment">///     </span>
+<span class="doccomment">///     // clear CI environment</span>
+<span class="doccomment">///     mock_info = CiInfo::new();</span>
+<span class="doccomment">///     ci_info::mock_ci(&amp;mock_info);</span>
+<span class="doccomment">///     </span>
+<span class="doccomment">///     let info = ci_info::get();</span>
+<span class="doccomment">///     </span>
+<span class="doccomment">///     assert!(!info.ci);</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mock_ci</span>(<span class="ident">info</span>: <span class="kw-2">&amp;</span><span class="ident">CiInfo</span>) {
+    <span class="ident">mock</span>::<span class="ident">mock_ci_info</span>(<span class="ident">info</span>);
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "ci_info";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
