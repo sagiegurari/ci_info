@@ -113,7 +113,7 @@
 //!
 //! # Examples
 //!
-//! ## Get CI environment information.
+//! ## Get CI environment information
 //!
 //! ```
 //! fn main() {
@@ -137,13 +137,39 @@
 //! }
 //! ```
 //!
-//! ## Check if a CI environment is detected.
+//! ## Check if a CI environment is detected
 //!
 //! ```
 //! fn main() {
 //!     let ci = ci_info::is_ci();
 //!
 //!     println!("Is CI: {}", ci);
+//! }
+//! ```
+//!
+//! ## Mocking CI environment
+//!
+//! ```
+//! use ci_info::types::{CiInfo, Vendor};
+//!
+//! fn main() {
+//!     // create the CI info manually
+//!     let mut mock_info = CiInfo::new();
+//!     mock_info.vendor = Some(Vendor::TravisCI);
+//!     mock_info.ci = true;
+//!     mock_info.pr = Some(true);
+//!     mock_info.branch_name = Some("dev_branch".to_string());
+//!
+//!     // mock environment
+//!     ci_info::mock_ci(&mock_info);
+//!
+//!     let info = ci_info::get();
+//!
+//!     assert!(info.ci);
+//!     assert!(info.pr.unwrap());
+//!     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
+//!     assert_eq!(info.name.unwrap(), "Travis CI");
+//!     assert_eq!(info.branch_name.unwrap(), "dev_branch");
 //! }
 //! ```
 //!
@@ -179,12 +205,16 @@ mod lib_test;
 #[cfg(test)]
 #[path = "./test_env.rs"]
 mod test_env;
+#[cfg(test)]
+#[path = "./vendors_test.rs"]
+mod vendors_test;
 
 #[cfg(doctest)]
 doc_comment::doctest!("../README.md");
 
 mod ci;
 mod config;
+mod mock;
 pub mod types;
 
 use crate::types::CiInfo;
@@ -231,4 +261,36 @@ pub fn get() -> CiInfo {
 /// ```
 pub fn is_ci() -> bool {
     ci::is_ci()
+}
+
+/// This function will modify the current environment variables to mock the
+/// requested CI vendor.
+///
+/// # Example
+///
+/// ```
+/// use ci_info::types::{CiInfo, Vendor};
+///
+/// fn main() {
+///     // create the CI info manually
+///     let mut mock_info = CiInfo::new();
+///     mock_info.vendor = Some(Vendor::TravisCI);
+///     mock_info.ci = true;
+///     mock_info.pr = Some(true);
+///     mock_info.branch_name = Some("dev_branch".to_string());
+///
+///     // mock environment
+///     ci_info::mock_ci(&mock_info);
+///
+///     let info = ci_info::get();
+///
+///     assert!(info.ci);
+///     assert!(info.pr.unwrap());
+///     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
+///     assert_eq!(info.name.unwrap(), "Travis CI");
+///     assert_eq!(info.branch_name.unwrap(), "dev_branch");
+/// }
+/// ```
+pub fn mock_ci(info: &CiInfo) {
+    mock::mock_ci_info(info);
 }

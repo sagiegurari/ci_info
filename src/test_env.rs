@@ -1,6 +1,7 @@
-use envmnt;
+use crate::config;
+use crate::mock;
+use crate::types::{CiInfo, EnvValue, Vendor, VendorConfig};
 use lazy_static::lazy_static;
-use std::env;
 use std::sync::{Mutex, MutexGuard};
 
 pub(crate) struct MutexInner;
@@ -9,92 +10,45 @@ lazy_static! {
     pub(crate) static ref ENVLOCK: Mutex<MutexInner> = { Mutex::new(MutexInner) };
 }
 
-pub(crate) fn get_with_env(vars: Vec<(&str, &str)>) -> crate::CiInfo {
-    let _lock = setup_env(vars);
+/// Vendor detection info
+#[derive(Debug, Clone)]
+pub(crate) struct TestVendorConfig {
+    /// CI env var name
+    pub(crate) ci_env: EnvValue,
+    /// PR env var name
+    pub(crate) pr_env: Option<EnvValue>,
+    /// Branch name env var name
+    pub(crate) branch_name_env: Option<String>,
+}
+
+pub(crate) fn get_with_env(test_config: TestVendorConfig) -> CiInfo {
+    let _lock = setup_env(test_config);
     crate::get()
 }
 
 #[inline(always)]
-pub(crate) fn setup_env(vars: Vec<(&str, &str)>) -> MutexGuard<'static, MutexInner> {
+pub(crate) fn clear_env() -> MutexGuard<'static, MutexInner> {
     let lock = ENVLOCK.lock().unwrap();
-    envmnt::remove_all(&vec![
-        "APPVEYOR",
-        "APPVEYOR_PULL_REQUEST_NUMBER",
-        "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI",
-        "SYSTEM_PULLREQUEST_PULLREQUESTID",
-        "bamboo_planKey",
-        "BITBUCKET_COMMIT",
-        "BITBUCKET_PR_ID",
-        "BITRISE_IO",
-        "BITRISE_PULL_REQUEST",
-        "BUDDY_WORKSPACE_ID",
-        "BUDDY_EXECUTION_PULL_REQUEST_ID",
-        "BUILDKITE",
-        "BUILDKITE_PULL_REQUEST",
-        "CIRCLECI",
-        "CIRCLE_PULL_REQUEST",
-        "CIRRUS_CI",
-        "CIRRUS_PR",
-        "CODEBUILD_BUILD_ARN",
-        "CI_NAME",
-        "DRONE",
-        "DRONE_BUILD_EVENT",
-        "pull_request",
-        "DSARI",
-        "GITHUB_ACTIONS",
-        "GITHUB_EVENT_NAME",
-        "GITLAB_CI",
-        "CI_MERGE_REQUEST_ID",
-        "GO_PIPELINE_LABEL",
-        "NODE",
-        "HUDSON_URL",
-        "JENKINS_URL",
-        "BUILD_ID",
-        "ghprbPullId",
-        "CHANGE_ID",
-        "MAGNUM",
-        "NETLIFY",
-        "PULL_REQUEST",
-        "NEVERCODE",
-        "NEVERCODE_PULL_REQUEST",
-        "RENDER",
-        "SAILCI",
-        "SAIL_PULL_REQUEST_NUMBER",
-        "SEMAPHORE",
-        "PULL_REQUEST_NUMBER",
-        "SHIPPABLE",
-        "IS_PULL_REQUEST",
-        "TDDIUM",
-        "TDDIUM_PR_ID",
-        "STRIDER",
-        "TASK_ID",
-        "RUN_ID",
-        "TEAMCITY_VERSION",
-        "TRAVIS",
-        "TRAVIS_PULL_REQUEST",
-        "NOW_BUILDER",
-        "CI",
-        "CONTINUOUS_INTEGRATION",
-        "BUILD_NUMBER",
-        "APPVEYOR_REPO_BRANCH",
-        "BUILD_SOURCEBRANCHNAME",
-        "BITBUCKET_BRANCH",
-        "BITRISE_GIT_BRANCH",
-        "BUDDY_EXECUTION_BRANCH",
-        "CIRCLE_BRANCH",
-        "CIRRUS_BRANCH",
-        "CI_BRANCH",
-        "CI_COMMIT_REF_NAME",
-        "HEROKU_TEST_RUN_BRANCH",
-        "BRANCH_NAME",
-        "BRANCH",
-        "NEVERCODE_BRANCH",
-        "SEMAPHORE_GIT_BRANCH",
-        "TRAVIS_BRANCH",
-    ]);
+    let vendor_config_list = config::create();
+    mock::clear_env(&vendor_config_list);
+    return lock;
+}
 
-    for env_var in vars {
-        env::set_var(env_var.0, env_var.1);
-    }
+#[inline(always)]
+fn setup_env(test_config: TestVendorConfig) -> MutexGuard<'static, MutexInner> {
+    let lock = ENVLOCK.lock().unwrap();
+
+    let vendor_config = VendorConfig {
+        name: "".to_string(),
+        vendor: Vendor::Unknown,
+        ci_env: test_config.ci_env,
+        pr_env: test_config.pr_env,
+        branch_name_env: test_config.branch_name_env,
+    };
+
+    let vendor_config_list = config::create();
+    mock::clear_env(&vendor_config_list);
+    mock::set_env_for_config(&vendor_config, None);
+
     return lock;
 }

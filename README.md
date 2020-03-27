@@ -23,6 +23,8 @@ The code is based on the [ci-info](https://github.com/watson/ci-info) npm module
 ## Usage
 Simply include the library and invoke the get function to pull all info as follows:
 
+### Fetching Info
+
 ```rust
 fn main() {
     // Just check if a CI environment is detected.
@@ -42,6 +44,32 @@ fn main() {
     if info.branch_name.is_some() {
         println!("Branch Name: {:#?}", info.branch_name.unwrap());
     }
+}
+```
+
+### Mocking CI environment
+
+```rust
+use ci_info::types::{CiInfo, Vendor};
+
+fn main() {
+    // create the CI info manually
+    let mut mock_info = CiInfo::new();
+    mock_info.vendor = Some(Vendor::TravisCI);
+    mock_info.ci = true;
+    mock_info.pr = Some(true);
+    mock_info.branch_name = Some("dev_branch".to_string());
+
+    // mock environment
+    ci_info::mock_ci(&mock_info);
+
+    let info = ci_info::get();
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
+    assert_eq!(info.name.unwrap(), "Travis CI");
+    assert_eq!(info.branch_name.unwrap(), "dev_branch");
 }
 ```
 

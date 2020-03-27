@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### v0.10 (2020-03-27)
+
+* Gitlab: Add pr detection #13 (thanks @mathstuf)
+* Ability to manually mock CI info via new mock_ci function #12
+* gitignore target directory if it is a symlink #14 (thanks @mathstuf)
+
 ### v0.9.2 (2020-02-14)
 
 * Update Netlify detection to use NETLIFY environment variable.

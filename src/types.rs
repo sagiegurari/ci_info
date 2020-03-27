@@ -79,6 +79,7 @@ pub enum Vendor {
     Unknown,
 }
 
+#[derive(Debug, Clone)]
 pub(crate) enum EnvValue {
     /// Env name
     Exists(String),
@@ -95,6 +96,7 @@ pub(crate) enum EnvValue {
 }
 
 /// Vendor detection info
+#[derive(Debug, Clone)]
 pub(crate) struct VendorConfig {
     /// vendor name
     pub(crate) name: String,
