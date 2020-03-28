@@ -35,16 +35,6 @@ lazy_static = "^1"
 [features]
 serde-1 = [ "serde", "serde_derive" ]
 
-[badges.travis-ci]
-branch = "master"
-repository = "sagiegurari/ci_info"
-
-[badges.appveyor]
-repository = "sagiegurari/ci_info"
-service = "github"
-branch = "master"
-project_name = "sagiegurari/ci-info"
-
 [badges.codecov]
 branch = "master"
 repository = "sagiegurari/ci_info"
