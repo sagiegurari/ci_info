@@ -31,6 +31,7 @@ serde_derive = { version = "1", optional = true }
 [dev-dependencies]
 doc-comment = "^0.3"
 lazy_static = "^1"
+rusty-hook = "^0.10"
 
 [features]
 serde-1 = [ "serde", "serde_derive" ]
