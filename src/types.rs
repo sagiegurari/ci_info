@@ -111,7 +111,7 @@ pub(crate) struct VendorConfig {
 }
 
 #[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Default)]
 /// CI info
 pub struct CiInfo {
     /// The CI vendor
@@ -129,12 +129,6 @@ pub struct CiInfo {
 impl CiInfo {
     /// Returns new instance
     pub fn new() -> CiInfo {
-        CiInfo {
-            vendor: None,
-            name: None,
-            ci: false,
-            pr: None,
-            branch_name: None,
-        }
+        Default::default()
     }
 }
