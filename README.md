@@ -87,7 +87,7 @@ In order to use this library, just add it as a dependency:
 
 ```ini
 [dependencies]
-ci_info = "*"
+ci_info = "^0.10.0"
 ```
 
 There is optional `serde` support that can be enabled via the `serde-1` feature:
