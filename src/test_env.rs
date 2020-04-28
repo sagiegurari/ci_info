@@ -7,7 +7,7 @@ use std::sync::{Mutex, MutexGuard};
 pub(crate) struct MutexInner;
 
 lazy_static! {
-    pub(crate) static ref ENVLOCK: Mutex<MutexInner> = { Mutex::new(MutexInner) };
+    pub(crate) static ref ENVLOCK: Mutex<MutexInner> = Mutex::new(MutexInner);
 }
 
 /// Vendor detection info

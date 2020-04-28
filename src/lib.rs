@@ -20,6 +20,7 @@
     incomplete_features,
     indirect_structural_match,
     inline_no_sanitize,
+    invalid_codeblock_attribute,
     invalid_type_param_default,
     invalid_value,
     irrefutable_let_patterns,
@@ -28,6 +29,7 @@
     macro_expanded_macro_exports_accessed_by_absolute_paths,
     meta_variable_misuse,
     missing_copy_implementations,
+    missing_crate_level_docs,
     missing_docs,
     missing_fragment_specifier,
     mutable_borrow_reservation_conflict,
@@ -71,6 +73,7 @@
     unused_allocation,
     unused_assignments,
     unused_attributes,
+    unused_braces,
     unused_comparisons,
     unused_doc_comments,
     unused_extern_crates,
@@ -170,13 +173,13 @@
 //!     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
 //!     assert_eq!(info.name.unwrap(), "Travis CI");
 //!     assert_eq!(info.branch_name.unwrap(), "dev_branch");
-//!     
+//!
 //!     // clear CI environment
 //!     mock_info = CiInfo::new();
 //!     ci_info::mock_ci(&mock_info);
-//!     
+//!
 //!     let info = ci_info::get();
-//!     
+//!
 //!     assert!(!info.ci);
 //! }
 //! ```
@@ -297,13 +300,13 @@ pub fn is_ci() -> bool {
 ///     assert_eq!(info.vendor.unwrap(), Vendor::TravisCI);
 ///     assert_eq!(info.name.unwrap(), "Travis CI");
 ///     assert_eq!(info.branch_name.unwrap(), "dev_branch");
-///     
+///
 ///     // clear CI environment
 ///     mock_info = CiInfo::new();
 ///     ci_info::mock_ci(&mock_info);
-///     
+///
 ///     let info = ci_info::get();
-///     
+///
 ///     assert!(!info.ci);
 /// }
 /// ```
