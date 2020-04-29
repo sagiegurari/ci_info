@@ -19,6 +19,10 @@ fn validate(env_info: &EnvValue) -> bool {
         EnvValue::Value(ref key, ref value) => envmnt::is_equal(key, value),
         EnvValue::NotEqual(ref key, ref value) => !envmnt::is_equal(key, value),
         EnvValue::Contains(ref key, ref value) => envmnt::contains_ignore_case(key, value),
+        EnvValue::NotEmpty(ref key) => {
+            let value = envmnt::get_or(key, "");
+            !value.is_empty()
+        }
     }
 }
 

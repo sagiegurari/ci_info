@@ -143,6 +143,30 @@ fn validate_contains_not_exists() {
 }
 
 #[test]
+fn validate_not_empty_not_exists() {
+    let output = validate(&EnvValue::NotEmpty(
+        "VALIDATE_NOT_EMPTY_NOT_EXISTS".to_string(),
+    ));
+    assert!(!output);
+}
+
+#[test]
+fn validate_not_empty_empty() {
+    env::set_var("VALIDATE_NOT_EMPTY_EMPTY", "");
+    let output = validate(&EnvValue::NotEmpty("VALIDATE_NOT_EMPTY_EMPTY".to_string()));
+    assert!(!output);
+}
+
+#[test]
+fn validate_not_empty_not_empty() {
+    env::set_var("VALIDATE_NOT_EMPTY_NOT_EMPTY", "1");
+    let output = validate(&EnvValue::NotEmpty(
+        "VALIDATE_NOT_EMPTY_NOT_EMPTY".to_string(),
+    ));
+    assert!(output);
+}
+
+#[test]
 fn is_ci_test() {
     let lock = clear_env();
     let info = get();

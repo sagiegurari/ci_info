@@ -16,6 +16,7 @@ fn get_env_keys(env_info: &Option<EnvValue>) -> Vec<String> {
             EnvValue::Value(ref key, ref _value) => vec![key.to_string()],
             EnvValue::NotEqual(ref key, ref _value) => vec![key.to_string()],
             EnvValue::Contains(ref key, ref _value) => vec![key.to_string()],
+            EnvValue::NotEmpty(ref key) => vec![key.to_string()],
         },
         None => vec![],
     }
@@ -55,6 +56,7 @@ fn set_mock_env_key_value_pairs(env_info: &Option<EnvValue>, test_value: &str) {
                 vec![(key.to_string(), test_value.to_string())]
             }
             EnvValue::Contains(ref key, ref value) => vec![(key.to_string(), value.to_string())],
+            EnvValue::NotEmpty(ref key) => vec![(key.to_string(), test_value.to_string())],
         },
         None => vec![],
     };

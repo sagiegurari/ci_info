@@ -226,6 +226,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Screwdriver".to_string(),
+        vendor: Vendor::Screwdriver,
+        ci_env: EnvValue::Exists("SCREWDRIVER".to_string()),
+        pr_env: Some(EnvValue::NotEmpty("SD_PULL_REQUEST".to_string())),
+        branch_name_env: Some("GIT_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Semaphore".to_string(),
         vendor: Vendor::Semaphore,
         ci_env: EnvValue::Exists("SEMAPHORE".to_string()),

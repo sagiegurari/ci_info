@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.10.1
+
+* Add screwdriver support.
+
 ### v0.10.0 (2020-03-27)
 
 * Gitlab: Add pr detection #13 (thanks @mathstuf)

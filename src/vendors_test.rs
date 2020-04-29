@@ -780,6 +780,57 @@ fn get_pr_sail_ci() {
 }
 
 #[test]
+fn get_no_pr_screwdriver_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("SCREWDRIVER".to_string()),
+        pr_env: None,
+        branch_name_env: Some("GIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Screwdriver);
+    assert_eq!(info.name.unwrap(), "Screwdriver");
+    assert!(info.branch_name.is_some());
+}
+
+#[test]
+fn get_no_pr2_screwdriver_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("SCREWDRIVER".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "SD_PULL_REQUEST".to_string(),
+            "".to_string(),
+        )),
+        branch_name_env: Some("GIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Screwdriver);
+    assert_eq!(info.name.unwrap(), "Screwdriver");
+    assert!(info.branch_name.is_some());
+}
+
+#[test]
+fn get_pr_screwdriver_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("SCREWDRIVER".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "SD_PULL_REQUEST".to_string(),
+            "1".to_string(),
+        )),
+        branch_name_env: Some("GIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Screwdriver);
+    assert_eq!(info.name.unwrap(), "Screwdriver");
+    assert!(info.branch_name.is_some());
+}
+
+#[test]
 fn get_no_pr_semaphore() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("SEMAPHORE".to_string()),

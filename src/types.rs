@@ -60,6 +60,8 @@ pub enum Vendor {
     /// CI vendor
     SailCI,
     /// CI vendor
+    Screwdriver,
+    /// CI vendor
     Semaphore,
     /// CI vendor
     Shippable,
@@ -93,6 +95,8 @@ pub(crate) enum EnvValue {
     NotEqual(String, String),
     /// Env name contains the provided value (case insensitive)
     Contains(String, String),
+    /// Env value exists and not empty
+    NotEmpty(String),
 }
 
 /// Vendor detection info
