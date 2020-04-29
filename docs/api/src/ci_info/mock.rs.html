@@ -113,6 +113,8 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # mock</span>
 <span class="doccomment">//!</span>
@@ -132,6 +134,7 @@
             <span class="ident">EnvValue</span>::<span class="ident">Value</span>(<span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">_value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">key</span>.<span class="ident">to_string</span>()],
             <span class="ident">EnvValue</span>::<span class="ident">NotEqual</span>(<span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">_value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">key</span>.<span class="ident">to_string</span>()],
             <span class="ident">EnvValue</span>::<span class="ident">Contains</span>(<span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">_value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">key</span>.<span class="ident">to_string</span>()],
+            <span class="ident">EnvValue</span>::<span class="ident">NotEmpty</span>(<span class="kw-2">ref</span> <span class="ident">key</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">key</span>.<span class="ident">to_string</span>()],
         },
         <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[],
     }
@@ -171,6 +174,7 @@
                 <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">test_value</span>.<span class="ident">to_string</span>())]
             }
             <span class="ident">EnvValue</span>::<span class="ident">Contains</span>(<span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>.<span class="ident">to_string</span>())],
+            <span class="ident">EnvValue</span>::<span class="ident">NotEmpty</span>(<span class="kw-2">ref</span> <span class="ident">key</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">test_value</span>.<span class="ident">to_string</span>())],
         },
         <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[],
     };

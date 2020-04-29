@@ -136,8 +136,6 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # types</span>
 <span class="doccomment">//!</span>
@@ -201,6 +199,8 @@
     <span class="doccomment">/// CI vendor</span>
     <span class="ident">SailCI</span>,
     <span class="doccomment">/// CI vendor</span>
+    <span class="ident">Screwdriver</span>,
+    <span class="doccomment">/// CI vendor</span>
     <span class="ident">Semaphore</span>,
     <span class="doccomment">/// CI vendor</span>
     <span class="ident">Shippable</span>,
@@ -234,6 +234,8 @@
     <span class="ident">NotEqual</span>(<span class="ident">String</span>, <span class="ident">String</span>),
     <span class="doccomment">/// Env name contains the provided value (case insensitive)</span>
     <span class="ident">Contains</span>(<span class="ident">String</span>, <span class="ident">String</span>),
+    <span class="doccomment">/// Env value exists and not empty</span>
+    <span class="ident">NotEmpty</span>(<span class="ident">String</span>),
 }
 
 <span class="doccomment">/// Vendor detection info</span>
@@ -252,7 +254,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="doccomment">/// CI info</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CiInfo</span> {
     <span class="doccomment">/// The CI vendor</span>
@@ -270,13 +272,7 @@
 <span class="kw">impl</span> <span class="ident">CiInfo</span> {
     <span class="doccomment">/// Returns new instance</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CiInfo</span> {
-        <span class="ident">CiInfo</span> {
-            <span class="ident">vendor</span>: <span class="prelude-val">None</span>,
-            <span class="ident">name</span>: <span class="prelude-val">None</span>,
-            <span class="ident">ci</span>: <span class="bool-val">false</span>,
-            <span class="ident">pr</span>: <span class="prelude-val">None</span>,
-            <span class="ident">branch_name</span>: <span class="prelude-val">None</span>,
-        }
+        <span class="ident">Default</span>::<span class="ident">default</span>()
     }
 }
 </pre></div>

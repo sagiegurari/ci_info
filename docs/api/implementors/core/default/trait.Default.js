@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["ci_info"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"ci_info/types/struct.CiInfo.html\" title=\"struct ci_info::types::CiInfo\">CiInfo</a>","synthetic":false,"types":["ci_info::types::CiInfo"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

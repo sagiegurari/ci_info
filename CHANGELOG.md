@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.10.1
+### v0.10.1 (2020-04-29)
 
 * Add screwdriver support.
 

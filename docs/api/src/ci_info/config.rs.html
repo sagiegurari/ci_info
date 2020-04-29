@@ -310,6 +310,14 @@
 <span id="310">310</span>
 <span id="311">311</span>
 <span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # config</span>
 <span class="doccomment">//!</span>
@@ -536,6 +544,14 @@
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;SAILCI&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;SAIL_PULL_REQUEST_NUMBER&quot;</span>.<span class="ident">to_string</span>())),
         <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
+    });
+
+    <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
+        <span class="ident">name</span>: <span class="string">&quot;Screwdriver&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">Screwdriver</span>,
+        <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;SCREWDRIVER&quot;</span>.<span class="ident">to_string</span>()),
+        <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">NotEmpty</span>(<span class="string">&quot;SD_PULL_REQUEST&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;GIT_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
     });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
