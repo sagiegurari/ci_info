@@ -25,6 +25,7 @@ Simply include the library and invoke the get function to pull all info as follo
 
 ### Fetching Info
 
+<!--{ "examples/get.rs" | lines: 3 | code: rust }-->
 ```rust
 fn main() {
     // Just check if a CI environment is detected.
@@ -46,9 +47,11 @@ fn main() {
     }
 }
 ```
+<!--{ end }-->
 
 ### Mocking CI environment
 
+<!--{ "examples/mock.rs" | lines: 2 | code: rust }-->
 ```rust
 use ci_info::types::{CiInfo, Vendor};
 
@@ -80,6 +83,7 @@ fn main() {
     assert!(!info.ci);
 }
 ```
+<!--{ end }-->
 
 <a name="installation"></a>
 ## Installation
