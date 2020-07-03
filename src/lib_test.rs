@@ -1,6 +1,8 @@
 use super::*;
 use crate::test_env::{clear_env, get_with_env, TestVendorConfig};
 use crate::types::EnvValue;
+use doc_comment as _;
+use rusty_hook as _;
 
 #[test]
 fn get_test() {
