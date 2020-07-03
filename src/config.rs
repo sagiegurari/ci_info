@@ -9,6 +9,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     let mut config = vec![];
 
     config.push(VendorConfig {
+        name: "AppCenter".to_string(),
+        vendor: Vendor::AppCenter,
+        ci_env: EnvValue::Exists("APPCENTER_BUILD_ID".to_string()),
+        pr_env: None,
+        branch_name_env: Some("APPCENTER_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "AppVeyor".to_string(),
         vendor: Vendor::AppVeyor,
         ci_env: EnvValue::Exists("APPVEYOR".to_string()),

@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.10.2 (2020-07-03)
+
+* Add App Center support.
+
 ### v0.10.1 (2020-04-29)
 
 * Add screwdriver support.

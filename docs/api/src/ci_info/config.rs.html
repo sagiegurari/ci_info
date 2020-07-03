@@ -318,6 +318,14 @@
 <span id="318">318</span>
 <span id="319">319</span>
 <span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # config</span>
 <span class="doccomment">//!</span>
@@ -328,6 +336,14 @@
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">create</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">VendorConfig</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">config</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+
+    <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
+        <span class="ident">name</span>: <span class="string">&quot;AppCenter&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">AppCenter</span>,
+        <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;APPCENTER_BUILD_ID&quot;</span>.<span class="ident">to_string</span>()),
+        <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;APPCENTER_BRANCH&quot;</span>.<span class="ident">to_string</span>()),
+    });
 
     <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
         <span class="ident">name</span>: <span class="string">&quot;AppVeyor&quot;</span>.<span class="ident">to_string</span>(),

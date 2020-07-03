@@ -443,15 +443,15 @@
 <span class="doccomment">//!     // Get CI environment information</span>
 <span class="doccomment">//!     let info = ci_info::get();</span>
 <span class="doccomment">//!     println!(&quot;Is CI: {}&quot;, info.ci);</span>
-<span class="doccomment">//!     if info.vendor.is_some() {</span>
-<span class="doccomment">//!         println!(&quot;Vendor: {:#?}&quot;, info.vendor.unwrap());</span>
+<span class="doccomment">//!     if let Some(vendor) = info.vendor {</span>
+<span class="doccomment">//!         println!(&quot;Vendor: {:#?}&quot;, vendor);</span>
 <span class="doccomment">//!         println!(&quot;Name: {:#?}&quot;, info.name.unwrap());</span>
 <span class="doccomment">//!     }</span>
-<span class="doccomment">//!     if info.pr.is_some() {</span>
-<span class="doccomment">//!         println!(&quot;Is PR: {:#?}&quot;, info.pr.unwrap());</span>
+<span class="doccomment">//!     if let Some(pr) = info.pr {</span>
+<span class="doccomment">//!         println!(&quot;Is PR: {:#?}&quot;, pr);</span>
 <span class="doccomment">//!     }</span>
-<span class="doccomment">//!     if info.branch_name.is_some() {</span>
-<span class="doccomment">//!         println!(&quot;Branch Name: {:#?}&quot;, info.branch_name.unwrap());</span>
+<span class="doccomment">//!     if let Some(branch_name) = info.branch_name {</span>
+<span class="doccomment">//!         println!(&quot;Branch Name: {:#?}&quot;, branch_name);</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>

@@ -12,6 +12,8 @@ mod types_test;
 /// Supported vendors enum
 pub enum Vendor {
     /// CI vendor
+    AppCenter,
+    /// CI vendor
     AppVeyor,
     /// CI vendor
     AzurePipelines,
