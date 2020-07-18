@@ -17,7 +17,7 @@
 <a name="overview"></a>
 ## Overview
 This library main goal is to provide development/build tools such as [cargo-make](https://sagiegurari.github.io/cargo-make/) the needed information on the current CI environment.<br>
-The code is based on the [ci-info](https://github.com/watson/ci-info) npm module.
+Inspired by the [ci-info](https://github.com/watson/ci-info) npm module.
 
 <a name="usage"></a>
 ## Usage
