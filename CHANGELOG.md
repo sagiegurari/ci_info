@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.11.0
+
+* Use non_exhaustive for Vendor enum #17
+
 ### v0.10.2 (2020-07-03)
 
 * Add App Center support.
