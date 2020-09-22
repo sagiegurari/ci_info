@@ -9,6 +9,7 @@ mod types_test;
 
 #[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, Copy)]
+#[non_exhaustive]
 /// Supported vendors enum
 pub enum Vendor {
     /// CI vendor
