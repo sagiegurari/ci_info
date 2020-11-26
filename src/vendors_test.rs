@@ -1081,7 +1081,7 @@ fn get_pr2_travis() {
 }
 
 #[test]
-fn get_ziet_now() {
+fn get_vercel() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
         pr_env: None,
@@ -1090,8 +1090,8 @@ fn get_ziet_now() {
 
     assert!(info.ci);
     assert!(info.pr.is_none());
-    assert_eq!(info.vendor.unwrap(), Vendor::ZEITNow);
-    assert_eq!(info.name.unwrap(), "ZEIT Now");
+    assert_eq!(info.vendor.unwrap(), Vendor::Vercel);
+    assert_eq!(info.name.unwrap(), "Vercel");
     assert!(info.branch_name.is_none());
 }
 

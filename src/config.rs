@@ -304,8 +304,8 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
-        name: "ZEIT Now".to_string(),
-        vendor: Vendor::ZEITNow,
+        name: "Vercel".to_string(),
+        vendor: Vendor::Vercel,
         ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
         pr_env: None,
         branch_name_env: None,

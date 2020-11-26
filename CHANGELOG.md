@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.12.0 (2020-11-26)
+
+* Rebrand 'zeit now' to vercel.
+
 ### v0.11.0 (2020-09-22)
 
 * Use non_exhaustive for Vendor enum #17
