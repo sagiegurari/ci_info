@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.13.0 (2020-11-26)
+
+* Remove serde support.
+
 ### v0.12.0 (2020-11-26)
 
 * Rebrand 'zeit now' to vercel.
