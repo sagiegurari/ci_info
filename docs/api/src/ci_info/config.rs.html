@@ -329,6 +329,14 @@
 <span id="326">326</span>
 <span id="327">327</span>
 <span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # config</span>
 <span class="doccomment">//!</span>
@@ -597,6 +605,14 @@
         <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">SolanoCI</span>,
         <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;TDDIUM&quot;</span>.<span class="ident">to_string</span>()),
         <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;TDDIUM_PR_ID&quot;</span>.<span class="ident">to_string</span>())),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
+    });
+
+    <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
+        <span class="ident">name</span>: <span class="string">&quot;SourceHut&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">SourceHut</span>,
+        <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">Contains</span>(<span class="string">&quot;JOB_URL&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;builds.sr.ht&quot;</span>.<span class="ident">to_string</span>()),
+        <span class="ident">pr_env</span>: <span class="prelude-val">None</span>,
         <span class="ident">branch_name_env</span>: <span class="prelude-val">None</span>,
     });
 

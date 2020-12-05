@@ -957,6 +957,24 @@ fn get_pr_solano_ci() {
 }
 
 #[test]
+fn get_sourcehut() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Value(
+            "JOB_URL".to_string(),
+            "https://builds.sr.ht/~test/job/1".to_string(),
+        ),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::SourceHut);
+    assert_eq!(info.name.unwrap(), "SourceHut");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_strider_cd() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("STRIDER".to_string()),

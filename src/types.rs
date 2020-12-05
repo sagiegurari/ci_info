@@ -70,6 +70,8 @@ pub enum Vendor {
     /// CI vendor
     SolanoCI,
     /// CI vendor
+    SourceHut,
+    /// CI vendor
     StriderCD,
     /// CI vendor
     TaskCluster,

@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.13.1 (2020-12-05)
+
+* Added support for SourceHut CI.
+
 ### v0.13.0 (2020-11-26)
 
 * Remove serde support.

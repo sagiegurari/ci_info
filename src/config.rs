@@ -269,6 +269,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "SourceHut".to_string(),
+        vendor: Vendor::SourceHut,
+        ci_env: EnvValue::Contains("JOB_URL".to_string(), "builds.sr.ht".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "Strider CD".to_string(),
         vendor: Vendor::StriderCD,
         ci_env: EnvValue::Exists("STRIDER".to_string()),
