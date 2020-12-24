@@ -597,6 +597,64 @@ fn get_pr2_jenkins() {
 }
 
 #[test]
+fn get_no_pr_jenkinsx() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::AllExists(vec![
+            "JX_CHART_REPOSITORY".to_string(),
+            "BUILD_ID".to_string(),
+        ]),
+        pr_env: None,
+        branch_name_env: Some("BRANCH_NAME".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::JenkinsX);
+    assert_eq!(info.name.unwrap(), "JenkinsX");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_partial1_jenkinsx() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("JX_CHART_REPOSITORY".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(!info.ci);
+}
+
+#[test]
+fn get_partial2_jenkinsx() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("BUILD_ID".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(!info.ci);
+}
+
+#[test]
+fn get_pr_jenkinsx() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::AllExists(vec![
+            "JX_CHART_REPOSITORY".to_string(),
+            "BUILD_ID".to_string(),
+        ]),
+        pr_env: Some(EnvValue::Exists("PULL_NUMBER".to_string())),
+        branch_name_env: Some("BRANCH_NAME".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::JenkinsX);
+    assert_eq!(info.name.unwrap(), "JenkinsX");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_magnum_ci() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("MAGNUM".to_string()),

@@ -52,6 +52,8 @@ pub enum Vendor {
     /// CI vendor
     Jenkins,
     /// CI vendor
+    JenkinsX,
+    /// CI vendor
     MagnumCI,
     /// CI vendor
     NetlifyCI,

@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.13.2 (2020-12-24)
+
+* Added support for JenkinsX CI.
+
 ### v0.13.1 (2020-12-05)
 
 * Added support for SourceHut CI.

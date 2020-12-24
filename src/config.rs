@@ -185,6 +185,17 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "JenkinsX".to_string(),
+        vendor: Vendor::JenkinsX,
+        ci_env: EnvValue::AllExists(vec![
+            "JX_CHART_REPOSITORY".to_string(),
+            "BUILD_ID".to_string(),
+        ]),
+        pr_env: Some(EnvValue::Exists("PULL_NUMBER".to_string())),
+        branch_name_env: Some("BRANCH_NAME".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Magnum CI".to_string(),
         vendor: Vendor::MagnumCI,
         ci_env: EnvValue::Exists("MAGNUM".to_string()),

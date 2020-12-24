@@ -337,6 +337,17 @@
 <span id="334">334</span>
 <span id="335">335</span>
 <span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # config</span>
 <span class="doccomment">//!</span>
@@ -521,6 +532,17 @@
             <span class="string">&quot;ghprbPullId&quot;</span>.<span class="ident">to_string</span>(),
             <span class="string">&quot;CHANGE_ID&quot;</span>.<span class="ident">to_string</span>(),
         ])),
+        <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BRANCH_NAME&quot;</span>.<span class="ident">to_string</span>()),
+    });
+
+    <span class="ident">config</span>.<span class="ident">push</span>(<span class="ident">VendorConfig</span> {
+        <span class="ident">name</span>: <span class="string">&quot;JenkinsX&quot;</span>.<span class="ident">to_string</span>(),
+        <span class="ident">vendor</span>: <span class="ident">Vendor</span>::<span class="ident">JenkinsX</span>,
+        <span class="ident">ci_env</span>: <span class="ident">EnvValue</span>::<span class="ident">AllExists</span>(<span class="macro">vec</span><span class="macro">!</span>[
+            <span class="string">&quot;JX_CHART_REPOSITORY&quot;</span>.<span class="ident">to_string</span>(),
+            <span class="string">&quot;BUILD_ID&quot;</span>.<span class="ident">to_string</span>(),
+        ]),
+        <span class="ident">pr_env</span>: <span class="prelude-val">Some</span>(<span class="ident">EnvValue</span>::<span class="ident">Exists</span>(<span class="string">&quot;PULL_NUMBER&quot;</span>.<span class="ident">to_string</span>())),
         <span class="ident">branch_name_env</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;BRANCH_NAME&quot;</span>.<span class="ident">to_string</span>()),
     });
 
