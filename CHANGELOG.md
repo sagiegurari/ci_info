@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.0 (2021-01-14)
+
+* Return serde support #19
+
 ### v0.13.2 (2020-12-24)
 
 * Added support for JenkinsX CI.

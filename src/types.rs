@@ -7,6 +7,7 @@
 #[path = "./types_test.rs"]
 mod types_test;
 
+#[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, Copy)]
 #[non_exhaustive]
 /// Supported vendors enum
@@ -120,6 +121,7 @@ pub(crate) struct VendorConfig {
     pub(crate) branch_name_env: Option<String>,
 }
 
+#[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, Default)]
 /// CI info
 pub struct CiInfo {
