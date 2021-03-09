@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.1 (2021-03-09)
+
+* Upgrade envmnt dependency
+
 ### v0.14.0 (2021-01-14)
 
 * Return serde support #19
