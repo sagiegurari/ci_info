@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.14.2
+### v0.14.2 (2021-05-20)
 
 * Add support for codefresh.
 * Add support for appcircle.
