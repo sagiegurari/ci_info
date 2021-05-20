@@ -96,6 +96,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Codefresh".to_string(),
+        vendor: Vendor::Codefresh,
+        ci_env: EnvValue::Exists("CF_BUILD_ID".to_string()),
+        pr_env: Some(EnvValue::Exists("CF_PULL_REQUEST_ID".to_string())),
+        branch_name_env: Some("CF_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "AWS CodeBuild".to_string(),
         vendor: Vendor::AWSCodeBuild,
         ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),

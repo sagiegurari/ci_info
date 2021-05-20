@@ -297,6 +297,36 @@ fn get_pr_cirrus_ci() {
 }
 
 #[test]
+fn get_no_pr_codefresh() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CF_BUILD_ID".to_string()),
+        pr_env: None,
+        branch_name_env: Some("CF_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Codefresh);
+    assert_eq!(info.name.unwrap(), "Codefresh");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_codefresh() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CF_BUILD_ID".to_string()),
+        pr_env: Some(EnvValue::Exists("CF_PULL_REQUEST_ID".to_string())),
+        branch_name_env: Some("CF_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Codefresh);
+    assert_eq!(info.name.unwrap(), "Codefresh");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_aws_codebuild() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),

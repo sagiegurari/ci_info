@@ -17,6 +17,8 @@ pub enum Vendor {
     /// CI vendor
     AppVeyor,
     /// CI vendor
+    AWSCodeBuild,
+    /// CI vendor
     AzurePipelines,
     /// CI vendor
     Bamboo,
@@ -33,7 +35,7 @@ pub enum Vendor {
     /// CI vendor
     CirrusCI,
     /// CI vendor
-    AWSCodeBuild,
+    Codefresh,
     /// CI vendor
     Codeship,
     /// CI vendor

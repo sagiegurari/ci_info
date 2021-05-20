@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.2
+
+* Add support for codefresh.
+
 ### v0.14.1 (2021-03-09)
 
 * Upgrade envmnt dependency
