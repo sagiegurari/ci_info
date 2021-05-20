@@ -715,6 +715,36 @@ fn get_pr_jenkinsx() {
 }
 
 #[test]
+fn get_no_pr_layer_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("LAYERCI".to_string()),
+        pr_env: None,
+        branch_name_env: Some("LAYERCI_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::LayerCI);
+    assert_eq!(info.name.unwrap(), "Layer CI");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_layer_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("LAYERCI".to_string()),
+        pr_env: Some(EnvValue::Exists("LAYERCI_PULL_REQUEST".to_string())),
+        branch_name_env: Some("LAYERCI_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::LayerCI);
+    assert_eq!(info.name.unwrap(), "Layer CI");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_magnum_ci() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("MAGNUM".to_string()),

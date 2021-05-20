@@ -220,6 +220,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Layer CI".to_string(),
+        vendor: Vendor::LayerCI,
+        ci_env: EnvValue::Exists("LAYERCI".to_string()),
+        pr_env: Some(EnvValue::Exists("LAYERCI_PULL_REQUEST".to_string())),
+        branch_name_env: Some("LAYERCI_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Magnum CI".to_string(),
         vendor: Vendor::MagnumCI,
         ci_env: EnvValue::Exists("MAGNUM".to_string()),
