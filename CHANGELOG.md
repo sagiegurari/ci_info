@@ -4,6 +4,7 @@
 
 * Add support for codefresh.
 * Add support for appcircle.
+* Add support for Flow CI.
 
 ### v0.14.1 (2021-03-09)
 

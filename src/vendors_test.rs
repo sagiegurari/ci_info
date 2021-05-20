@@ -497,7 +497,7 @@ fn get_no_pr_gitlab_ci() {
     });
 
     assert!(info.ci);
-    assert_eq!(info.pr.unwrap(), false);
+    assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::GitLabCI);
     assert_eq!(info.name.unwrap(), "GitLab CI");
     assert_eq!(info.branch_name.unwrap(), "mock_branch");
@@ -512,9 +512,24 @@ fn get_pr_gitlab_ci() {
     });
 
     assert!(info.ci);
-    assert_eq!(info.pr.unwrap(), true);
+    assert!(info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::GitLabCI);
     assert_eq!(info.name.unwrap(), "GitLab CI");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_flow_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("FLOWCI_JOB_BUILD_NUM".to_string()),
+        pr_env: None,
+        branch_name_env: Some("FLOWCI_GIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::FlowCI);
+    assert_eq!(info.name.unwrap(), "Flow CI");
     assert_eq!(info.branch_name.unwrap(), "mock_branch");
 }
 

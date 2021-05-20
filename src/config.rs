@@ -166,6 +166,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Flow CI".to_string(),
+        vendor: Vendor::FlowCI,
+        ci_env: EnvValue::Exists("FLOWCI_JOB_BUILD_NUM".to_string()),
+        pr_env: None,
+        branch_name_env: Some("FLOWCI_GIT_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "GoCD".to_string(),
         vendor: Vendor::GoCD,
         ci_env: EnvValue::Exists("GO_PIPELINE_LABEL".to_string()),
