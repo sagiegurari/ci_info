@@ -17,11 +17,27 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "AppCircle".to_string(),
+        vendor: Vendor::AppCircle,
+        ci_env: EnvValue::Exists("AC_APPCIRCLE".to_string()),
+        pr_env: None,
+        branch_name_env: Some("AC_GIT_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "AppVeyor".to_string(),
         vendor: Vendor::AppVeyor,
         ci_env: EnvValue::Exists("APPVEYOR".to_string()),
         pr_env: Some(EnvValue::Exists("APPVEYOR_PULL_REQUEST_NUMBER".to_string())),
         branch_name_env: Some("APPVEYOR_REPO_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
+        name: "AWS CodeBuild".to_string(),
+        vendor: Vendor::AWSCodeBuild,
+        ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),
+        pr_env: None,
+        branch_name_env: None,
     });
 
     config.push(VendorConfig {
@@ -101,14 +117,6 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         ci_env: EnvValue::Exists("CF_BUILD_ID".to_string()),
         pr_env: Some(EnvValue::Exists("CF_PULL_REQUEST_ID".to_string())),
         branch_name_env: Some("CF_BRANCH".to_string()),
-    });
-
-    config.push(VendorConfig {
-        name: "AWS CodeBuild".to_string(),
-        vendor: Vendor::AWSCodeBuild,
-        ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),
-        pr_env: None,
-        branch_name_env: None,
     });
 
     config.push(VendorConfig {

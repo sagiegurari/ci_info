@@ -17,6 +17,21 @@ fn get_appcenter() {
 }
 
 #[test]
+fn get_appcircle() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("AC_APPCIRCLE".to_string()),
+        pr_env: None,
+        branch_name_env: Some("AC_GIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::AppCircle);
+    assert_eq!(info.name.unwrap(), "AppCircle");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_no_pr_appveyor() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("APPVEYOR".to_string()),
@@ -44,6 +59,21 @@ fn get_pr_appveyor() {
     assert_eq!(info.vendor.unwrap(), Vendor::AppVeyor);
     assert_eq!(info.name.unwrap(), "AppVeyor");
     assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_aws_codebuild() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::AWSCodeBuild);
+    assert_eq!(info.name.unwrap(), "AWS CodeBuild");
+    assert!(info.branch_name.is_none());
 }
 
 #[test]
@@ -324,21 +354,6 @@ fn get_pr_codefresh() {
     assert_eq!(info.vendor.unwrap(), Vendor::Codefresh);
     assert_eq!(info.name.unwrap(), "Codefresh");
     assert_eq!(info.branch_name.unwrap(), "mock_branch");
-}
-
-#[test]
-fn get_aws_codebuild() {
-    let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("CODEBUILD_BUILD_ARN".to_string()),
-        pr_env: None,
-        branch_name_env: None,
-    });
-
-    assert!(info.ci);
-    assert!(info.pr.is_none());
-    assert_eq!(info.vendor.unwrap(), Vendor::AWSCodeBuild);
-    assert_eq!(info.name.unwrap(), "AWS CodeBuild");
-    assert!(info.branch_name.is_none());
 }
 
 #[test]

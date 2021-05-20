@@ -15,6 +15,8 @@ pub enum Vendor {
     /// CI vendor
     AppCenter,
     /// CI vendor
+    AppCircle,
+    /// CI vendor
     AppVeyor,
     /// CI vendor
     AWSCodeBuild,
