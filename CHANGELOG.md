@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.3 (2021-09-13)
+
+* Upgrade fsio
+
 ### v0.14.2 (2021-05-20)
 
 * Add support for codefresh.
