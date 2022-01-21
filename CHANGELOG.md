@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.4 (2022-01-21)
+
+* Add support for Woodpecker CI.
+
 ### v0.14.3 (2021-09-13)
 
 * Upgrade fsio

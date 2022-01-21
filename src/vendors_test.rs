@@ -1262,6 +1262,54 @@ fn get_vercel() {
 }
 
 #[test]
+fn get_no_pr_woodpecker() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Value("CI".to_string(), "woodpecker".to_string()),
+        pr_env: None,
+        branch_name_env: Some("CI_COMMIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::WoodpeckerCI);
+    assert_eq!(info.name.unwrap(), "Woodpecker CI");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_no_pr2_woodpecker() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Value("CI".to_string(), "woodpecker".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "CI_COMMIT_PULL_REQUEST".to_string(),
+            "".to_string(),
+        )),
+        branch_name_env: Some("CI_COMMIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::WoodpeckerCI);
+    assert_eq!(info.name.unwrap(), "Woodpecker CI");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_woodpecker() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Value("CI".to_string(), "woodpecker".to_string()),
+        pr_env: Some(EnvValue::NotEmpty("CI_COMMIT_PULL_REQUEST".to_string())),
+        branch_name_env: Some("CI_COMMIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::WoodpeckerCI);
+    assert_eq!(info.name.unwrap(), "Woodpecker CI");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_ci_unknown_1() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("CI".to_string()),

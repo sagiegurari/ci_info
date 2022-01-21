@@ -363,6 +363,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Woodpecker CI".to_string(),
+        vendor: Vendor::WoodpeckerCI,
+        ci_env: EnvValue::Value("CI".to_string(), "woodpecker".to_string()),
+        pr_env: Some(EnvValue::NotEmpty("CI_COMMIT_PULL_REQUEST".to_string())),
+        branch_name_env: Some("CI_COMMIT_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Unknown".to_string(),
         vendor: Vendor::Unknown,
         ci_env: EnvValue::AnyExists(vec![

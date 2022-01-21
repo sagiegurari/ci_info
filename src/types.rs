@@ -93,6 +93,8 @@ pub enum Vendor {
     /// CI vendor
     Vercel,
     /// CI vendor
+    WoodpeckerCI,
+    /// CI vendor
     Unknown,
 }
 
