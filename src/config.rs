@@ -371,6 +371,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Xcode Cloud".to_string(),
+        vendor: Vendor::XcodeCloud,
+        ci_env: EnvValue::Exists("CI_XCODE_PROJECT".to_string()),
+        pr_env: Some(EnvValue::NotEmpty("CI_PULL_REQUEST_NUMBER".to_string())),
+        branch_name_env: Some("CI_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Xcode Server".to_string(),
         vendor: Vendor::XcodeServer,
         ci_env: EnvValue::Exists("XCS".to_string()),

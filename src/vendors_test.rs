@@ -1310,6 +1310,54 @@ fn get_pr_woodpecker() {
 }
 
 #[test]
+fn get_no_pr_xcode_cloud() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CI_XCODE_PROJECT".to_string()),
+        pr_env: None,
+        branch_name_env: Some("CI_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::XcodeCloud);
+    assert_eq!(info.name.unwrap(), "Xcode Cloud");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_no_pr2_xcode_cloud() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CI_XCODE_PROJECT".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "CI_PULL_REQUEST_NUMBER".to_string(),
+            "".to_string(),
+        )),
+        branch_name_env: Some("CI_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::XcodeCloud);
+    assert_eq!(info.name.unwrap(), "Xcode Cloud");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_xcode_cloud() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CI_XCODE_PROJECT".to_string()),
+        pr_env: Some(EnvValue::NotEmpty("CI_PULL_REQUEST_NUMBER".to_string())),
+        branch_name_env: Some("CI_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::XcodeCloud);
+    assert_eq!(info.name.unwrap(), "Xcode Cloud");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_ci_xcode_server() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("XCS".to_string()),

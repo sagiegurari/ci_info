@@ -95,6 +95,8 @@ pub enum Vendor {
     /// CI vendor
     WoodpeckerCI,
     /// CI vendor
+    XcodeCloud,
+    /// CI vendor
     XcodeServer,
     /// CI vendor
     Unknown,
