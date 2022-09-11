@@ -357,6 +357,57 @@ fn get_pr_codefresh() {
 }
 
 #[test]
+fn get_no_pr_codemagic() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CM_BUILD_ID".to_string()),
+        pr_env: None,
+        branch_name_env: Some("CM_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Codemagic);
+    assert_eq!(info.name.unwrap(), "Codemagic");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_no_pr2_codemagic() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CM_BUILD_ID".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "CF_PULL_REQUEST_ID".to_string(),
+            "test".to_string(),
+        )),
+        branch_name_env: Some("CM_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Codemagic);
+    assert_eq!(info.name.unwrap(), "Codemagic");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_codemagic() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("CM_BUILD_ID".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "CM_PULL_REQUEST".to_string(),
+            "true".to_string(),
+        )),
+        branch_name_env: Some("CM_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Codemagic);
+    assert_eq!(info.name.unwrap(), "Codemagic");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_codeship() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Value("CI_NAME".to_string(), "codeship".to_string()),

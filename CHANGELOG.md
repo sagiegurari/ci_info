@@ -4,6 +4,7 @@
 
 * Add support for Xcode Cloud.
 * Add support for Xcode Server.
+* Add support for Codemagic.
 
 ### v0.14.5 (2022-04-22)
 

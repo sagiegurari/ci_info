@@ -120,6 +120,17 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Codemagic".to_string(),
+        vendor: Vendor::Codemagic,
+        ci_env: EnvValue::Exists("CM_BUILD_ID".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "CM_PULL_REQUEST".to_string(),
+            "true".to_string(),
+        )),
+        branch_name_env: Some("CM_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Codeship".to_string(),
         vendor: Vendor::Codeship,
         ci_env: EnvValue::Value("CI_NAME".to_string(), "codeship".to_string()),

@@ -39,6 +39,8 @@ pub enum Vendor {
     /// CI vendor
     Codefresh,
     /// CI vendor
+    Codemagic,
+    /// CI vendor
     Codeship,
     /// CI vendor
     Drone,
