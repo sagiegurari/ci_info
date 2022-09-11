@@ -1,3 +1,3 @@
-(function() {var implementors = {};
-implementors["ci_info"] = [{"text":"impl Freeze for <a class=\"enum\" href=\"ci_info/types/enum.Vendor.html\" title=\"enum ci_info::types::Vendor\">Vendor</a>","synthetic":true,"types":["ci_info::types::Vendor"]},{"text":"impl Freeze for <a class=\"struct\" href=\"ci_info/types/struct.CiInfo.html\" title=\"struct ci_info::types::CiInfo\">CiInfo</a>","synthetic":true,"types":["ci_info::types::CiInfo"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
+(function() {var implementors = {
+"ci_info":[["impl Freeze for <a class=\"enum\" href=\"ci_info/types/enum.Vendor.html\" title=\"enum ci_info::types::Vendor\">Vendor</a>",1,["ci_info::types::Vendor"]],["impl Freeze for <a class=\"struct\" href=\"ci_info/types/struct.CiInfo.html\" title=\"struct ci_info::types::CiInfo\">CiInfo</a>",1,["ci_info::types::CiInfo"]]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["get","Loads and returns the CI info of the current environment."],["is_ci","Returns true if a CI environment is detected."],["mock_ci","This function will modify the current environment variables to mock the requested CI vendor."]],"mod":[["types","types"]]});
+window.SIDEBAR_ITEMS = {"fn":[["get","Loads and returns the CI info of the current environment."],["is_ci","Returns true if a CI environment is detected."],["mock_ci","This function will modify the current environment variables to mock the requested CI vendor."]],"mod":[["types","types"]]};
