@@ -1310,6 +1310,21 @@ fn get_pr_woodpecker() {
 }
 
 #[test]
+fn get_ci_xcode_server() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("XCS".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::XcodeServer);
+    assert_eq!(info.name.unwrap(), "Xcode Server");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_ci_unknown_1() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("CI".to_string()),

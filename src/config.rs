@@ -371,6 +371,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Xcode Server".to_string(),
+        vendor: Vendor::XcodeServer,
+        ci_env: EnvValue::Exists("XCS".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "Unknown".to_string(),
         vendor: Vendor::Unknown,
         ci_env: EnvValue::AnyExists(vec![

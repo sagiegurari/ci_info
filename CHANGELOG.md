@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.6
+
+* Add support for Xcode Server.
+
 ### v0.14.5 (2022-04-22)
 
 * Upgrade envmnt
