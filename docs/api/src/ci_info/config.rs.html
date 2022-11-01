@@ -412,6 +412,14 @@
 <span id="412">412</span>
 <span id="413">413</span>
 <span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # config
 //!
 //! Predefined config of CI vendors.
@@ -680,6 +688,14 @@
             <span class="string">&quot;false&quot;</span>.to_string(),
         )),
         branch_name_env: <span class="prelude-val">Some</span>(<span class="string">&quot;NEVERCODE_BRANCH&quot;</span>.to_string()),
+    });
+
+    config.push(VendorConfig {
+        name: <span class="string">&quot;Prow&quot;</span>.to_string(),
+        vendor: Vendor::Prow,
+        ci_env: EnvValue::Exists(<span class="string">&quot;PROW_JOB_ID&quot;</span>.to_string()),
+        pr_env: <span class="prelude-val">Some</span>(EnvValue::NotEmpty(<span class="string">&quot;PULL_NUMBER&quot;</span>.to_string())),
+        branch_name_env: <span class="prelude-val">Some</span>(<span class="string">&quot;PULL_BASE_REF&quot;</span>.to_string()),
     });
 
     config.push(VendorConfig {

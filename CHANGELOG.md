@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.14.7
+### v0.14.7 (2022-11-01)
 
 * Add support for Prow.
 
