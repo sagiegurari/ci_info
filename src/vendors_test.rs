@@ -913,6 +913,36 @@ fn get_pr2_nevercode_ci() {
 }
 
 #[test]
+fn get_no_pr_prow_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("PROW_JOB_ID".to_string()),
+        pr_env: None,
+        branch_name_env: Some("PULL_BASE_REF".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Prow);
+    assert_eq!(info.name.unwrap(), "Prow");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_prow_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("PROW_JOB_ID".to_string()),
+        pr_env: Some(EnvValue::Value("PULL_NUMBER".to_string(), "5".to_string())),
+        branch_name_env: Some("PULL_BASE_REF".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Prow);
+    assert_eq!(info.name.unwrap(), "Prow");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_no_pr_render_ci() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("RENDER".to_string()),

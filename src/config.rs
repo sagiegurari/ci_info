@@ -269,6 +269,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Prow".to_string(),
+        vendor: Vendor::Prow,
+        ci_env: EnvValue::Exists("PROW_JOB_ID".to_string()),
+        pr_env: Some(EnvValue::NotEmpty("PULL_NUMBER".to_string())),
+        branch_name_env: Some("PULL_BASE_REF".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Render".to_string(),
         vendor: Vendor::Render,
         ci_env: EnvValue::Exists("RENDER".to_string()),

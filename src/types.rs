@@ -71,6 +71,8 @@ pub enum Vendor {
     /// CI vendor
     Nevercode,
     /// CI vendor
+    Prow,
+    /// CI vendor
     Render,
     /// CI vendor
     SailCI,

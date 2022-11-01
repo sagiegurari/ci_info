@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.7
+
+* Add support for Prow.
+
 ### v0.14.6 (2022-09-11)
 
 * Add support for Xcode Cloud.
