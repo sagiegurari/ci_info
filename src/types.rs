@@ -53,6 +53,8 @@ pub enum Vendor {
     /// CI vendor
     GitHubActions,
     /// CI vendor
+    Gerrit,
+    /// CI vendor
     GoCD,
     /// CI vendor
     Heroku,

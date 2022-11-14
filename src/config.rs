@@ -185,6 +185,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Gerrit".to_string(),
+        vendor: Vendor::Gerrit,
+        ci_env: EnvValue::Exists("GERRIT_PROJECT".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "GoCD".to_string(),
         vendor: Vendor::GoCD,
         ci_env: EnvValue::Exists("GO_PIPELINE_LABEL".to_string()),

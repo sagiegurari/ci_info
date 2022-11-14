@@ -585,6 +585,21 @@ fn get_flow_ci() {
 }
 
 #[test]
+fn get_gerrit() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("GERRIT_PROJECT".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Gerrit);
+    assert_eq!(info.name.unwrap(), "Gerrit");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_gocd() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("GO_PIPELINE_LABEL".to_string()),

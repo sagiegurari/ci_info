@@ -2,7 +2,8 @@
 
 ### v0.14.8
 
-* Add improved support for vercel detection
+* Add improved support for vercel detection.
+* Add support for Gerrit code review.
 
 ### v0.14.7 (2022-11-01)
 
