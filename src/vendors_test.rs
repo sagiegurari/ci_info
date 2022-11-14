@@ -615,6 +615,21 @@ fn get_gocd() {
 }
 
 #[test]
+fn get_google_cloud_build() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("BUILDER_OUTPUT".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::GoogleCloudBuild);
+    assert_eq!(info.name.unwrap(), "Google Cloud Build");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_heroku() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Value("NODE".to_string(), "/app/.heroku/node/bin/node".to_string()),

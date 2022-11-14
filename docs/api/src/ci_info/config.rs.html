@@ -420,6 +420,22 @@
 <span id="420">420</span>
 <span id="421">421</span>
 <span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # config
 //!
 //! Predefined config of CI vendors.
@@ -607,9 +623,25 @@
     });
 
     config.push(VendorConfig {
+        name: <span class="string">&quot;Gerrit&quot;</span>.to_string(),
+        vendor: Vendor::Gerrit,
+        ci_env: EnvValue::Exists(<span class="string">&quot;GERRIT_PROJECT&quot;</span>.to_string()),
+        pr_env: <span class="prelude-val">None</span>,
+        branch_name_env: <span class="prelude-val">None</span>,
+    });
+
+    config.push(VendorConfig {
         name: <span class="string">&quot;GoCD&quot;</span>.to_string(),
         vendor: Vendor::GoCD,
         ci_env: EnvValue::Exists(<span class="string">&quot;GO_PIPELINE_LABEL&quot;</span>.to_string()),
+        pr_env: <span class="prelude-val">None</span>,
+        branch_name_env: <span class="prelude-val">None</span>,
+    });
+
+    config.push(VendorConfig {
+        name: <span class="string">&quot;Google Cloud Build&quot;</span>.to_string(),
+        vendor: Vendor::GoogleCloudBuild,
+        ci_env: EnvValue::Exists(<span class="string">&quot;BUILDER_OUTPUT&quot;</span>.to_string()),
         pr_env: <span class="prelude-val">None</span>,
         branch_name_env: <span class="prelude-val">None</span>,
     });
@@ -798,7 +830,7 @@
     config.push(VendorConfig {
         name: <span class="string">&quot;Vercel&quot;</span>.to_string(),
         vendor: Vendor::Vercel,
-        ci_env: EnvValue::Exists(<span class="string">&quot;NOW_BUILDER&quot;</span>.to_string()),
+        ci_env: EnvValue::AnyExists(<span class="macro">vec!</span>[<span class="string">&quot;NOW_BUILDER&quot;</span>.to_string(), <span class="string">&quot;VERCEL_URL&quot;</span>.to_string()]),
         pr_env: <span class="prelude-val">None</span>,
         branch_name_env: <span class="prelude-val">None</span>,
     });

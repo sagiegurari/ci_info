@@ -201,6 +201,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Google Cloud Build".to_string(),
+        vendor: Vendor::GoogleCloudBuild,
+        ci_env: EnvValue::Exists("BUILDER_OUTPUT".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "Heroku".to_string(),
         vendor: Vendor::Heroku,
         ci_env: EnvValue::Contains("NODE".to_string(), "heroku".to_string()),

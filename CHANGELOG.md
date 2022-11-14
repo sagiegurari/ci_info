@@ -1,8 +1,9 @@
 ## CHANGELOG
 
-### v0.14.8
+### v0.14.8 (2022-11-14)
 
 * Add improved support for vercel detection.
+* Add support for Google cloud build.
 * Add support for Gerrit code review.
 
 ### v0.14.7 (2022-11-01)

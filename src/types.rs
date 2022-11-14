@@ -57,6 +57,8 @@ pub enum Vendor {
     /// CI vendor
     GoCD,
     /// CI vendor
+    GoogleCloudBuild,
+    /// CI vendor
     Heroku,
     /// CI vendor
     Hudson,
