@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.8
+
+* Add improved support for vercel detection
+
 ### v0.14.7 (2022-11-01)
 
 * Add support for Prow.

@@ -376,7 +376,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     config.push(VendorConfig {
         name: "Vercel".to_string(),
         vendor: Vendor::Vercel,
-        ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
+        ci_env: EnvValue::AnyExists(vec!["NOW_BUILDER".to_string(), "VERCEL_URL".to_string()]),
         pr_env: None,
         branch_name_env: None,
     });

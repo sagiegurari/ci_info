@@ -1343,6 +1343,21 @@ fn get_vercel() {
 }
 
 #[test]
+fn get_vercel2() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("VERCEL_URL".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Vercel);
+    assert_eq!(info.name.unwrap(), "Vercel");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_no_pr_woodpecker() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Value("CI".to_string(), "woodpecker".to_string()),
