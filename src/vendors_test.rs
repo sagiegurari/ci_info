@@ -1375,7 +1375,7 @@ fn get_vercel() {
 #[test]
 fn get_vercel2() {
     let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("VERCEL_URL".to_string()),
+        ci_env: EnvValue::Exists("VERCEL".to_string()),
         pr_env: None,
         branch_name_env: None,
     });

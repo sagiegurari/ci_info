@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v0.14.9 (2022-11-26)
+
+* Improve support for vercel detection.
+
+
 ### v0.14.8 (2022-11-14)
 
 * Add improved support for vercel detection.
