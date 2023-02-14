@@ -3,6 +3,7 @@
 ### v0.14.10
 
 * Add support for Vela
+* Add support for Agola
 
 ### v0.14.9 (2022-11-26)
 

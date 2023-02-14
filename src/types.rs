@@ -13,6 +13,8 @@ mod types_test;
 /// Supported vendors enum
 pub enum Vendor {
     /// CI vendor
+    Agola,
+    /// CI vendor
     AppCenter,
     /// CI vendor
     AppCircle,

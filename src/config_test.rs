@@ -2,6 +2,21 @@ use crate::test_env::{get_with_env, TestVendorConfig};
 use crate::types::{EnvValue, Vendor};
 
 #[test]
+fn get_agola() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("AGOLA_REPOSITORY_URL".to_string()),
+        pr_env: None,
+        branch_name_env: Some("AGOLA_GIT_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::Agola);
+    assert_eq!(info.name.unwrap(), "Agola");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_appcenter() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("APPCENTER_BUILD_ID".to_string()),

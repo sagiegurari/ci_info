@@ -9,6 +9,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     let mut config = vec![];
 
     config.push(VendorConfig {
+        name: "Agola".to_string(),
+        vendor: Vendor::Agola,
+        ci_env: EnvValue::Exists("AGOLA_REPOSITORY_URL".to_string()),
+        pr_env: None,
+        branch_name_env: Some("AGOLA_GIT_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "AppCenter".to_string(),
         vendor: Vendor::AppCenter,
         ci_env: EnvValue::Exists("APPCENTER_BUILD_ID".to_string()),
