@@ -4,6 +4,7 @@
 
 * Add support for Vela
 * Add support for Agola
+* Add support for Harness CI
 
 ### v0.14.9 (2022-11-26)
 

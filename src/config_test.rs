@@ -645,6 +645,21 @@ fn get_google_cloud_build() {
 }
 
 #[test]
+fn get_harness_ci() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("HARNESS_BUILD_ID".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::HarnessCI);
+    assert_eq!(info.name.unwrap(), "Harness CI");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_heroku() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Value("NODE".to_string(), "/app/.heroku/node/bin/node".to_string()),

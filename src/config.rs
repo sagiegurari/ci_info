@@ -217,6 +217,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Harness CI".to_string(),
+        vendor: Vendor::HarnessCI,
+        ci_env: EnvValue::Exists("HARNESS_BUILD_ID".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "Heroku".to_string(),
         vendor: Vendor::Heroku,
         ci_env: EnvValue::Contains("NODE".to_string(), "heroku".to_string()),
