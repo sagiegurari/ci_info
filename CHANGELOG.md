@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.14.10
+### v0.14.10 (2023-02-14)
 
 * Add support for Vela
 * Add support for Agola
