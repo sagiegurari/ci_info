@@ -265,14 +265,14 @@
 #[macro_use]
 extern crate serde_derive;
 #[cfg(test)]
+#[path = "./config_test.rs"]
+mod config_test;
+#[cfg(test)]
 #[path = "./lib_test.rs"]
 mod lib_test;
 #[cfg(test)]
 #[path = "./test_env.rs"]
 mod test_env;
-#[cfg(test)]
-#[path = "./vendors_test.rs"]
-mod vendors_test;
 
 #[cfg(doctest)]
 doc_comment::doctest!("../README.md");

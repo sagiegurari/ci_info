@@ -99,6 +99,8 @@ pub enum Vendor {
     /// CI vendor
     TravisCI,
     /// CI vendor
+    Vela,
+    /// CI vendor
     Vercel,
     /// CI vendor
     WoodpeckerCI,

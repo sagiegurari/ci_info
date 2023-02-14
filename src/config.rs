@@ -390,6 +390,14 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Vela".to_string(),
+        vendor: Vendor::Vela,
+        ci_env: EnvValue::Exists("VELA_BUILD_NUMBER".to_string()),
+        pr_env: Some(EnvValue::Exists("VELA_PULL_REQUEST".to_string())),
+        branch_name_env: Some("VELA_BUILD_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
         name: "Vercel".to_string(),
         vendor: Vendor::Vercel,
         ci_env: EnvValue::AnyExists(vec!["NOW_BUILDER".to_string(), "VERCEL".to_string()]),

@@ -1,9 +1,12 @@
 ## CHANGELOG
 
+### v0.14.10
+
+* Add support for Vela
+
 ### v0.14.9 (2022-11-26)
 
 * Improve support for vercel detection.
-
 
 ### v0.14.8 (2022-11-14)
 

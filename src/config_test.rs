@@ -1358,6 +1358,40 @@ fn get_pr2_travis() {
 }
 
 #[test]
+fn get_no_pr_vela() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("VELA_BUILD_NUMBER".to_string()),
+        pr_env: None,
+        branch_name_env: Some("VELA_BUILD_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(!info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Vela);
+    assert_eq!(info.name.unwrap(), "Vela");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
+fn get_pr_vela() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("VELA_BUILD_NUMBER".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "VELA_PULL_REQUEST".to_string(),
+            "123".to_string(),
+        )),
+
+        branch_name_env: Some("VELA_BUILD_BRANCH".to_string()),
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Vela);
+    assert_eq!(info.name.unwrap(), "Vela");
+    assert_eq!(info.branch_name.unwrap(), "mock_branch");
+}
+
+#[test]
 fn get_vercel() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
