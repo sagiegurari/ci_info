@@ -417,7 +417,7 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         name: "Vercel".to_string(),
         vendor: Vendor::Vercel,
         ci_env: EnvValue::AnyExists(vec!["NOW_BUILDER".to_string(), "VERCEL".to_string()]),
-        pr_env: None,
+        pr_env: Some(EnvValue::Exists("VERCEL_GIT_PULL_REQUEST_ID".to_string())),
         branch_name_env: None,
     });
 

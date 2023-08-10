@@ -1422,7 +1422,43 @@ fn get_pr_vela() {
 }
 
 #[test]
-fn get_vercel() {
+fn get_pr_vercel() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "VERCEL_GIT_PULL_REQUEST_ID".to_string(),
+            "123".to_string(),
+        )),
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Vercel);
+    assert_eq!(info.name.unwrap(), "Vercel");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
+fn get_pr_vercel2() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("VERCEL".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "VERCEL_GIT_PULL_REQUEST_ID".to_string(),
+            "123".to_string(),
+        )),
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.unwrap());
+    assert_eq!(info.vendor.unwrap(), Vendor::Vercel);
+    assert_eq!(info.name.unwrap(), "Vercel");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
+fn get_no_pr_vercel() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("NOW_BUILDER".to_string()),
         pr_env: None,
@@ -1430,22 +1466,7 @@ fn get_vercel() {
     });
 
     assert!(info.ci);
-    assert!(info.pr.is_none());
-    assert_eq!(info.vendor.unwrap(), Vendor::Vercel);
-    assert_eq!(info.name.unwrap(), "Vercel");
-    assert!(info.branch_name.is_none());
-}
-
-#[test]
-fn get_vercel2() {
-    let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("VERCEL".to_string()),
-        pr_env: None,
-        branch_name_env: None,
-    });
-
-    assert!(info.ci);
-    assert!(info.pr.is_none());
+    assert!(!info.pr.unwrap());
     assert_eq!(info.vendor.unwrap(), Vendor::Vercel);
     assert_eq!(info.name.unwrap(), "Vercel");
     assert!(info.branch_name.is_none());

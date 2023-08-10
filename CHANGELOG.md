@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.11 (2023-08-10)
+
+* Add support for vercel PR detection
+
 ### v0.14.10 (2023-02-14)
 
 * Add support for Vela
