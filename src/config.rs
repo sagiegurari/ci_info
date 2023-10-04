@@ -51,9 +51,10 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     config.push(VendorConfig {
         name: "Azure Pipelines".to_string(),
         vendor: Vendor::AzurePipelines,
-        ci_env: EnvValue::Exists("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI".to_string()),
-        pr_env: Some(EnvValue::Exists(
-            "SYSTEM_PULLREQUEST_PULLREQUESTID".to_string(),
+        ci_env: EnvValue::Exists("TF_BUILD".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "BUILD_REASON".to_string(),
+            "PullRequest".to_string(),
         )),
         branch_name_env: Some("BUILD_SOURCEBRANCHNAME".to_string()),
     });

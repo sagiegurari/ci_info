@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.12 (2023-10-04)
+
+* Improve azure pipelines support
+
 ### v0.14.11 (2023-08-10)
 
 * Add support for vercel PR detection

@@ -460,6 +460,7 @@
 <a href="#460" id="460">460</a>
 <a href="#461" id="461">461</a>
 <a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # config
 //!
 //! Predefined config of CI vendors.
@@ -513,9 +514,10 @@
     config.push(VendorConfig {
         name: <span class="string">&quot;Azure Pipelines&quot;</span>.to_string(),
         vendor: Vendor::AzurePipelines,
-        ci_env: EnvValue::Exists(<span class="string">&quot;SYSTEM_TEAMFOUNDATIONCOLLECTIONURI&quot;</span>.to_string()),
-        pr_env: <span class="prelude-val">Some</span>(EnvValue::Exists(
-            <span class="string">&quot;SYSTEM_PULLREQUEST_PULLREQUESTID&quot;</span>.to_string(),
+        ci_env: EnvValue::Exists(<span class="string">&quot;TF_BUILD&quot;</span>.to_string()),
+        pr_env: <span class="prelude-val">Some</span>(EnvValue::Value(
+            <span class="string">&quot;BUILD_REASON&quot;</span>.to_string(),
+            <span class="string">&quot;PullRequest&quot;</span>.to_string(),
         )),
         branch_name_env: <span class="prelude-val">Some</span>(<span class="string">&quot;BUILD_SOURCEBRANCHNAME&quot;</span>.to_string()),
     });

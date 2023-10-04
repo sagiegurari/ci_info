@@ -94,8 +94,11 @@ fn get_aws_codebuild() {
 #[test]
 fn get_no_pr_azure_piplines() {
     let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI".to_string()),
-        pr_env: None,
+        ci_env: EnvValue::Exists("TF_BUILD".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "BUILD_REASON".to_string(),
+            "Test".to_string(),
+        )),
         branch_name_env: Some("BUILD_SOURCEBRANCHNAME".to_string()),
     });
 
@@ -109,9 +112,10 @@ fn get_no_pr_azure_piplines() {
 #[test]
 fn get_pr_azure_piplines() {
     let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI".to_string()),
-        pr_env: Some(EnvValue::Exists(
-            "SYSTEM_PULLREQUEST_PULLREQUESTID".to_string(),
+        ci_env: EnvValue::Exists("TF_BUILD".to_string()),
+        pr_env: Some(EnvValue::Value(
+            "BUILD_REASON".to_string(),
+            "PullRequest".to_string(),
         )),
         branch_name_env: Some("BUILD_SOURCEBRANCHNAME".to_string()),
     });
