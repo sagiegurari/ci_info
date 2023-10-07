@@ -89,8 +89,6 @@ pub enum Vendor {
     /// CI vendor
     Semaphore,
     /// CI vendor
-    Shippable,
-    /// CI vendor
     SolanoCI,
     /// CI vendor
     SourceHut,

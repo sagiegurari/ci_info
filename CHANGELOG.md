@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.13 (2023-10-07)
+
+* Remove shippable
+
 ### v0.14.12 (2023-10-04)
 
 * Improve azure pipelines support

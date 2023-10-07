@@ -345,17 +345,6 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
-        name: "Shippable".to_string(),
-        vendor: Vendor::Shippable,
-        ci_env: EnvValue::Exists("SHIPPABLE".to_string()),
-        pr_env: Some(EnvValue::Value(
-            "IS_PULL_REQUEST".to_string(),
-            "true".to_string(),
-        )),
-        branch_name_env: None,
-    });
-
-    config.push(VendorConfig {
         name: "Solano CI".to_string(),
         vendor: Vendor::SolanoCI,
         ci_env: EnvValue::Exists("TDDIUM".to_string()),
