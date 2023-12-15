@@ -1199,36 +1199,6 @@ fn get_pr_semaphore() {
 }
 
 #[test]
-fn get_no_pr_solano_ci() {
-    let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("TDDIUM".to_string()),
-        pr_env: None,
-        branch_name_env: None,
-    });
-
-    assert!(info.ci);
-    assert!(!info.pr.unwrap());
-    assert_eq!(info.vendor.unwrap(), Vendor::SolanoCI);
-    assert_eq!(info.name.unwrap(), "Solano CI");
-    assert!(info.branch_name.is_none());
-}
-
-#[test]
-fn get_pr_solano_ci() {
-    let info = get_with_env(TestVendorConfig {
-        ci_env: EnvValue::Exists("TDDIUM".to_string()),
-        pr_env: Some(EnvValue::Exists("TDDIUM_PR_ID".to_string())),
-        branch_name_env: None,
-    });
-
-    assert!(info.ci);
-    assert!(info.pr.unwrap());
-    assert_eq!(info.vendor.unwrap(), Vendor::SolanoCI);
-    assert_eq!(info.name.unwrap(), "Solano CI");
-    assert!(info.branch_name.is_none());
-}
-
-#[test]
 fn get_sourcehut() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Value(

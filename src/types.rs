@@ -93,8 +93,6 @@ pub enum Vendor {
     /// CI vendor
     Semaphore,
     /// CI vendor
-    SolanoCI,
-    /// CI vendor
     SourceHut,
     /// CI vendor
     StriderCD,

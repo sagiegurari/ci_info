@@ -1,9 +1,10 @@
 ## CHANGELOG
 
-### v0.14.14
+### v0.14.14 (2023-12-15)
 
 * Add support for Earthly
 * Add support for Gitea Actions
+* Remove Solano
 
 ### v0.14.13 (2023-10-07)
 
