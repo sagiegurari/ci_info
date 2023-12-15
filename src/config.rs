@@ -175,6 +175,22 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
+        name: "Flow CI".to_string(),
+        vendor: Vendor::FlowCI,
+        ci_env: EnvValue::Exists("FLOWCI_JOB_BUILD_NUM".to_string()),
+        pr_env: None,
+        branch_name_env: Some("FLOWCI_GIT_BRANCH".to_string()),
+    });
+
+    config.push(VendorConfig {
+        name: "Gitea Actions".to_string(),
+        vendor: Vendor::GiteaActions,
+        ci_env: EnvValue::Exists("GITEA_ACTIONS".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    config.push(VendorConfig {
         name: "GitHub Actions".to_string(),
         vendor: Vendor::GitHubActions,
         ci_env: EnvValue::Exists("GITHUB_ACTIONS".to_string()),
@@ -191,14 +207,6 @@ pub(crate) fn create() -> Vec<VendorConfig> {
         ci_env: EnvValue::Exists("GITLAB_CI".to_string()),
         pr_env: Some(EnvValue::Exists("CI_MERGE_REQUEST_ID".to_string())),
         branch_name_env: Some("CI_COMMIT_REF_NAME".to_string()),
-    });
-
-    config.push(VendorConfig {
-        name: "Flow CI".to_string(),
-        vendor: Vendor::FlowCI,
-        ci_env: EnvValue::Exists("FLOWCI_JOB_BUILD_NUM".to_string()),
-        pr_env: None,
-        branch_name_env: Some("FLOWCI_GIT_BRANCH".to_string()),
     });
 
     config.push(VendorConfig {

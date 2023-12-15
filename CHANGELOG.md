@@ -3,6 +3,7 @@
 ### v0.14.14
 
 * Add support for Earthly
+* Add support for Gitea Actions
 
 ### v0.14.13 (2023-10-07)
 

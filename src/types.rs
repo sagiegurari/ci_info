@@ -53,6 +53,8 @@ pub enum Vendor {
     /// CI vendor
     FlowCI,
     /// CI vendor
+    GiteaActions,
+    /// CI vendor
     GitLabCI,
     /// CI vendor
     GitHubActions,
