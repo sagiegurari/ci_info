@@ -508,6 +508,21 @@ fn get_dsari() {
 }
 
 #[test]
+fn get_earthly() {
+    let info = get_with_env(TestVendorConfig {
+        ci_env: EnvValue::Exists("EARTHLY_CI".to_string()),
+        pr_env: None,
+        branch_name_env: None,
+    });
+
+    assert!(info.ci);
+    assert!(info.pr.is_none());
+    assert_eq!(info.vendor.unwrap(), Vendor::EARTHLY);
+    assert_eq!(info.name.unwrap(), "Earthly");
+    assert!(info.branch_name.is_none());
+}
+
+#[test]
 fn get_no_pr_github_actions() {
     let info = get_with_env(TestVendorConfig {
         ci_env: EnvValue::Exists("GITHUB_ACTIONS".to_string()),

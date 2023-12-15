@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.14
+
+* Add support for Earthly
+
 ### v0.14.13 (2023-10-07)
 
 * Remove shippable

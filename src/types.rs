@@ -49,6 +49,8 @@ pub enum Vendor {
     /// CI vendor
     DSARI,
     /// CI vendor
+    EARTHLY,
+    /// CI vendor
     FlowCI,
     /// CI vendor
     GitLabCI,
