@@ -361,14 +361,6 @@ pub(crate) fn create() -> Vec<VendorConfig> {
     });
 
     config.push(VendorConfig {
-        name: "Solano CI".to_string(),
-        vendor: Vendor::SolanoCI,
-        ci_env: EnvValue::Exists("TDDIUM".to_string()),
-        pr_env: Some(EnvValue::Exists("TDDIUM_PR_ID".to_string())),
-        branch_name_env: None,
-    });
-
-    config.push(VendorConfig {
         name: "SourceHut".to_string(),
         vendor: Vendor::SourceHut,
         ci_env: EnvValue::Contains("JOB_URL".to_string(), "builds.sr.ht".to_string()),
