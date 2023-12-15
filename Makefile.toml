@@ -8,3 +8,7 @@ additional_profiles = [
   "ci-static-code-analysis-tasks",
   "publish-pre-cleanup",
 ]
+
+[env]
+CARGO_MAKE_SKIP_SLOW_SECONDARY_FLOWS = true
+
