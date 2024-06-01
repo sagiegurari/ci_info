@@ -9,7 +9,6 @@ mod ci_test;
 
 use crate::config;
 use crate::types::{CiInfo, EnvValue, Vendor};
-use envmnt;
 
 fn validate(env_info: &EnvValue) -> bool {
     match env_info {
@@ -58,7 +57,7 @@ pub(crate) fn get() -> CiInfo {
                 Some(ref env_key) => {
                     let value = envmnt::get_or(env_key, "");
 
-                    if value.len() > 0 {
+                    if !value.is_empty() {
                         Some(value.to_string())
                     } else {
                         None

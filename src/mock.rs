@@ -5,7 +5,6 @@
 
 use crate::config;
 use crate::types::{CiInfo, EnvValue, VendorConfig};
-use envmnt;
 
 fn get_env_keys(env_info: &Option<EnvValue>) -> Vec<String> {
     match env_info {
