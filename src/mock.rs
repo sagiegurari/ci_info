@@ -29,9 +29,8 @@ pub(crate) fn clear_env(vendor_config_list: &Vec<VendorConfig>) {
         keys = get_env_keys(&vendor_config.pr_env);
         envmnt::remove_all(&keys);
 
-        match vendor_config.branch_name_env {
-            Some(ref key) => envmnt::remove(key),
-            None => (),
+        if let Some(ref key) = vendor_config.branch_name_env {
+            envmnt::remove(key)
         };
     }
 }
@@ -68,9 +67,8 @@ fn set_mock_env_key_value_pairs(env_info: &Option<EnvValue>, test_value: &str) {
 pub(crate) fn set_env_for_config(vendor_config: &VendorConfig, branch_name: Option<String>) {
     set_mock_env_key_value_pairs(&Some(vendor_config.ci_env.clone()), "mock_ci");
     set_mock_env_key_value_pairs(&vendor_config.pr_env, "mock_pr");
-    match vendor_config.branch_name_env {
-        Some(ref key) => envmnt::set(key, branch_name.unwrap_or("mock_branch".to_string())),
-        None => (),
+    if let Some(ref key) = vendor_config.branch_name_env {
+        envmnt::set(key, branch_name.unwrap_or("mock_branch".to_string()))
     };
 }
 
