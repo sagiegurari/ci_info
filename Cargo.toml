@@ -38,8 +38,3 @@ lazy_static = "^1"
 
 [features]
 serde-1 = ["serde", "serde_derive"]
-
-[badges.codecov]
-branch = "master"
-repository = "sagiegurari/ci_info"
-service = "github"
