@@ -8,6 +8,7 @@
 mod types_test;
 
 #[cfg_attr(feature = "serde-1", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "iter", derive(strum_macros::EnumIter, Eq, Hash))]
 #[derive(Debug, Clone, PartialEq, Copy)]
 #[non_exhaustive]
 /// Supported vendors enum

@@ -99,6 +99,45 @@
 //! ci_info = { version = "*", features = ["serde-1"] }
 //! ```
 //!
+//! ## Iterating Over Vendor Variants (Optional Feature)
+//!
+//! When `iter` feature is enabled, you can iterate over all known CI vendor variants:
+//!
+//! ```toml
+//! [dependencies]
+//! ci_info = { version = "*", features = ["iter"] }
+//! ```
+//!
+//! Example usage:
+//!
+//! ```rust
+//! # #[cfg(feature = "iter")]
+//! # {
+//! use ci_info::types::Vendor;
+//! use strum::IntoEnumIterator;
+//!
+//! // List all supported CI vendors
+//! for vendor in Vendor::iter() {
+//!     println!("Supported CI vendor: {:?}", vendor);
+//! }
+//!
+//! // Count vendors
+//! let vendor_count = Vendor::iter().count();
+//! println!("Total CI vendors supported: {}", vendor_count);
+//!
+//! // Filter for specific vendors
+//! let cloud_vendors: Vec<_> = Vendor::iter()
+//!     .filter(|v| matches!(v,
+//!         Vendor::GitHubActions |
+//!         Vendor::GitLabCI |
+//!         Vendor::CircleCI
+//!     ))
+//!     .collect();
+//! # }
+//! ```
+//!
+//! This feature uses [strum](https://crates.io/crates/strum) library's `EnumIter` derive macro.
+//!
 //! # Contributing
 //! See [contributing guide](https://github.com/sagiegurari/ci_info/blob/master/.github/CONTRIBUTING.md)
 //!
