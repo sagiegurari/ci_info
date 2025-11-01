@@ -91,7 +91,7 @@ In order to use this library, just add it as a dependency:
 
 ```ini
 [dependencies]
-ci_info = "^0.14.14"
+ci_info = "^0.14.15"
 ```
 
 There is optional `serde` support that can be enabled via the `serde-1` feature:

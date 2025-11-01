@@ -66,8 +66,7 @@ mod iter_tests {
     #[test]
     fn iteration_supports_find() {
         // Demonstrate find operation works on iterator
-        let github_actions = Vendor::iter()
-            .find(|v| matches!(v, Vendor::GitHubActions));
+        let github_actions = Vendor::iter().find(|v| matches!(v, Vendor::GitHubActions));
 
         assert!(
             github_actions.is_some(),
@@ -79,8 +78,7 @@ mod iter_tests {
     #[test]
     fn iteration_supports_any() {
         // Demonstrate any() predicate works
-        let has_gitlab = Vendor::iter()
-            .any(|v| matches!(v, Vendor::GitLabCI));
+        let has_gitlab = Vendor::iter().any(|v| matches!(v, Vendor::GitLabCI));
 
         assert!(has_gitlab, "Iterator should contain GitLabCI");
     }
@@ -88,8 +86,7 @@ mod iter_tests {
     #[test]
     fn iteration_supports_all() {
         // Demonstrate all() predicate works
-        let all_are_vendors = Vendor::iter()
-            .all(|_v| true); // All variants are valid Vendor types
+        let all_are_vendors = Vendor::iter().all(|_v| true); // All variants are valid Vendor types
 
         assert!(all_are_vendors, "All items should be Vendor variants");
     }
@@ -108,8 +105,8 @@ mod iter_tests {
     #[test]
     fn iteration_works_with_partition() {
         // Demonstrate partition operation
-        let (cloud_based, others): (Vec<_>, Vec<_>) = Vendor::iter()
-            .partition(|v| matches!(
+        let (cloud_based, others): (Vec<_>, Vec<_>) = Vendor::iter().partition(|v| {
+            matches!(
                 v,
                 Vendor::GitHubActions
                     | Vendor::GitLabCI
@@ -117,7 +114,8 @@ mod iter_tests {
                     | Vendor::AzurePipelines
                     | Vendor::AWSCodeBuild
                     | Vendor::GoogleCloudBuild
-            ));
+            )
+        });
 
         assert!(
             !cloud_based.is_empty(),

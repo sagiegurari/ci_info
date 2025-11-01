@@ -1,6 +1,6 @@
+use ci_info::types::Vendor;
 #[cfg(feature = "iter")]
 use strum::IntoEnumIterator;
-use ci_info::types::Vendor;
 
 fn main() {
     #[cfg(not(feature = "iter"))]

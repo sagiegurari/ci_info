@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.14.15 (2025-11-01)
+
+* Add iter feature to enable Vendor enum iteration #21 (thanks @ivan23kor)
+
 ### v0.14.14 (2023-12-15)
 
 * Add support for Earthly
