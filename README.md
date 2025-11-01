@@ -101,6 +101,44 @@ There is optional `serde` support that can be enabled via the `serde-1` feature:
 ci_info = { version = "*", features = ["serde-1"] }
 ```
 
+### Iterating Over Vendor Variants
+
+You can enable iteration over all `Vendor` enum variants by enabling `iter` feature:
+
+```ini
+[dependencies]
+ci_info = { version = "^0.14.14", features = ["iter"] }
+```
+
+This allows you to programmatically access all supported CI vendors:
+
+```rust
+use ci_info::types::Vendor;
+use strum::IntoEnumIterator;
+
+// List all supported CI vendors
+for vendor in Vendor::iter() {
+    println!("{:?}", vendor);
+}
+
+// Check how many vendors are supported
+let count = Vendor::iter().count();
+println!("Supporting {} CI vendors", count);
+
+// Filter for specific vendors
+let cloud_vendors: Vec<_> = Vendor::iter()
+    .filter(|v| matches!(v,
+        Vendor::GitHubActions |
+        Vendor::GitLabCI |
+        Vendor::CircleCI
+    ))
+    .collect();
+```
+
+**Note:** Iteration uses [strum](https://crates.io/crates/strum)'s `EnumIter` derive macro under a feature flag.
+
+Run complete example with: `cargo run --example iterate_vendors --features iter`
+
 ## API Documentation
 See full docs at: [API Docs](https://sagiegurari.github.io/ci_info/)
 
