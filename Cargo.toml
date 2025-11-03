@@ -32,7 +32,7 @@ envmnt = "^0.10"
 serde = { version = "1", optional = true }
 serde_derive = { version = "1", optional = true }
 strum = { version = "0.26", optional = true }
-strum_macros = { version = "0.26", optional = true }
+strum_macros = { version = "0.27", optional = true }
 
 [dev-dependencies]
 doc-comment = "^0.3"
